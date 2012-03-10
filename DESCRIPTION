@@ -1,8 +1,14 @@
 Package: sorvi
 Type: Package
+<<<<<<< HEAD
 Title: sorvi - avoimen datan tyokalupakki
 Version: 0.1.72
 Date: 2012-07-01
+=======
+Title: sorvi - avoimen datan tyokalupaketti
+Version: 0.1.59
+Date: 2012-03-10
+>>>>>>> Added GetOmakaupunki, GetPalvelukartta, GetThemeMap, joined map functions to maps.R
 Author: Leo Lahti, Juuso Parkkinen and Joona Lehtomaki
 Maintainer: Louhos team <sorvi-admin@lists.r-forge.r-project.org>
 Description: Avoimen datan algoritmeja
@@ -43,11 +49,9 @@ Collate:
     'utilities.R'
     'vaalit.R'
     'worldbank.R'
-    'googlemaps.R'
     'HRI.R'
     'HSY.R'
     'matrixOperations.R'
-    'OpenStreetMap.R'
     'show-methods.R'
     'get.province.info.R'
     'mml.R'
@@ -55,8 +59,12 @@ Collate:
     'visualization.R'
     'wms.R'
     'HKK.R'
+<<<<<<< HEAD
     'elections.R'
     'elections2000.R'
     'elections2008.R'
     'elections2004.R'
+=======
+    'maps.R'
+>>>>>>> Added GetOmakaupunki, GetPalvelukartta, GetThemeMap, joined map functions to maps.R
 Packaged: 2011-12-29 14:19:39 UTC; lei
