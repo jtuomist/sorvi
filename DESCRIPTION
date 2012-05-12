@@ -1,8 +1,8 @@
 Package: sorvi
 Type: Package
 Title: sorvi - avoimen datan tyokalupaketti
-Version: 0.1.58
-Date: 2012-03-06
+Version: 0.1.71
+Date: 2012-05-12
 Author: Leo Lahti, Juuso Parkkinen and Joona Lehtomaki
 Maintainer: soRvi developer team
     <sorvi-commits@lists.r-forge.r-project.org>
@@ -56,4 +56,8 @@ Collate:
     'visualization.R'
     'wms.R'
     'HKK.R'
+    'elections.R'
+    'elections2000.R'
+    'elections2008.R'
+    'elections2004.R'
 Packaged: 2011-12-29 14:19:39 UTC; lei

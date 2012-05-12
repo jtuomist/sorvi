@@ -61,7 +61,7 @@ GetStaticmapGoogleMaps <- function(center, zoom = 10, GRAYSCALE=FALSE, scale=1, 
   }
 
   # Reshape map for plotting
-  m_map <- melt(map)
+  m_map <- reshape::melt(map)
   names(m_map) <- c('x','y','fill')
   m_map <- within(m_map,{
     x <- x - n_pix/2 - 1

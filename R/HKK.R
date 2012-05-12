@@ -220,7 +220,7 @@ MergeSpatial <- function(sp.list, CRS=NA, FID=NA) {
 #' geometries are coming from a common source.
 #'
 #' @param sp.object  A Spatial*DataFrame object to be splitted
-#' @param spit.field A string describing the identifier field for the subregions
+#' @param split.field A string describing the identifier field for the subregions
 #'
 #' @return a list of Shape objects (from SpatialPolygonsDataFrame class)
 #' @export

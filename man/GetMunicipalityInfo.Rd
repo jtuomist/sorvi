@@ -5,11 +5,14 @@
 and Maanmittauslaitos (C) MML 2011. For details of MML data, see
 help(GetShapeMML).}
 \usage{
-  GetMunicipalityInfo(url = "http://pxweb2.stat.fi/Database/Kuntien\%20perustiedot/Kuntien\%20perustiedot/Kuntaportaali.px")
+  GetMunicipalityInfo(url = "http://pxweb2.stat.fi/Database/Kuntien\%20perustiedot/Kuntien\%20perustiedot/Kuntaportaali.px",
+    MML)
 }
 \arguments{
   \item{url}{URL for Tilastokeskus municipality
   information}
+
+  \item{MML}{MML data, obtain with 'data(MML)'}
 }
 \value{
   A data frame with municipality data
@@ -20,7 +23,7 @@ help(GetShapeMML).}
   details of MML data, see help(GetShapeMML).
 }
 \examples{
-# tmp <- GetMunicipalityInfo()
+# data(MML); tmp <- GetMunicipalityInfo(MML = MML)
 }
 \author{
   Leo Lahti

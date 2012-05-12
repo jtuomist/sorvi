@@ -8,7 +8,7 @@
   \item{sp.object}{A Spatial*DataFrame object to be
   splitted}
 
-  \item{spit.field}{A string describing the identifier
+  \item{split.field}{A string describing the identifier
   field for the subregions}
 }
 \value{
