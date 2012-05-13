@@ -7,6 +7,7 @@
 #     - Hakee eduskunta-aineistoista halutun äänestyksen tulokset puolueittain (kaikki puolueet, myös ne joita ei ole tällä hetkellä eduskunnassa)
 #
 GetAllAanestykset <- function() {
+  #hakee kaikki äänestykset
   library(XML)
   url <- "http://www.biomi.org/eduskunta/"
   kaikki.tree <- xmlParse(url)
@@ -20,7 +21,8 @@ GetAllAanestykset <- function() {
 
 GetEdustajaData <- function(aanestys)
 {
-
+  #@input: äänestyksen id
+  #@output: data.frame, jossa äänestyksen tulokset ehdokkaittain
   library(XML)
   baseurl <- "http://www.biomi.org/eduskunta/?haku=aanestys&id="
   if(is.na(aanestys)) {
@@ -42,6 +44,8 @@ GetEdustajaData <- function(aanestys)
 }
 
 GetEdustajanAanestykset <- function(edustaja) {
+  #@input: edustajan nimi
+  #@output: data frame, jossa kyseisen kansanedustajan äänestyksistä perustietoa
   edustaja <- URLencode(edustaja)
   url <- "http://www.biomi.org/eduskunta/?haku=edustaja&id"
   url.haku <- paste(url, edustaja, sep="=")
@@ -52,6 +56,8 @@ GetEdustajanAanestykset <- function(edustaja) {
 }
 
 haeHakuSanalla <- function(hakusana) {
+  #@input: sana, jolla haetaan eduskunnan aineistoista äänestyksiä
+  #@output: data frame, jossa dataa on
   hakusana <- URLencode(hakusana)
   url <- "http://www.biomi.org/eduskunta/?haku=sanahaku&id"
   url.haku <- paste(url, hakusana, sep="=")
