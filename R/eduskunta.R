@@ -8,7 +8,7 @@
 #
 GetAllAanestykset <- function() {
   #hakee kaikki äänestykset
-  library(XML)
+  require(XML)
   url <- "http://www.biomi.org/eduskunta/"
   kaikki.tree <- xmlParse(url)
   tunnisteet <- getNodeSet(kaikki.tree, path='//luettelo/aanestys/tunniste')
@@ -23,7 +23,7 @@ GetEdustajaData <- function(aanestys)
 {
   #@input: äänestyksen id
   #@output: data.frame, jossa äänestyksen tulokset ehdokkaittain
-  library(XML)
+  require(XML)
   baseurl <- "http://www.biomi.org/eduskunta/?haku=aanestys&id="
   if(is.na(aanestys)) {
      stop('Error ')
@@ -44,20 +44,27 @@ GetEdustajaData <- function(aanestys)
 }
 
 GetEdustajanAanestykset <- function(edustaja) {
-  #@input: edustajan nimi
+  #@input: edustajan nimi muodossa Sukunimi Etunimi
   #@output: data frame, jossa kyseisen kansanedustajan äänestyksistä perustietoa
-  edustaja <- URLencode(edustaja)
+  if(!require(XML)) {
+    install.packages('XML')
+  }
+  #options(encoding='UTF-8')
+  #edustaja <- URLencode(edustaja)
   url <- "http://www.biomi.org/eduskunta/?haku=edustaja&id"
   url.haku <- paste(url, edustaja, sep="=")
-  edustaja.puu <- xmlParse(url.haku)
+  edustaja.puu <- xmlParse(url.haku, encoding="latin1")
   aanestykset <- getNodeSet(edustaja.puu, path='//edustaja/aanestys/tiedot')
   df <- xmlToDataFrame(aanestykset)
+  
   return(df)
 }
 
 haeHakuSanalla <- function(hakusana) {
   #@input: sana, jolla haetaan eduskunnan aineistoista äänestyksiä
   #@output: data frame, jossa dataa on
+  require(XML)
+  
   hakusana <- URLencode(hakusana)
   url <- "http://www.biomi.org/eduskunta/?haku=sanahaku&id"
   url.haku <- paste(url, hakusana, sep="=")
