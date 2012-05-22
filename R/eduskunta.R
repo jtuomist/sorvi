@@ -1,11 +1,7 @@
 #Eduskuntadatan hakemiseen kirjoitettu R-sovellus, jolla saa helposti R:ään data frameksi XML-muotoista dataa. 
 #
 #
-# getEdustajat
-#     - Hakee eduskunta-aineistoista halutun äänestyksen tiedot kansanedustajaittain (kaikki kansanedustajat).
-# getPuolueet 
-#     - Hakee eduskunta-aineistoista halutun äänestyksen tulokset puolueittain (kaikki puolueet, myös ne joita ei ole tällä hetkellä eduskunnassa)
-#
+
 GetAllAanestykset <- function() {
   #hakee kaikki äänestykset
   require(XML)
@@ -19,10 +15,12 @@ GetAllAanestykset <- function() {
 }
 
 
+#' @param aanestys äänestyksen tunniste.
+#' @return data.frame jossa valinta, puolue ja nimi
+#' @author Juuso Haapanen
+#' 
 GetEdustajaData <- function(aanestys)
 {
-  #@input: äänestyksen id
-  #@output: data.frame, jossa äänestyksen tulokset ehdokkaittain
   require(XML)
   baseurl <- "http://www.biomi.org/eduskunta/?haku=aanestys&id="
   if(is.na(aanestys)) {
@@ -43,9 +41,8 @@ GetEdustajaData <- function(aanestys)
   return(df)
 }
 
+
 GetEdustajanAanestykset <- function(edustaja) {
-  #@input: edustajan nimi muodossa Sukunimi Etunimi
-  #@output: data frame, jossa kyseisen kansanedustajan äänestyksistä perustietoa
   if(!require(XML)) {
     install.packages('XML')
   }
@@ -60,9 +57,11 @@ GetEdustajanAanestykset <- function(edustaja) {
   return(df)
 }
 
+
+#' @param hakusana string
+#' @return data.frame
 haeHakuSanalla <- function(hakusana) {
-  #@input: sana, jolla haetaan eduskunnan aineistoista äänestyksiä
-  #@output: data frame, jossa dataa on
+
   require(XML)
   
   hakusana <- URLencode(hakusana)
