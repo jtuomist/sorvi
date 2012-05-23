@@ -35,7 +35,7 @@ GetMunicipalElectionData2000 <- function (which = "election.statistics") {
     px <- read.px(url)
     df <- as.data.frame(px)
     kaava <- as.formula("Alue ~ Äänestystiedot")
-    tab <- reshape::cast(df, kaava)
+    tab <- reshape::cast(df, kaava, value="dat")
     rownames(tab) <- as.character(tab$Alue)
 
     # Keep only municipality-level information, filter out others
@@ -60,7 +60,7 @@ GetMunicipalElectionData2000 <- function (which = "election.statistics") {
     url <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa_2000/020_kvaa_2000_2008-10-17_tau_102_fi.px"
     px <- read.px(url)
     df <- as.data.frame(px)
-    tmp <- reshape::cast(df, Alue ~ Puolue ~ Ehdokastiedot)
+    tmp <- reshape::cast(df, Alue ~ Puolue ~ Ehdokastiedot, value="dat")
 
     tab1 <- tmp[,,"Ehdokkaiden lkm"]
     tab2 <- tmp[,,"Ehdokkaiden osuus (%)"]
@@ -96,7 +96,7 @@ GetMunicipalElectionData2000 <- function (which = "election.statistics") {
 
     px <- read.px(url)
     df <- as.data.frame(px)
-    tmp <- reshape::cast(df, Alue ~ Puolue ~ Valittujen.tiedot)
+    tmp <- reshape::cast(df, Alue ~ Puolue ~ Valittujen.tiedot, value="dat")
 
     tab1 <- tmp[,,"Valittujen lkm"]
     tab2 <- tmp[,,"Valittujen osuus (%)"]
@@ -132,7 +132,7 @@ GetMunicipalElectionData2000 <- function (which = "election.statistics") {
     px <- read.px(url)
     df <- as.data.frame(px)
 
-    tmp <- reshape::cast(df, Alue ~ Puolue ~ Kannatustiedot)
+    tmp <- reshape::cast(df, Alue ~ Puolue ~ Kannatustiedot, value="dat")
 
     tab1 <- tmp[,,"Ääniä yhtensä"]
     tab2 <- tmp[,,"Ennakkoäänet"]
@@ -173,7 +173,7 @@ GetMunicipalElectionData2000 <- function (which = "election.statistics") {
 
     px <- read.px(url)
     df <- as.data.frame(px)
-    tab <- reshape::cast(df, Ehdokas ~ Ehdokastiedot)
+    tab <- reshape::cast(df, Ehdokas ~ Ehdokastiedot, value="dat")
 
   } else if (which == "all.municipality.level.data") {
 

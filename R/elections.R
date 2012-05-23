@@ -36,7 +36,7 @@ GetParliamentaryElectionData <- function (level) {
     px <- read.px(url)
     df <- try(as.data.frame(px))
     kaava <- as.formula("Vaalipiiri.ja.kunta~Äänestystiedot~Lukumäärätiedot")
-    tmp <- reshape::cast(df, kaava)
+    tmp <- reshape::cast(df, kaava, value="dat")
 
     # Separate tables and preprocess
     tab1 <- tmp[,,"Lukumäärä 2007"]
@@ -93,7 +93,7 @@ GetParliamentaryElectionData <- function (level) {
     px <- read.px(url) 
     df <- try(as.data.frame(px))
     kaava <- as.formula("Vaalipiiri~Äänestystiedot~Lukumäärätiedot")
-    tmp <- reshape::cast(df, kaava)
+    tmp <- reshape::cast(df, kaava, value="dat")
 
     # Separate the tables
     tab1 <- tmp[,,1]
@@ -116,7 +116,7 @@ GetParliamentaryElectionData <- function (level) {
     px <- read.px("http://pxweb2.stat.fi/database/StatFin/vaa/evaa/120_evaa_tau_105_fi.px") 
     df <- try(as.data.frame(px))
     kaava <- as.formula("Vaalipiiri~Hylkäysperuste")
-    tab2 <- reshape::cast(df, kaava)
+    tab2 <- reshape::cast(df, kaava, value="dat")
 
     # Keep only election.region level data
     rownames(tab2) <- as.character(tab2[,1])
