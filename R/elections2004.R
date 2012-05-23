@@ -36,7 +36,8 @@ GetMunicipalElectionData2004 <- function (which = "election.statistics") {
     url <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2004_05/010_KVAA_2004_2008-07-23_TAU_101_FI.px"
     px <- read.px(url)
     df <- as.data.frame(px)
-    tmp <- reshape::cast(df, Alue~Äänestystiedot~Sukupuoli)
+    kaava <- as.formula("Alue~Äänestystiedot~Sukupuoli")
+    tmp <- reshape::cast(df, kaava, value="dat")
 
     tab1 <- tmp[,,"Sukupuolet yhteensä"]
     tab2 <- tmp[,,"Miehet"]
@@ -92,7 +93,8 @@ GetMunicipalElectionData2004 <- function (which = "election.statistics") {
 
     px <- read.px(url)
     df <- as.data.frame(px)
-    tmp <- reshape::cast(df, Puolue~Vaalipiiri~Lukumäärätiedot)
+    kaava <- as.formula("Puolue~Vaalipiiri~Lukumäärätiedot")
+    tmp <- reshape::cast(df, kaava, value="dat")
 
     tab1 <- tmp[,,"Valtuutettujen lukumäärä"]
     tab2 <- tmp[,,"Puolueen osuus"]
@@ -111,7 +113,8 @@ GetMunicipalElectionData2004 <- function (which = "election.statistics") {
 
     px <- read.px(url)
     df <- as.data.frame(px)
-    tmp <- reshape::cast(df, Alue~Puolue~Sukupuoli~Valittujen.lukumäärä)
+    kaava <- as.formula("Alue~Puolue~Sukupuoli~Valittujen.lukumäärä")
+    tmp <- reshape::cast(df, kaava, value="dat")
 
     tab1 <- tmp[,,"Kaikki ehdokkaat", "Valittujen lukumäärä"]
     colnames(tab1) <- paste("Kaikki ehdokkaat", "Valittujen lukumäärä", colnames(tab1))
@@ -208,8 +211,8 @@ GetMunicipalElectionData2004 <- function (which = "election.statistics") {
 
     px <- read.px(url)
     df <- as.data.frame(px)
-
-    tmp <- reshape::cast(df, Vaalipiiri.ja.kunta~Puolue~Lukumäärätiedot)
+    kaava <- as.fromula("Vaalipiiri.ja.kunta~Puolue~Lukumäärätiedot")
+    tmp <- reshape::cast(df, kaava, value="dat")
 
     tab1 <- tmp[,,"Äänimäärä"]
     tab2 <- tmp[,,"Osuus %"]
@@ -247,8 +250,8 @@ GetMunicipalElectionData2004 <- function (which = "election.statistics") {
 
     px <- read.px(url)
     df <- as.data.frame(px)
-
-    tmp <- reshape::cast(df, Vaalipiiri.ja.kunta~Äänestystiedot.ja.puolueiden.kannatus~Lukumäärätiedot)
+    kaava <- as.formula("Vaalipiiri.ja.kunta~Äänestystiedot.ja.puolueiden.kannatus~Lukumäärätiedot")
+    tmp <- reshape::cast(df, kaava, value="dat")
 
     tab1 <- tmp[,,"Äänimäärä"]
     tab2 <- tmp[,,"Osuus %"]
@@ -284,8 +287,8 @@ GetMunicipalElectionData2004 <- function (which = "election.statistics") {
 
     px <- read.px(url)
     df <- as.data.frame(px)
-
-    tmp <- reshape::cast(df, Vaalipiiri.ja.kunta~Äänestystiedot.ja.puolueiden.kannatus~Lukumäärätiedot)
+    kaava <- as.formula("Vaalipiiri.ja.kunta~Äänestystiedot.ja.puolueiden.kannatus~Lukumäärätiedot")
+    tmp <- reshape::cast(df, kaava, value="dat")
 
     tab1 <- tmp[,,"Lukumäärä / Äänimäärä"]
     tab2 <- tmp[,,"Osuus äänistä"]
