@@ -1,10 +1,29 @@
-#Eduskuntadatan hakemiseen kirjoitettu R-sovellus, jolla saa helposti R:ään data frameksi XML-muotoista dataa. 
+# Copyright (C) Juuso Haapanen 2012, <juuso(at)haapanen.biz> All rights reserved
 #
-#
+# This program is open source software; you can redistribute it and/or
+# modify it under the terms of the FreeBSD License (keep this notice):
+# http://en.wikipedia.org/wiki/BSD_licenses
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+# This software has been published as part of louhos project (louhos.github.com) 
+
+
+# Kirjasto eduskunnan äänestystulosten hakemiseen. Käyttää hyväkseen www.biomi.org/eduskunta/eduskunta.html -sivulla määriteltyä rajapintaa
+# Versio 0.1
+
+
+#' Hae kaikki äänestykset eduskuntarajapinnasta
+#' @param no params
+#' @return list
+#' @author Juuso Haapanen
 
 GetAllAanestykset <- function() {
-  #hakee kaikki äänestykset
-  require(XML)
+  if(!require(XML)) {
+    install.packages('XML')
+  }
   url <- "http://www.biomi.org/eduskunta/"
   kaikki.tree <- xmlParse(url)
   tunnisteet <- getNodeSet(kaikki.tree, path='//luettelo/aanestys/tunniste')
@@ -21,10 +40,12 @@ GetAllAanestykset <- function() {
 #' 
 GetEdustajaData <- function(aanestys)
 {
-  require(XML)
+  if(!require(XML)) {
+    install.packages('XML')
+  }
   baseurl <- "http://www.biomi.org/eduskunta/?haku=aanestys&id="
   if(is.na(aanestys)) {
-     stop('Error ')
+     stop('Param aanestys not defined ')
   }
   else {
     search_url <- paste(baseurl,aanestys,sep="")
@@ -41,16 +62,19 @@ GetEdustajaData <- function(aanestys)
   return(df)
 }
 
+#' @param edustajan nimi muodossa Sukunimi Etunimi
+#' @return data.frame
+#' @author Juuso Haapanen
 
 GetEdustajanAanestykset <- function(edustaja) {
   if(!require(XML)) {
     install.packages('XML')
   }
-  #options(encoding='UTF-8')
-  #edustaja <- URLencode(edustaja)
+  
+  edustaja <- URLencode(edustaja)
   url <- "http://www.biomi.org/eduskunta/?haku=edustaja&id"
   url.haku <- paste(url, edustaja, sep="=")
-  edustaja.puu <- xmlParse(url.haku, encoding="latin1")
+  edustaja.puu <- xmlParse(url.haku)
   aanestykset <- getNodeSet(edustaja.puu, path='//edustaja/aanestys/tiedot')
   df <- xmlToDataFrame(aanestykset)
   
@@ -60,6 +84,7 @@ GetEdustajanAanestykset <- function(edustaja) {
 
 #' @param hakusana string
 #' @return data.frame
+#' @author Juuso Haapanen
 haeHakuSanalla <- function(hakusana) {
 
   require(XML)
