@@ -48,7 +48,6 @@ Collate:
     'matrixOperations.R'
     'show-methods.R'
     'get.province.info.R'
-    'maps.R'
     'mml.R'
     'population.register.R'
     'visualization.R'
