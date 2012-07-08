@@ -1,9 +1,6 @@
 export(CenterData)
 export(ConvertGADMPosition2Region)
-<<<<<<< HEAD
 export(ConvertMunicipalityNames)
-=======
->>>>>>> Added GetOmakaupunki, GetPalvelukartta, GetThemeMap, joined map functions to maps.R
 export(FindProvince)
 export(GenerateMapColours)
 export(GetApurahat)
@@ -22,14 +19,11 @@ export(GetMunicipalityInfo)
 export(GetMunicipalityInfoMML)
 export(GetMunicipalityInfoStatFi)
 export(GetOikotie)
-<<<<<<< HEAD
 export(GetPXTilastokeskus)
 export(GetParliamentaryElectionData)
-=======
 export(GetOmakaupunki)
 export(GetPXTilastokeskus)
 export(GetPalvelukartta)
->>>>>>> Added GetOmakaupunki, GetPalvelukartta, GetThemeMap, joined map functions to maps.R
 export(GetPopulationRegister)
 export(GetPostalCodeInfo)
 export(GetPresidentti2012)
