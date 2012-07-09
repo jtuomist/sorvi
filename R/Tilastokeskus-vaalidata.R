@@ -415,7 +415,7 @@ GetMunicipalElectionData2004 <- function (which = "election.statistics") {
 
     px <- pxR::read.px(url)
     df <- as.data.frame(px)
-    kaava <- as.fromula("Vaalipiiri.ja.kunta~Puolue~Lukumäärätiedot")
+    kaava <- as.formula("Vaalipiiri.ja.kunta~Puolue~Lukumäärätiedot")
     tmp <- reshape::cast(df, kaava, value="dat")
 
     tab1 <- tmp[,,"Äänimäärä"]
