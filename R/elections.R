@@ -537,6 +537,13 @@ GetParliamentaryElectionData <- function (level) {
     require(reshape) # Remember to load the library after installation
   }
 
+  if (!try(require(plyr))) { 
+    message("Function GetParliamentaryElectionData requires package 'plyr' Package not found, installing...")
+    install.packages(plyr) # Install the packages
+    require(plyr) # Remember to load the library after installation
+  }
+
+
   if (level == "municipality") {
 
     #http://pxweb2.stat.fi/database/StatFin/vaa/evaa/evaa_fi.asp
@@ -600,7 +607,7 @@ GetParliamentaryElectionData <- function (level) {
     url <- "http://pxweb2.stat.fi/database/StatFin/vaa/evaa/120_evaa_tau_103_fi.px"
 
     # Read election data from Statistics Finland			 
-    px <- read.px(url) 
+    px <- pxR::read.px(url) 
     df <- try(as.data.frame(px))
     kaava <- as.formula("Vaalipiiri~Äänestystiedot~Lukumäärätiedot")
     tmp <- reshape::cast(df, kaava, value="dat")
@@ -623,7 +630,7 @@ GetParliamentaryElectionData <- function (level) {
     tab$Vaalipiiri.Koodi <- sapply(rnams, function (s) {strsplit(s, " ")[[1]][[1]]})
 
     # Read more election data from Statistics Finland			 
-    px <- read.px("http://pxweb2.stat.fi/database/StatFin/vaa/evaa/120_evaa_tau_105_fi.px") 
+    px <- pxR::read.px("http://pxweb2.stat.fi/database/StatFin/vaa/evaa/120_evaa_tau_105_fi.px") 
     df <- try(as.data.frame(px))
     kaava <- as.formula("Vaalipiiri~Hylkäysperuste")
     tab2 <- reshape::cast(df, kaava, value="dat")
@@ -652,4 +659,3 @@ GetParliamentaryElectionData <- function (level) {
 
 }
 
-##########################################################################
