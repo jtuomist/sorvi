@@ -4,7 +4,7 @@
 #' Package: \tab sorvi\cr
 #' Type: \tab Package\cr
 #' Version: \tab See sessionInfo() or DESCRIPTION file\cr
-#' Date: \tab 2011\cr
+#' Date: \tab 2012\cr
 #' License: \tab FreeBSD\cr
 #' LazyLoad: \tab yes\cr
 #' }
@@ -24,4 +24,3 @@
 #' @examples library(sorvi)
 #' @keywords package
 NULL
-
