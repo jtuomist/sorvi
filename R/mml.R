@@ -11,9 +11,6 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 
-
-
-
 #' Preprocessing function for MML data 
 #'
 #' This script can be used to preprocess shape data 
@@ -151,6 +148,8 @@ PreprocessShapeMML <- function (sp) {
 
 GetShapeMML <- function (input.data.dir = "./", verbose = TRUE) {
 
+  warning("GetShapeMML may crash in Windows as it uses unix commands and temporary files.")
+
   MML <- list()
   for (resolutions in c("1_milj_Shape_etrs_shape", "4_5_milj_shape_etrs-tm35fin")) {
 
@@ -197,8 +196,9 @@ GetShapeMML <- function (input.data.dir = "./", verbose = TRUE) {
       file.id <- unlist(strsplit(f, "/"))
       file.id <- file.id[[length(file.id)]]
       file.id <- unlist(strsplit(file.id, "\\."))[[1]]
-      MML[[resolutions]][[file.id]] <- PreprocessShapeMML(readShapePoly(f))
-    }
+      MML[[resolutions]][[file.id]] <- sorvi::PreprocessShapeMML(readShapePoly(f))
+ 
+   }
     
   }
 
