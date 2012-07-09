@@ -543,7 +543,7 @@ GetParliamentaryElectionData <- function (level) {
 
     # 2.2 Äänioikeutetut ja äänestäneet sekä ennakolta äänestäneet sukupuolen mukaan kunnittain eduskuntavaaleissa 2011 ja 2007
     url <- "http://pxweb2.stat.fi/database/StatFin/vaa/evaa/120_evaa_tau_104_fi.px"
-    px <- read.px(url)
+    px <- pxR::read.px(url)
     df <- try(as.data.frame(px))
     kaava <- as.formula("Vaalipiiri.ja.kunta~Äänestystiedot~Lukumäärätiedot")
     tmp <- reshape::cast(df, kaava, value="dat")
@@ -572,7 +572,7 @@ GetParliamentaryElectionData <- function (level) {
     tab <- as.data.frame(tab[rnams, ])
 
     # Parse municipality codes and names
-    v <- ldply(strsplit(ConvertMunicipalityNames(rownames(tab)), " "), function (x) {x})
+    v <- plyr::ldply(strsplit(ConvertMunicipalityNames(rownames(tab)), " "), function (x) {x})
 
     tab$Kuntakoodi <- v[,1]
     tab$Kunta <- v[,2]
