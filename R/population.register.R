@@ -28,7 +28,11 @@
 
 GetPopulationRegister <- function (url = "http://vrk.fi/default.aspx?docid=5127&site=3&id=0") {
 
-  require(XML)
+  if (!try(require(XML))) { 
+    message("Function GetPopulationRegister requires package 'XML'  Package not found, installing...")
+    install.packages(XML) # Install the packages
+    require(XML) # Remember to load the library after installation
+  }
 
   # Read tables from the website
   tables <- XML::readHTMLTable(url)
