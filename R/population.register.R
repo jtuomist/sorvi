@@ -11,8 +11,6 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 
-
-
 #' Retrieve population register data
 #'
 #' Retrieves municipality data from population register. 

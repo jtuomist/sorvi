@@ -70,6 +70,6 @@ GetOikotie <- function() {
   hr.myynnit$Street <- factor(iconv(hr.myynnit$Street, from="ISO-8859-1", to="UTF-8"))
   hr.myynnit$Room.configuration <- factor(iconv(hr.myynnit$Room.configuration, from="ISO-8859-1", to="UTF-8"))
   
-  message("DONE\n")
+  message("DONE")
   return(list(myynnit=myynnit, hr.myynnit=hr.myynnit))
 }
