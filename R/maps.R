@@ -35,17 +35,40 @@
 GetStaticmapGoogleMaps <- function(center, zoom = 10, GRAYSCALE=FALSE, scale=1, maptype = 'map',
                                      destfile = 'TemporaryMap.png', n_pix = 640, format="png32") {
 
+  # library(RgoogleMaps) 
+  # library(png)
+  if (!try(require(RgoogleMaps))) { 
+    message("Function GetStaticmapGoogleMaps requires package 'RgoogleMaps'  Package not found, installing...")
+    install.packages(RgoogleMaps) # Install the packages
+    require(RgoogleMaps) # Remember to load the library after installation
+  }
+  if (!try(require(png))) { 
+    message("Function GetStaticmapGoogleMaps requires package 'png'  Package not found, installing...")
+    install.packages(png) # Install the packages
+    require(png) # Remember to load the library after installation
+  }
+  if (!try(require(reshape2))) { 
+    message("Function GetStaticmapGoogleMaps requires package 'reshape2'  Package not found, installing...")
+    install.packages(reshape2) # Install the packages
+    require(reshape2) # Remember to load the library after installation
+  }
+  if (!try(require(plyr))) { 
+    message("Function GetStaticmapGoogleMaps requires package 'plyr'  Package not found, installing...")
+    install.packages(plyr) # Install the packages
+    require(plyr) # Remember to load the library after installation
+  }
+  
   # Get map with given scale
   if (scale==1) 
-    GetMap(center = center[c('lat','lon')], GRAYSCALE=GRAYSCALE, size = c(n_pix, n_pix), 
+    RgoogleMaps::GetMap(center = center[c('lat','lon')], GRAYSCALE=GRAYSCALE, size = c(n_pix, n_pix), 
            zoom = zoom, format = format, maptype = maptype, destfile=destfile)
   else if (scale==2)
-    GetMap(center = center[c('lat','lon')], GRAYSCALE=GRAYSCALE, size = c(n_pix, n_pix),
+    RgoogleMaps::GetMap(center = center[c('lat','lon')], GRAYSCALE=GRAYSCALE, size = c(n_pix, n_pix),
            zoom = zoom, format = format, maptype = paste(maptype, "&scale=2", sep=""), destfile=destfile)
   else
     stop("Invalid scale-value!")
   
-  map <- readPNG(destfile)
+  map <- png::readPNG(destfile)
   n_pix <- n_pix*scale #Double number of pixels if scale==2
   
   # Deal with color
@@ -61,7 +84,7 @@ GetStaticmapGoogleMaps <- function(center, zoom = 10, GRAYSCALE=FALSE, scale=1, 
   }
 
   # Reshape map for plotting
-  m_map <- reshape::melt(map)
+  m_map <- reshape2::melt(map)
   names(m_map) <- c('x','y','fill')
   m_map <- within(m_map,{
     x <- x - n_pix/2 - 1
@@ -69,20 +92,20 @@ GetStaticmapGoogleMaps <- function(center, zoom = 10, GRAYSCALE=FALSE, scale=1, 
   })     
   
   mapInfo <- list(lat = center['lat'], lon = center['lon'], zoom = zoom, map)
-  XY_cent <- LatLon2XY.centered(mapInfo, center['lat'], center['lon'])
+  XY_cent <- RgoogleMaps::LatLon2XY.centered(mapInfo, center['lat'], center['lon'])
   
   # Geocode pixel references
   s <- (-n_pix/2) : (n_pix/2 - 1)  
-  lat_wrapper <- function(x) XY2LatLon(mapInfo, -n_pix/2, x)[1]
+  lat_wrapper <- function(x) RgoogleMaps::XY2LatLon(mapInfo, -n_pix/2, x)[1]
   lats <- apply(data.frame(s), 1, lat_wrapper)  
-  lon_wrapper <- function(y) XY2LatLon(mapInfo, y, -n_pix/2)[2]
+  lon_wrapper <- function(y) RgoogleMaps::XY2LatLon(mapInfo, y, -n_pix/2)[2]
   lons <- apply(data.frame(s), 1, lon_wrapper)
   
   # Merge colors to latlons and return
   df_xy   <- expand.grid(x = s, y = s)
   df_ll   <- expand.grid(lat = rev(lats), lon = lons)
   df_xyll <- data.frame(df_xy, df_ll)
-  df <- suppressMessages(join(df_xyll, m_map, type = 'right'))
+  df <- suppressMessages(plyr::join(df_xyll, m_map, type = 'right'))
   df <- df[,c('lon','lat','fill')]
   return(df)
 }
@@ -101,6 +124,12 @@ GetStaticmapGoogleMaps <- function(center, zoom = 10, GRAYSCALE=FALSE, scale=1, 
 #' @export
 GetGeocodeGoogleMaps <- function(str) {
 
+  #  library(XML) 
+  if (!try(require(XML))) { 
+    message("Function GetGeocodeGoogleMaps requires package 'XML'  Package not found, installing...")
+    install.packages(XML) # Install the packages
+    require(XML) # Remember to load the library after installation
+  }
   u <- paste('http://maps.google.com/maps/api/geocode/xml?sensor=false&address=',str)
   doc <- XML::xmlTreeParse(u, useInternal=TRUE)
   lat <- sapply(XML::getNodeSet(doc, "/GeocodeResponse/result/geometry/location/lat"), function(el) XML::xmlValue(el))
@@ -122,9 +151,11 @@ GetGeocodeGoogleMaps <- function(str) {
 #' @export
 GetGeocodeOpenStreetMap <- function(query) {
   
+  library(RCurl)
+  library(rjson)
   u <- paste("http://nominatim.openstreetmap.org/search?q=",query,"&format=json", sep="")
-  val <- getURI(u)
-  res <- fromJSON(val)
+  val <- RCurl::getURI(u)
+  res <- rjson::fromJSON(val)
   if (length(res)>0)
     return(as.numeric(c(res[[1]]$lat, res[[1]]$lon)))
   else # Geocode not found
@@ -142,7 +173,12 @@ GetGeocodeOpenStreetMap <- function(query) {
 #' @export
 GetThemeMap <- function() {
   
-  library(ggplot2)
+#  library(ggplot2)
+  if (!try(require(ggplot2))) { 
+    message("Function GetThemeMap requires package 'ggplot2'  Package not found, installing...")
+    install.packages(ggplot2) # Install the packages
+    require(ggplot2) # Remember to load the library after installation
+  }
   theme_map <- theme_bw()
   theme_map$panel.background <- theme_blank()
   theme_map$panel.grid.major <- theme_blank()

@@ -22,7 +22,7 @@
 GetOikotie <- function() {
      
   message("Loading Oikotie data...")
-  library(gdata)
+#  library(gdata)
     # First download and unzip data from http://www2.hs.fi/extrat/hsnext/oikotie-data.zip
   myynnit <- read.csv("data/myynnit.csv", sep=";", quote="", fileEncoding="ISO-8859-1")
   
