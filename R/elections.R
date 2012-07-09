@@ -27,6 +27,13 @@
 #' @keywords utilities
 GetParliamentaryElectionData <- function (level) {
 
+  if (!try(require(reshape))) { 
+    message("Function GetParliamentaryElectionData requires package 'reshape' Package not found, installing...")
+    install.packages(reshape) # Install the packages
+    require(reshape) # Remember to load the library after installation
+  }
+
+
   if (level == "municipality") {
 
     #http://pxweb2.stat.fi/database/StatFin/vaa/evaa/evaa_fi.asp
@@ -142,3 +149,4 @@ GetParliamentaryElectionData <- function (level) {
 
 }
 
+##########################################################################

@@ -1,7 +1,7 @@
 Package: sorvi
 Type: Package
 Title: sorvi - avoimen datan tyokalupakki
-Version: 0.1.73
+Version: 0.1.74
 Date: 2012-07-09
 Author: Leo Lahti, Juuso Parkkinen and Joona Lehtomaki
 Maintainer: Louhos team <sorvi-admin@lists.r-forge.r-project.org>
@@ -11,9 +11,7 @@ Depends:
     R (>= 2.15.0),
     maps,
     maptools,
-    methods,
     pxR,
-    RColorBrewer,
     RCurl,
     rjson,
     sp,
