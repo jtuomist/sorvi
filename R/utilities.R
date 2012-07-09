@@ -105,13 +105,20 @@ is.url <- function (s) {
 
 ReadShape <- function (files, proj4string = NA) {
 
+  if (!try(require(maptools))) { 
+    message("Function ReadShape requires package 'maptools' Package not found, installing...")
+    install.packages(maptools) # Install the packages
+    require(maptools) # Remember to load the library after installation
+  }
+
+
   ids <- unlist(sapply(files, function (x) {strsplit(x, "\\.")[[1]][[1]]}))
    
   shapedata <- list()
 
   for (id in ids) {
     print(id)
-    shapedata[[id]] <- try(readShapePoly(id, 
+    shapedata[[id]] <- try(maptools::readShapePoly(id, 
                                          proj4string=CRS(as.character(proj4string))))
   }
 
