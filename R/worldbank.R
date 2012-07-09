@@ -11,10 +11,14 @@
 #' @export
 GetWorldbankMigration <- function(countries) {
   
-  library(gdata)
-  
+  #  library(gdata) 
+  if (!try(require(gdata))) { 
+    message("Function GetWorldbankMigration requires package 'gdata'  Package not found, installing...")
+    install.packages(gdata) # Install the packages
+    require(gdata) # Remember to load the library after installation
+  }  
   # Load migration matrix from World Bank
-  migration.matrix <- read.xls("http://siteresources.worldbank.org/INTPROSPECTS/Resources/334934-1110315015165/T1.Estimates_of_Migrant_Stocks_2010.xls")
+  migration.matrix <- gdata::read.xls("http://siteresources.worldbank.org/INTPROSPECTS/Resources/334934-1110315015165/T1.Estimates_of_Migrant_Stocks_2010.xls")
   data.inds <- 2:214
   
   # Get migration flow in to and out from the given countries

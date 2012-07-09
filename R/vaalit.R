@@ -33,7 +33,12 @@ GetVaalipiiri <- function (url = "http://www.stat.fi/meta/luokitukset/vaalipiiri
   message(paste("Reading Vaalipiiri information from ", url))
 
   # Read info of municipalities and election areas from Tilastoteskus
-  require(XML)
+  #  library(XML) 
+  if (!try(require(XML))) { 
+    message("Function GetLukiot requires package 'XML'  Package not found, installing...")
+    install.packages(XML) # Install the packages
+    require(XML) # Remember to load the library after installation
+  }
   temp <- XML::readHTMLTable(url)
 
   # Extract info that we want
@@ -117,7 +122,7 @@ GetElectionResultsPresidentti2012 <- function (election.round, level = NULL) {
   # Get list of election region codes from Tilastokeskus
   message("Loading election region data from Tilastokeskus")
   url <- "http://www.stat.fi/meta/luokitukset/vaalipiiri/001-2012/luokitusavain_kunta.html"
-  vaalipiirit <- GetVaalipiiri(url)
+  vaalipiirit <- sorvi::GetVaalipiiri(url)
 
   # Rename regions to match voting data
   levels(vaalipiirit$Alue)[levels(vaalipiirit$Alue)=="Maarianhamina - Mariehamn"] <- "Maarianhamina"
@@ -172,15 +177,13 @@ GetElectionResultsPresidentti2012 <- function (election.round, level = NULL) {
 #' @author Juuso Parkkinen \email{sorvi-commits@@lists.r-forge.r-project.org}
 #' @export
 
-GetPresidentti2012 <- function(category=c("questions", "candidates", "useranswers"), 
-                               API, ID=NULL, filter=NULL, page=1, per_page=500, 
-			       show_total="true") {
+GetPresidentti2012 <- function(category=c("questions", "candidates", "useranswers"), API, ID=NULL, filter=NULL, page=1, per_page=500, show_total="true") {
 
 #category=c("questions", "candidates", "useranswers"); ID=NULL; filter=NULL; page=1; per_page=500; show_total="true"
 
   library(RCurl)
   library(rjson)
-  curl <- getCurlHandle(cookiefile="")
+  curl <- RCurl::getCurlHandle(cookiefile="")
   vaalikone.url <- paste("http://api.vaalikone.fi/presidentti2012/v1/", category, sep="")
   
   # Define parameters based on category
@@ -195,8 +198,8 @@ GetPresidentti2012 <- function(category=c("questions", "candidates", "useranswer
   } else {
     stop("Invalid 'category' given!")
   }
-  val <- getForm(uri = vaalikone.url, .params = params, curl = curl, .encoding = "utf-8")
-  res <- fromJSON(val)
+  val <- RCurl::getForm(uri = vaalikone.url, .params = params, curl = curl, .encoding = "utf-8")
+  res <- rjson::fromJSON(val)
   
   # Report error if given
   if (length(res$error) > 0) {
@@ -249,7 +252,7 @@ Presidentti2012CandidateAnswers2Numeric <- function (candidates, questions, type
   }
 
   # Convert choiceIDs to numeric
-  mat2 <- Presidentti2012ConvertOptionsToNumeric(mat, questions, type = type)
+  mat2 <- sorvi::Presidentti2012ConvertOptionsToNumeric(mat, questions, type = type)
  
   mat2
 }
@@ -278,7 +281,7 @@ Presidentti2012ConvertOptionsToNumeric <- function (df, questions, type = "rate"
   if (is.matrix(df)) { df <- as.data.frame(df) }
 
   # Rate the choices
-  choice.ratings <- Presidentti2012RateChoices(questions, type = type)
+  choice.ratings <- sorvi::Presidentti2012RateChoices(questions, type = type)
 
   # Replace selection IDs by corresponding selection rates
   for (qid in names(choice.ratings)) {
@@ -416,7 +419,7 @@ Presidentti2012GetUserData <- function (dates, API, per.page = 10000) {
     message("\n",filter, ", page 1...", appendLF=FALSE)
 
     # Get results (can download only 10000 at a time)
-    dat <- GetPresidentti2012(category = "useranswers", API = API, filter = filter, 
+    dat <- sorvi::GetPresidentti2012(category = "useranswers", API = API, filter = filter, 
        				   page = 1, per_page = per.page, show_total = "true")
 
     # Check if more than per.page answers given
@@ -425,7 +428,7 @@ Presidentti2012GetUserData <- function (dates, API, per.page = 10000) {
       # Get remaining results, per.page at a time
       for (t in 2:ten.ks) {
         message("page ", t, "... ", appendLF = FALSE)
-        temp.dat <- GetPresidentti2012(category = "useranswers", API = API, filter = filter, 
+        temp.dat <- sorvi::GetPresidentti2012(category = "useranswers", API = API, filter = filter, 
 	    			page = t, per_page = per.page, show_total = "true")
         dat$data <- c(dat$data, temp.dat$dat)
     }
@@ -451,8 +454,8 @@ Presidentti2012GetUserData <- function (dates, API, per.page = 10000) {
 
 PreprocessPresidentti2012UserData <- function (dat.list, API = API) {
 
-  questions <- GetPresidentti2012(category="questions", API = API)
-  Questions <- PreprocessPresidentti2012(questions)$Questions
+  questions <- sorvi::GetPresidentti2012(category="questions", API = API)
+  Questions <- sorvi::PreprocessPresidentti2012(questions)$Questions
 
   # Construct a data frame
   Presidentti2012.df <- c()
@@ -484,7 +487,7 @@ PreprocessPresidentti2012UserData <- function (dat.list, API = API) {
   Presidentti2012.df$Paivamaara <- as.Date(Presidentti2012.df$Paivamaara)
 
   # Get candidate data
-  candidates <- GetPresidentti2012(category = "candidates", API = API)
+  candidates <- sorvi::GetPresidentti2012(category = "candidates", API = API)
 
   # Match candidate IDs and names
   candidate <- sapply(candidates$data, function(x) x$lastname)  # candidate name

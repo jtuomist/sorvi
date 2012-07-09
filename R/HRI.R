@@ -19,32 +19,49 @@
 #' @export
 GetHRIaluejakokartat <- function() {
   
+  stop("Function GetHRIaluejakokartat is currently broken, we are working on it...")
   message("Loading aluejakokartat from HRI...")
   # Need to install package rgdal
   # Mac users, see http://www.r-bloggers.com/installing-rgdal-on-mac-os-x-2/
-  library(rgdal)
-  library(gpclib)
-  library(gdata)
-  library(ggplot2)
+#   library(rgdal)
+#   library(ggplot2)
+#   library(gpclib)
+#   library(gdata)
+  if (!try(require(rgdal))) { 
+    message("Function GetHRIaluejakokartat requires package 'rgdal'  Package not found, installing...")
+    install.packages(rgdal) # Install the packages
+    require(rgdal) # Remember to load the library after installation
+  }
+  if (!try(require(gpclib))) { 
+    message("Function GetHRIaluejakokartat requires package 'gpclib'  Package not found, installing...")
+    install.packages(gpclib) # Install the packages
+    require(gpclib) # Remember to load the library after installation
+  }
+  if (!try(require(ggplot2))) { 
+    message("Function GetHRIaluejakokartat requires package 'ggplot2'  Package not found, installing...")
+    install.packages(ggplot2) # Install the packages
+    require(ggplot2) # Remember to load the library after installation
+  }
   gpclibPermit()
   
   # Download KML files from http://www.hri.fi/fi/data/paakaupunkiseudun-aluejakokartat/
   # Substitute manually "xsd:sting" in <SimpleField type="xsd:string" name="KOKOTUN"> and other similar fields with "string" to read whole metadata
-  pks.pienalue <- rgdal::readOGR(dsn="data/PKS_Kartta_Rajat_KML2011/PKS_pienalue2.kml", layer="pks_pienalue")
+  pks.pienalue <- rgdal::readOGR(dsn="data/PKS_Kartta_Rajat_KML2011/PKS_pienalue.kml2", layer="pks_pienalue")
   
   pks.pienalue@data$id <- rownames(pks.pienalue@data) # Add IDs
-  pks.points <- fortify.SpatialPolygonsDataFrame(pks.pienalue, region="id") # Get point data
+  pks.points <- ggplot2::fortify(pks.pienalue, region="id") # Get point data
+  
   pks.points$group <- sub(".1", "", pks.points$group) # Regex PIEN to joinable format
   
   pks.df <- merge(pks.points, pks.pienalue@data, by.x="group", by.y = "id") # Put everything together
   pks.df <- pks.df[order(pks.df$order),] # sort DF so that polygons come out in the right order
   
   # Fix encoding
-  pks.df$Nimi <- factor(iconv(pks.df$Nimi, from="ISO-8859-1", to="UTF-8"))
-  pks.df$NIMI_ISO <- factor(iconv(pks.df$NIMI_ISO, from="ISO-8859-1", to="UTF-8"))
+#  pks.df$Nimi <- factor(iconv(pks.df$Nimi, from="ISO-8859-1", to="UTF-8"))
+#  pks.df$NIMI_ISO <- factor(iconv(pks.df$NIMI_ISO, from="ISO-8859-1", to="UTF-8"))
   pks.df$Name <- factor(iconv(pks.df$Name, from="ISO-8859-1", to="UTF-8"))
-  pks.pienalue@data$Nimi <- factor(iconv(pks.pienalue@data$Nimi, from="ISO-8859-1", to="UTF-8"))
-  pks.pienalue@data$NIMI_ISO <- factor(iconv(pks.pienalue@data$NIMI_ISO, from="ISO-8859-1", to="UTF-8"))
+#  pks.pienalue@data$Nimi <- factor(iconv(pks.pienalue@data$Nimi, from="ISO-8859-1", to="UTF-8"))
+#  pks.pienalue@data$NIMI_ISO <- factor(iconv(pks.pienalue@data$NIMI_ISO, from="ISO-8859-1", to="UTF-8"))
   pks.pienalue@data$Name <- factor(iconv(pks.pienalue@data$Name, from="ISO-8859-1", to="UTF-8"))
   
   message("DONE\n")
@@ -77,10 +94,10 @@ GetOmakaupunki <- function(query, login, password, api_key, ...) {
   
   api.url <- "http://api.omakaupunki.fi/v1/"
   query.url <- paste(api.url, query, sep="")
-  curl <- getCurlHandle(cookiefile = "")
+  curl <- RCurl::getCurlHandle(cookiefile = "")
   params <- list(login=login, password=password, api_key=api_key, ...)
-  val <- getForm(query.url, .params=params, curl=curl, binary=FALSE)
-  res <- fromJSON(val)
+  val <- RCurl::getForm(query.url, .params=params, curl=curl, binary=FALSE)
+  res <- rjosn::fromJSON(val)
   return(res)
 }
 
@@ -105,9 +122,9 @@ GetPalvelukartta <- function(category, ...) {
   library(rjson)
   
   api.url <- paste("http://www.hel.fi/palvelukarttaws/rest/v2/", category, "/", sep="")
-  curl <- getCurlHandle(cookiefile = "")
+  curl <- RCurl::getCurlHandle(cookiefile = "")
   params <- list(...)
-  val <- getForm(api.url, .params=params, curl=curl)
-  res <- fromJSON(val)
+  val <- RCurl::getForm(api.url, .params=params, curl=curl)
+  res <- rjson::fromJSON(val)
   return(res)
 }
