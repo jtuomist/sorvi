@@ -11,12 +11,6 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 
-#setClass("NetResponseModel", representation(
-#    moves = "matrix", 
-#    last.grouping = "list", subnets = "list", 
-#    params = "list", 
-#    datamatrix = "matrix", network = "graphNEL", models = "list")
-#)
 setClass("WMSLayer", representation(name = "character",
                                     group = "character",
                                     layer = "character"))
