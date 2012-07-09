@@ -26,7 +26,7 @@
 GetWorldbankMigration <- function(countries) {
   
   #  library(gdata) 
-  if (!try(require(gdata))) { 
+  if (!require(gdata)) { 
     message("Function GetWorldbankMigration requires package 'gdata'  Package not found, installing...")
     install.packages(gdata) # Install the packages
     require(gdata) # Remember to load the library after installation
