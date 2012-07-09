@@ -20,9 +20,8 @@
 #' @author Leo Lahti, Juuso Parkkinen and Joona Lehtomaki \email{sorvi-commits@@lists.r-forge.r-project.org}
 #' @references
 #' See citation("sorvi")
-#' \url{http://sorvi.r-forge.r-project.org}
+#' \url{http://louhos.github.com/sorvi}
 #' @examples library(sorvi)
 #' @keywords package
 NULL
-
 
