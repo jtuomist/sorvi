@@ -25,7 +25,11 @@
 
 GetProvinceInfo <- function (url = "http://fi.wikipedia.org/wiki/V%C3%A4est%C3%B6tiheys") {
 
-  require(XML)
+  if (!try(require(XML))) { 
+    message("Function GetVaalipiiri requires package 'XML'  Package not found, installing...")
+    install.packages(XML) # Install the packages
+    require(XML) # Remember to load the library after installation
+  }
 
   # Read tables from the website
   tables <- XML::readHTMLTable(url)
@@ -72,6 +76,7 @@ ConvertMunicipalityNames <- function (municipality.names) {
   # municipality.names <- gsub("", "", municipality.names)
 
   municipality.names
+
 }
 
 #' Get information of Finnish municipalities from Statistics Finland 2012 
@@ -92,8 +97,8 @@ ConvertMunicipalityNames <- function (municipality.names) {
 
 GetMunicipalityInfo <- function (url = "http://pxweb2.stat.fi/Database/Kuntien%20perustiedot/Kuntien%20perustiedot/Kuntaportaali.px", MML) {
 
-  mml <- GetMunicipalityInfoMML(MML)    # (C) MML 2012
-  statfi <- GetMunicipalityInfoStatFi() # (C) Tilastokeskus 2012
+  mml <- sorvi::GetMunicipalityInfoMML(MML)    # (C) MML 2012
+  statfi <- sorvi::GetMunicipalityInfoStatFi() # (C) Tilastokeskus 2012
 
   # Combine municipality information from Tilastokeskus and Maanmittauslaitos
   municipalities <- rownames(statfi)
@@ -120,12 +125,16 @@ GetMunicipalityInfo <- function (url = "http://pxweb2.stat.fi/Database/Kuntien%2
 
 GetMunicipalityInfoStatFi <- function (url = "http://pxweb2.stat.fi/Database/Kuntien%20perustiedot/Kuntien%20perustiedot/Kuntaportaali.px") {
 
-  require(reshape)
+  if (!try(require(reshape))) { 
+    message("Function GetMunicipalityInfoStatFi requires package 'reshape'  Package not found, installing...")
+    install.packages(reshape) # Install the packages
+    require(reshape) # Remember to load the library after installation
+  }
 
   # FIXME: merge GetPopulationRegister function in here
 
   # Get municipality information from Tilastokeskus
-  municipality.info <- GetPXTilastokeskus(url)
+  municipality.info <- sorvi::GetPXTilastokeskus(url)
 
   # Clean up municipality names
   # FIXME: scandinavic characters cause error in Windows systems, find solution
@@ -139,7 +148,7 @@ GetMunicipalityInfoStatFi <- function (url = "http://pxweb2.stat.fi/Database/Kun
 
   kuntanimi.statfin <- as.character(municipality.info$Alue)
 
-  municipality.info[, "Alue"] <- ConvertMunicipalityNames(municipality.info[, "Alue"])
+  municipality.info[, "Alue"] <- sorvi::ConvertMunicipalityNames(municipality.info[, "Alue"])
   
   municipality.info$Alue <- factor(municipality.info$Alue)
 
@@ -221,7 +230,7 @@ GetMunicipalityInfoMML <- function (MML) {
 FindProvince <- function (municipalities = NULL, municipality.info = NULL) {
 
   if (is.null(municipality.info)) { 
-    municipality.info <- GetMunicipalityInfo()
+    municipality.info <- sorvi::GetMunicipalityInfo()
   }
 
   m2p <- as.character(municipality.info$Maakunta)
