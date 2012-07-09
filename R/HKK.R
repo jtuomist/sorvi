@@ -251,7 +251,7 @@ SplitSpatial <- function(sp.object, split.field) {
   # Convert identifier field into a factor if it isn't one already
   sp.object[[split.field]] <- factor(sp.object[[split.field]])
   # Make sure that there are no dangling levels in the splitter field
-  sp.object[[split.field]] <- drop.levels(sp.object[[split.field]], 
+  sp.object[[split.field]] <- droplevels(sp.object[[split.field]], 
                                           reorder=FALSE)
   # Get all the levels for the subregions
   sub.region.levels <- levels(sp.object[[split.field]])
@@ -264,7 +264,7 @@ SplitSpatial <- function(sp.object, split.field) {
 
   # Drop the unused levels in all the fields
   for (i in 1:length(sub.regions)) {
-    sub.regions[[i]]@data <- drop.levels(sub.regions[[i]]@data)
+    sub.regions[[i]]@data <- droplevels(sub.regions[[i]]@data)
   }
   return(sub.regions)
 }
