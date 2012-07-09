@@ -12,8 +12,6 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 
-
-  
 #' Get information of Finnish provinces.
 #' @aliases get.province.info
 #' @param url URL of the Wikipedia source 
