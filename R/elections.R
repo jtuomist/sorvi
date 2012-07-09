@@ -531,10 +531,10 @@ PreprocessPresidentti2012UserData <- function (dat.list, API = API) {
 #' @keywords utilities
 GetParliamentaryElectionData <- function (level) {
 
-  if (!try(require(reshape))) { 
-    message("Function GetParliamentaryElectionData requires package 'reshape' Package not found, installing...")
-    install.packages(reshape) # Install the packages
-    require(reshape) # Remember to load the library after installation
+  if (!try(require(reshape2))) { 
+    message("Function GetParliamentaryElectionData requires package 'reshape2' Package not found, installing...")
+    install.packages(reshape2) # Install the packages
+    require(reshape2) # Remember to load the library after installation
   }
 
   if (!try(require(plyr))) { 
@@ -553,7 +553,7 @@ GetParliamentaryElectionData <- function (level) {
     px <- pxR::read.px(url)
     df <- try(as.data.frame(px))
     kaava <- as.formula("Vaalipiiri.ja.kunta~Äänestystiedot~Lukumäärätiedot")
-    tmp <- reshape::cast(df, kaava, value="dat")
+    tmp <- reshape2::cast(df, kaava, value="dat")
 
     # Separate tables and preprocess
     tab1 <- tmp[,,"Lukumäärä 2007"]
@@ -610,7 +610,7 @@ GetParliamentaryElectionData <- function (level) {
     px <- pxR::read.px(url) 
     df <- try(as.data.frame(px))
     kaava <- as.formula("Vaalipiiri~Äänestystiedot~Lukumäärätiedot")
-    tmp <- reshape::cast(df, kaava, value="dat")
+    tmp <- reshape2::cast(df, kaava, value="dat")
 
     # Separate the tables
     tab1 <- tmp[,,1]
@@ -633,7 +633,7 @@ GetParliamentaryElectionData <- function (level) {
     px <- pxR::read.px("http://pxweb2.stat.fi/database/StatFin/vaa/evaa/120_evaa_tau_105_fi.px") 
     df <- try(as.data.frame(px))
     kaava <- as.formula("Vaalipiiri~Hylkäysperuste")
-    tab2 <- reshape::cast(df, kaava, value="dat")
+    tab2 <- reshape2::cast(df, kaava, value="dat")
 
     # Keep only election.region level data
     rownames(tab2) <- as.character(tab2[,1])

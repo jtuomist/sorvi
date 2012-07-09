@@ -125,10 +125,10 @@ GetMunicipalityInfo <- function (url = "http://pxweb2.stat.fi/Database/Kuntien%2
 
 GetMunicipalityInfoStatFi <- function (url = "http://pxweb2.stat.fi/Database/Kuntien%20perustiedot/Kuntien%20perustiedot/Kuntaportaali.px") {
 
-  if (!try(require(reshape))) { 
-    message("Function GetMunicipalityInfoStatFi requires package 'reshape'  Package not found, installing...")
-    install.packages(reshape) # Install the packages
-    require(reshape) # Remember to load the library after installation
+  if (!try(require(reshape2))) { 
+    message("Function GetMunicipalityInfoStatFi requires package 'reshape2'  Package not found, installing...")
+    install.packages(reshape2) # Install the packages
+    require(reshape2) # Remember to load the library after installation
   }
 
   # FIXME: merge GetPopulationRegister function in here
@@ -144,7 +144,7 @@ GetMunicipalityInfoStatFi <- function (url = "http://pxweb2.stat.fi/Database/Kun
   municipality.info$value <- municipality.info$dat
   
   # Convert to wide format
-  municipality.info <- reshape::cast(municipality.info[, c("Alue", "Tunnusluku", "value")], Alue ~ Tunnusluku) 
+  municipality.info <- reshape2::cast(municipality.info[, c("Alue", "Tunnusluku", "value")], Alue ~ Tunnusluku) 
 
   kuntanimi.statfin <- as.character(municipality.info$Alue)
 
@@ -179,7 +179,12 @@ GetMunicipalityInfoStatFi <- function (url = "http://pxweb2.stat.fi/Database/Kun
 
 GetMunicipalityInfoMML <- function (MML) {
 
-  require(reshape)
+
+  if (!try(require(reshape2))) { 
+    message("Function GetMunicipalityInfoStatFi requires package 'reshape2'  Package not found, installing...")
+    install.packages(reshape2) # Install the packages
+    require(reshape2) # Remember to load the library after installation
+  }
 
   # Municipality information table from Maanmittauslaitos
   mml.table <- MML[["1_milj_Shape_etrs_shape"]][["kunta1_p"]]
