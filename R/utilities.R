@@ -175,3 +175,32 @@ strstrip.single <- function (s) {
   }
   s
 }
+
+#' Strip string i.e. remove spaces from the beginning and end
+#' @param s string or character vector
+#'
+#' @return Stripped string
+#' @export 
+#' @references
+#' See citation("sorvi") 
+#' @author Leo Lahti \email{sorvi-commits@@lists.r-forge.r-project.org}
+#' @examples 
+#' #s2 <- Strip(s) 
+#' @keywords utilities
+Strip <- function (s) {
+
+  ss <- c()
+  for (i in 1:length(s)) {
+    si <- s[[i]]
+
+    # Strip string i.e. remove spaces from the beginning and end
+    while (substr(si,1,1)==" ") {
+      si <- substr(si, 2, nchar(si))
+    }
+    while (substr(si, nchar(si), nchar(si))==" ") {
+      si <- substr(si, 1, nchar(si) - 1)
+    }
+    ss[[i]] <- si
+  }
+  ss
+}
