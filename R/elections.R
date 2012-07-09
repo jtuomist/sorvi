@@ -12,8 +12,6 @@
 
 
 
-
-
 # Function for reading the Presidentti2012 data
 # For documentation, see
 # http://www2.hs.fi/extrat/hsnext/Vaalikone_API_20111207.pdf
@@ -36,7 +34,7 @@ GetVaalipiiri <- function (url = "http://www.stat.fi/meta/luokitukset/vaalipiiri
   # Read info of municipalities and election areas from Tilastoteskus
   #  library(XML) 
   if (!try(require(XML))) { 
-    message("Function GetLukiot requires package 'XML'  Package not found, installing...")
+    message("Function GetVaalipiiri requires package 'XML'  Package not found, installing...")
     install.packages(XML) # Install the packages
     require(XML) # Remember to load the library after installation
   }
@@ -184,6 +182,7 @@ GetPresidentti2012 <- function(category=c("questions", "candidates", "useranswer
 
   library(RCurl)
   library(rjson)
+
   curl <- RCurl::getCurlHandle(cookiefile="")
   vaalikone.url <- paste("http://api.vaalikone.fi/presidentti2012/v1/", category, sep="")
   
