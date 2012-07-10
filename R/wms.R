@@ -35,6 +35,8 @@
 
 BuildService <- function(WMS, layer, extent, resolution) {
   
+  .InstallMarginal("XML")
+  
   if (class(WMS) != 'WMS') {
     stop(paste('WMS unsupported type: ', class(WMS)))
   }
@@ -118,6 +120,9 @@ BuildService <- function(WMS, layer, extent, resolution) {
 #' @export
 
 PreprocessWMS <- function(url, cache='~') {
+  
+  .InstallMarginal("XML")
+  
   wms <- new("WMS", base.url=url)
 }
 
@@ -136,6 +141,8 @@ PreprocessWMS <- function(url, cache='~') {
 #' @author Joona Lehtomaki \email{joona.lehtomaki@@gmail.org}
 
 GetCapabilities <- function(url) {
+  
+  .InstallMarginal("XML")
   
   errormsg <- "Could not get capabilities for WMS"
   
@@ -178,6 +185,8 @@ GetWMSlayers <- function(WMS) {
 
 LoadWMSurl <- function(provider, service) {
   
+  .InstallMarginal("XML")
+  
   errormsg <- "Could not load WMS definition XML, have you loaded soRvi?"
   
   xml.urls <- tryCatch(XML::xmlRoot(XML::xmlTreeParse(system.file("extdata/wms-urls.xml",
@@ -213,6 +222,8 @@ LoadWMSurl <- function(provider, service) {
 
 GetWMSraster <- function(WMS, layer, extent, resolution) {
   
+  .InstallMarginal("rgdal")
+  
   # Use GDAL to read in the value, rgdal::readGDAL returns a SpatialObject
   wms.description <- BuildService(WMS, layer, extent, resolution)
   wms.raster <- rgdal::readGDAL(wms.description)
@@ -231,6 +242,8 @@ GetWMSraster <- function(WMS, layer, extent, resolution) {
 #' @export
 
 ListWMSurls <- function() {
+  
+  .InstallMarginal("XML")
   
   errormsg <- "Could not load WMS definition XML, have you loaded soRvi?"
   
