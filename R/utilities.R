@@ -16,9 +16,6 @@
 # but WITHOUT ANY WARRANTY; without even the implied warranty of 
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-
-
-
 #' Sort data frame
 #'
 #' @param df data.frame to be sorted by the specified columns
@@ -286,5 +283,28 @@ UnitScale <- function(X, rm.na = TRUE, sd.value = NULL) {
   X2
 }
 
+#' Install marginal dependencies on-demand from other functions.
+#' 
+#' Function is always supposed to be called from a parent function and if the
+#' marginal depedency package is not installed, the function will report the 
+#' name of the parent function requiring the package. Note that the whole call
+#' stack is not reported, only the immediate parent.
+#'
+#' @param package String name for the name to be installed
+#' @param ... further arguments passed on to install.packages
+#'
+#' @return Invisible NULL
+#' 
+#' @note meant for package internal use only
+#' @author Joona Lehtomaki \email{sorvi-commits@@lists.r-forge.r-project.org}
+#' @keywords utilities
 
-
+.InstallMarginal <- function(package, ...) {
+  if (suppressWarnings(!require(package, character.only=TRUE, quietly=TRUE))) { 
+    parent.function <- sys.calls()[[1]][1]
+    message(paste("Function ", parent.function, " requires package: ", package,
+                  ". Package not found, installing...", sep=""))
+    install.packages(package, ...) # Install the packages
+    require(package, character.only=TRUE) # Remember to load the library after installation
+  }
+}

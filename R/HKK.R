@@ -10,10 +10,6 @@
 # but WITHOUT ANY WARRANTY; without even the implied warranty of 
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-
-
-
-
 .check.schema <- function(sp.object1, sp.object2) {
   
   # Check that both objects derive from Spatial

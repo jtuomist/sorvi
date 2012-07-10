@@ -26,6 +26,8 @@ setMethod("initialize", "WMS", function(.Object, base.url) {
   # TODO: which subset of GetCapabilities response should be mapped to the 
   #       object?
   
+  # 
+  
   wms.data <- GetCapabilities(base.url)
   
   .Object@base.url <- base.url

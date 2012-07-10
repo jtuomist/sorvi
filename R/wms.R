@@ -10,8 +10,6 @@
 # but WITHOUT ANY WARRANTY; without even the implied warranty of 
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-
-
 #' Build a WMS service description for the GDAL WMS driver.
 #'
 #' WMS service description file is a XML file that describes required and
