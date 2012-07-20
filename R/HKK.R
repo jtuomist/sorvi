@@ -89,6 +89,9 @@
 #' @examples # sp <- GetHKK("Aanestysaluejako", data.dir="C:/data")
 
 GetHKK <- function(which.data, data.dir) {
+  
+  .InstallMarginal("rgdal")
+  
   # TODO: shold all the urls/paths be defined independently from the functions?
   data.url <- "http://kartta.hel.fi/avoindata/aineistot/"
   
@@ -152,7 +155,7 @@ GetHKK <- function(which.data, data.dir) {
 #' @references
 #' See citation("sorvi") 
 #' @author Joona Lehtomaki \email{sorvi-commits@@lists.r-forge.r-project.org}
-#' @examples # sp <- GetHKK("Aanestysaluejako", data.dir="C:/data")
+#' @note Not tested (at all)
 
 MergeSpatial <- function(sp.list, CRS=NA, FID=NA) {
   
