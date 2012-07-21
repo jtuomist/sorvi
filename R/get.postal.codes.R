@@ -11,9 +11,6 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 
-
-
-
 #' Get Finnish postal codes vs. municipalities table from Wikipedia. 
 #' @aliases get.postal.codes
 #'
@@ -30,6 +27,13 @@
 #' @keywords utilities
 
 GetPostalCodeInfo <- function (url = "http://fi.wikipedia.org/wiki/Luettelo_Suomen_postinumeroista_kunnittain") {
+
+  if (!try(require(plyr))) { 
+    message("Function GetPostalCodeInfo requires package 'plyr'  Package not found, installing...")
+    install.packages(plyr) # Install the packages
+    require(plyr) # Remember to load the library after installation
+  }
+
 
   # Read URL site
   txt <- readLines(url)
@@ -55,10 +59,9 @@ GetPostalCodeInfo <- function (url = "http://fi.wikipedia.org/wiki/Luettelo_Suom
     }
   }
 
-  library(plyr)
-  map <- ldply(map)
+  map <- plyr::ldply(map)
   colnames(map) <- c("postal.code", "municipality")
-  map$municipality.ascii <- korvaa.skandit(map$municipality)
+  map$municipality.ascii <- sorvi::korvaa.skandit(map$municipality)
 
   # Remove the last row
   map <- map[-nrow(map),]

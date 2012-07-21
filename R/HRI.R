@@ -90,15 +90,15 @@ GetHRIaluejakokartat <- function() {
 #' @examples # event.categories <- GetOmakaupunki("event/categories", LOGIN, PASSWORD, API)
 GetOmakaupunki <- function(query, login, password, api_key, ...) {
   
-  library(RCurl)
-  library(rjson)
+  require(RCurl)
+  require(rjson)
   
   api.url <- "http://api.omakaupunki.fi/v1/"
   query.url <- paste(api.url, query, sep="")
   curl <- RCurl::getCurlHandle(cookiefile = "")
   params <- list(login=login, password=password, api_key=api_key, ...)
   val <- RCurl::getForm(query.url, .params=params, curl=curl, binary=FALSE)
-  res <- rjosn::fromJSON(val)
+  res <- rjson::fromJSON(val)
   return(res)
 }
 
@@ -119,9 +119,9 @@ GetOmakaupunki <- function(query, login, password, api_key, ...) {
 #' @examples # pk.services <- GetPalvelukartta("service")
 GetPalvelukartta <- function(category, ...) {
   
-  library(RCurl)
-  library(rjson)
-  
+  require(RCurl)
+  require(rjson)
+
   api.url <- paste("http://www.hel.fi/palvelukarttaws/rest/v2/", category, "/", sep="")
   curl <- RCurl::getCurlHandle(cookiefile = "")
   params <- list(...)

@@ -51,7 +51,7 @@ GetGADM <- function (map = "FIN_adm",
   # url <- "http://gadm.org/data/rda/FIN_adm"
 
   # Convert string input to corresponding integer
-  resolution <- ConvertGADMResolution(resolution, "integer") 
+  resolution <- sorvi::ConvertGADMResolution(resolution, "integer") 
 
   # Load map of Finland with the given resolution
   con <- url(paste(url, map, resolution, ".RData", sep=""))
@@ -171,6 +171,7 @@ ConvertGADMPosition2Region <- function (coordinates,
   # Modified from http://www.r-ohjelmointi.org/?p=894
  
   # Form data.frame with the coordinates
+
   require(sp)
   
   x <- coordinates[, "x"]
@@ -180,11 +181,11 @@ ConvertGADMPosition2Region <- function (coordinates,
   coordinates(dat) = ~x + y
 
   # Load Finland map, divided into provinces (laanit)
-  gadm <- GetGADM(map, resolution)
+  gadm <- sorvi::GetGADM(map, resolution)
   info <- overlay(gadm, dat)
 
-  resolution.int <- ConvertGADMResolution(resolution, "integer")
-  resolution.str <- ConvertGADMResolution(resolution, "string")
+  resolution.int <- sorvi::ConvertGADMResolution(resolution, "integer")
+  resolution.str <- sorvi::ConvertGADMResolution(resolution, "string")
   name.field <- paste("NAME_", resolution.int, sep = "")
 
   # Merge the location information for the coordinate into a single data.frame

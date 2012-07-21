@@ -12,7 +12,6 @@
 
 
 
-
 #' Visualize the specified fields of a shape object on using 1- or 2-way color scale. 
 #' 
 #' This function is used for fast investigation of shape objects; standard visualization choices are made
@@ -43,6 +42,13 @@
 PlotShape <- function (sp, varname, type = "oneway", ncol = 10, at = NULL, palette = NULL, main = NULL, colorkey = TRUE, lwd = .4, border.col = "black", col.regions = NULL) {
 
   # type = "oneway"; ncol = 10; at = NULL; palette = NULL; main = NULL; colorkey = TRUE; lwd = .4; border.col = "black"; col.regions = NULL
+
+  # FIXME: check if we could here use standard palettes, and avoid dependency
+  if (!require(RColorBrewer)) { 
+    message("Function GetWorldbankMigration requires package 'RColorBrewer'  Package not found, installing...")
+    install.packages(RColorBrewer) # Install the packages
+    require(RColorBrewer) # Remember to load the library after installation
+  }  
 
   pic <- NULL
 
@@ -132,14 +138,15 @@ PlotShape <- function (sp, varname, type = "oneway", ncol = 10, at = NULL, palet
     if (is.null(col.regions) && length(sp[[varname]]) == length(levels(sp[[varname]]))) {
       # Aims to find colors such that neighboring polygons have 
       # distinct colors
-      cols <- GenerateMapColours(sp) # Generate color indices
-      col.regions <- brewer.pal(max(cols), "Paired")[cols]
+      cols <- sorvi::GenerateMapColours(sp) # Generate color indices
+      col.regions <- RColorBrewer::brewer.pal(max(cols), "Paired")[cols]
 
     } else if ( is.null(col.regions) ) {
       
       # Use ncol colors, loop them to fill all regions    
       nlevels <- length(levels(vars))
-      col.regions <- rep(brewer.pal(ncol, "Paired"), ceiling(nlevels/ncol))[1:nlevels]
+      col.regions <- rep(RColorBrewer::brewer.pal(ncol, "Paired"), ceiling(nlevels/ncol))[1:nlevels]
+
     }
 
     colorkey <- FALSE
@@ -312,7 +319,7 @@ PlotScale <- function (breaks, colors = NULL, m = NULL, label.step = 2, interval
   if (two.sided) {
     
     if (length(m)>0) {
-      breaks <- set.breaks(m, interval)
+      breaks <- sorvi::set.breaks(m, interval)
       image(t(as.matrix(seq(-mm, mm, length = 100))), col = colors, xaxt = 'n', yaxt = 'n', zlim = range(breaks), breaks=breaks)
     } else {
       image(t(as.matrix(breaks)), col = colors, xaxt = 'n',yaxt = 'n', zlim = range(breaks), breaks = breaks)
@@ -337,13 +344,13 @@ PlotScale <- function (breaks, colors = NULL, m = NULL, label.step = 2, interval
     mm <- max(breaks) + 1e6 # infty
     m <- max(breaks)
  
-    labs = seq(0,m,label.step)
+    labs <- seq(0,m,label.step)
     #inds = sapply(labs,function(lab){min(which(lab<=breaks))})
     start.position <- which.min(abs(round(labs, ndigits) - (-label.start)))
     end.position <- which.min(abs(round(labs, ndigits) - (label.start)))
     inds <- seq(start.position,end.position,length=Nlab)  
 
-    image(t(as.matrix(seq(0, m, length = 100))), col = colors, xaxt='n',yaxt='n', zlim=range(breaks), breaks=breaks)
+    image(t(as.matrix(seq(0, m, length = 100))), col = colors, xaxt='n', yaxt='n', zlim=range(breaks), breaks=breaks)
     
     axis(2, at = seq(0, 1, length=Nlab), labels=labs[inds], las=2, ...)
   }

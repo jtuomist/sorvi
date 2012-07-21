@@ -13,7 +13,6 @@
 \usepackage{hyperref}
 \usepackage{Sweave}
 \usepackage{float}
-
 %\setlength{\textwidth}{417pt}
 %\setlength{\oddsidemargin}{44pt}
 %\setlength{\marginparwidth}{55pt}
@@ -34,7 +33,7 @@
 \title{soRvi\\avoimen datan ty{\"o}kalupakki}
 \author{Leo Lahti\footnote{Wageningen University, Nederland <leo.lahti@iki.fi>}\ , Juuso Parkkinen\footnote{Aalto-yliopisto <juuso.parkkinen@gmail.com>}\ \ ja Joona Lehtom{\"a}ki\footnote{Helsingin yliopisto}}
 
-\hyphenation{a-voi-men jul-kis-hal-lin-non tie-to-läh-tei-siin tar-jo-a-mal-la joh-da-tus e-si-merk-ke-jä pa-li-kan}
+\hyphenation{a-voi-men jul-kis-hal-lin-non tie-to tar-jo-a-mal-la joh-da-tus pa-li-kan kas-vus-sa}
 
 \begin{document}
 
@@ -53,141 +52,39 @@ käsiksi. Laaja saatavuus ja käyttö voi siten merkittävästi nostaa
 datan arvoa.
 
 Laskennallisten työkalujen saatavuus on osoittautunut keskeiseksi
-pullonkaulaksi. Tämä projekti pyrkii paikkaamaan puutetta tarjoamalla
-yleiskäyttöisiä välineitä julkisten tietoaineistojen hakuun,
-putsaamiseen, yhdistelyyn, louhintaan ja visualisointiin. Pakettiin on
-koottu kattava kokoelma ratkaisuja avoimen datan käsittelyyn. Myös uudet
-ehdotukset ja lisäykset ovat tervetulleita.
+pullonkaulaksi avoimen datan hyödyntämiselle tutkimuksessa,
+järjestötoiminnassa, tietojournalismissa, opetustyössä, ja muilla
+tietointensiivisillä aloilla.  Datan ja työkalujen helppo saatavuus
+tuo uudenlaisia välineitä yhteiskunnalliseen osallistumiseen ja
+läpinäkyvyyden lisäämiseksi.
 
-Yksityiskohtaisempia esimerkkejä paketin käytöstä Suomi-datan
-penkomiseen löydät
-Louhos-blogista\footnote{http://louhos.wordpress.com}. Ylläpitäjien
-yhteystiedot löytyvät projektin kotisivulta
-kautta\footnote{http://sorvi.r-forge.r-project.org}.
-
-
-\section{Paketin asennus}
-
-Yksityiskohtaiset asennusohjeet löytyvät osoitteesta\\
-http://sorvi.r-forge.r-project.org/asennus.html
-
-%\section{Esimerkkejä}
-%Esimerkkejä paketin käytöstä löytyy blogista http://louhos.wordpress.com
-
-\section{Pakettiin viittaaminen}
-
-Paketin tarjoamat välineet ovat vapaasti käytettävissä
-FreeBSD-lisenssillä\footnote{http://en.wikipedia.org/wiki/BSD\_licenses}. Mikäli
-paketista on apua, toivomme viittaamista työhön \cite{sorvi11}. Lisää tietoa löytyy projektin kotisivulta\footnote{http://sorvi.r-forge.r-project.org/}.
-
-\section{Julkiset tietokannat}
-
-Alla esimerkkejä joidenkin julkisten aineistojen lataamisesta sorviin.
-
-\subsection{Helsingin seudun ympäristöpalvelut}
-
-Helsingin seudun
-ympäristöpalveluiden\footnote{http://www.hsy.fi/seututieto/kaupunki/paikkatiedot/Sivut/Avoindata.aspx}
-avoimia aineistoja ((C) HSY 2011) voi hakea valmiilla
-hakurutiinilla. Seuraava esimerkki lataa väestötason tietoja ja kuvaa
-ne Helsingin kartalla. Lisätietoja aineistoista löytyy HSYn
-verkkosivuilta\footnote{http://www.hsy.fi/seututieto/Documents/Paikkatiedot/Tietokuvaukset\_kaikki.pdf}. 
-
-<<HSY,results=hide,eval=FALSE>>=
-library(sorvi)
-sp <- GetHSY("Vaestoruudukko")
-df <- as.data.frame(sp) # investigate data contents
-at <-  c(seq(0, 2000, 250), Inf) 
-q <- PlotShape(sp, "ASUKKAITA", type = "oneway", at = at, ncol = length(at))
-@
-
-\subsection{Maanmittauslaitos}
-
-Suomen karttatietoja on haettu Maanmittauslaitoksen
-sivuilta\footnote{http://www.maanmittauslaitos.fi/aineistot-palvelut/digitaaliset-tuotteet/ilmaiset-aineistot/hankinta}
-rajapintasyistä valmiiksi sorviin\footnote{Jatkokaytto sallittu - (C) MML 2011 - http://www.maanmittauslaitos.fi/node/6417}. Seuraava komento lataa valmiin listan MML:n shape-muotoisia aineistoja ja poimii kuntarajat 1:1000000 kartalta:
-
-<<MML2011A,results=hide,eval=FALSE>>=
-data(MML)
-sp <- MML[["1_milj_Shape_etrs_shape"]][["kunta1_p"]]
-@
-
-% voi selata system.file-funktion avulla:
-%<<MML2011A,results=hide,eval=FALSE>>=
-%dir(system.file("extdata/Maanmittauslaitos/", package = "sorvi")) 
-%@
-
-Alkuperaisten shape-tiedostojen suora luku ja esikasittely onnistuu
-seuraavasti:
-
-<<MML2011B,results=hide,eval=FALSE>>=
-sp <- readShapePoly("kunta1_p.shp")
-sp <- PreprocessShapeMML(sp)      
-@
-
-\subsection{Tilastokeskus}
-
-Tilastokeskuksen
-sivuilta\footnote{http://www.stat.fi/tup/tilastotietokannat/index.html}
-löytyy avoimia aineistoja PC-Axis muodossa. Tässä esimerkkinä poimittu
-kuntien mediaanitulot (määrittele muuttujaan url-osoite
-"http://pxweb2.stat.fi/Database/StatFin/tul/tvt/2009/120\_tvt\_2009\_2011-02-18\_tau\_112\_fi.px":
-
-<<tilastokeskus,results=hide,eval=FALSE>>=
-library(pxR)
-px <- GetPXTilastokeskus(url)
-@
-
-\subsection{Suomen ympäristökeskus}
-
-Suomen ympäristökeskuksen\footnote{http://www.ymparisto.fi/syke}
-(SYKE) OIVA-palvelu\footnote{www.ymparisto.fi/oiva} sisältää lukuisia
-avoimia aineistoja. Aineistot ovat saatavilla sekä latauspalvelun että
-WMS-rajapinnan kautta. OIVA-palvelu vaati ilmaisen käyttäjätunnuksen,
-WMS-palvelu ei edellytä tunnusta. Esimerkkejä näiden aineistojen
-käytöstä löytyy Louhos-blogista.
-
-\subsection{Muuta}
-
-\subsubsection{Postinumerot}
-
-<<postinumerot,results=hide,eval=FALSE>>=
-suomen.postinumerot <- GetPostalCodeInfo()
-@
+Tämä R-kielinen työkalupakki paikkaa nämä puutteet tarjoamalla
+kattavan kokoelman välineitä avoimen yhteiskunnallisen datan hakuun,
+putsaamiseen, yhdistelyyn, analyysiin ja
+visualisointiin. Ohjelmakirjaston kehitys tapahtuu
+vapaaehtoistyönä. Uudet ehdotukset ja lisäykset yleisöltä ovat
+tervetulleita\footnote{http://louhos.github.com/sorvi}.
 
 
-% Korvaa ja poista tama, jos tiedot loytyy jo
-% Maanmittauksen datoista
-%\subsubsection{Kunta-maakunta-lääni-taulukko}
-%<<alueet, results = hide, eval = FALSE>>=
-%alueet <- aluetaulukko.suomi()
-%@
+\section{Asentaminen ja esimerkit}
 
-\subsubsection{Kuntatason informaatio}
+Asennus- ja kehitysohjeet löytyvät projektin kotisivulta
+http://louhos.github.com/sorvi. Yksityiskohtaisia esimerkkejä paketin
+käytöstä Suomi-datan penkomiseen löydät lähdekoodeineen
+Louhos-blogista http://louhos.wordpress.com.
 
-Poimi kuntatason tietoja verkosta ja muodosta taulukko: 
 
-<<kuntataulukko,results=hide,eval=FALSE>>=
-municipality.info <- GetMunicipalityInfo()
-@
+\section{Työhön viittaaminen}
 
-Etsi annetuille kunnille vastaava maakunta:
+Välineet ovat vapaasti käytettävissä, muokattavissa, ja edelleen levitettävissä.
+FreeBSD-lisenssillä\footnote{http://en.wikipedia.org/wiki/BSD\_licenses}. 
+Toivomme työhön viittaamista julkaisujen yhteydessä \cite{sorvi11}. 
+Lisää tietoa hankkeesta löydät projektin kotisivulta\footnote{http://louhos.github.com/sorvi}.
 
-<<kunta2maakunta,results=hide,eval=FALSE>>=
-kunnat <- as.character(municipality.info$Kunta)
-kunta.maakunta <- FindProvince(kunnat, municipality.info)
-@
-
-\subsubsection{Maakuntatason informaatio}
-
-Poimi maakuntatason väestötiheystiedot Wikipediasta:
-
-<<vaestotiheys,results=hide,eval=FALSE>>=
-url <- "http://fi.wikipedia.org/wiki/V%C3%A4est%C3%B6tiheys"
-vaestotiheys <- GetProvinceInfo(url)
-@
 
 \section{Versiotiedot}
+
+Tämä manuaali on luotu seuraavin asetuksin:
 
 <<details>>=
 sessionInfo()
@@ -198,16 +95,16 @@ sessionInfo()
 
 \begin{thebibliography}{1}
 
-\bibitem{sorvi11}
-Leo Lahti, Juuso Parkkinen ja Joona Lehtomäki (2011).
-\newblock soRvi - avoimen datan työkalupaketti
-\newblock URL: http://louhos.wordpress.com
-
 \bibitem{Poikola10}
 Antti Poikola, Petri Kola ja Kari A. Hintikka (2010).
 \newblock Julkinen data – joh\-da\-tus tietovarantojen avaamiseen
 \newblock Liikenne- ja Viestintäministeriö. Edita Prima Oy, Helsinki 2010.
 \newblock URL: http://www.julkinendata.fi
+
+\bibitem{sorvi11}
+Leo Lahti, Juuso Parkkinen ja Joona Lehtomäki (2011).
+\newblock soRvi - suomalainen avoimen datan työkalupakki
+\newblock URL: http://louhos.wordpress.com
 
 %\bibliographystyle{abbrv}
 %\bibliography{my.bib}

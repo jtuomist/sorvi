@@ -10,10 +10,6 @@
 # but WITHOUT ANY WARRANTY; without even the implied warranty of 
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-
-
-
-
   
 #' GetMunicipalElectionData2000
 #'
@@ -29,15 +25,27 @@
 #' @examples # 
 #' @keywords utilities
 GetMunicipalElectionData2000 <- function (which = "election.statistics") {
+
+    if (!require(plyr)) { 
+      message("Function GetMunicipalElectionData2000 requires package 'plyr'  Package not found, installing...")
+      install.packages(plyr) # Install the packages
+      require(plyr) # Remember to load the library after installation
+    }
+
+    if (!require(reshape2)) { 
+      message("Function GetMunicipalElectionData2000 requires package 'reshape2'  Package not found, installing...")
+      install.packages(reshape2) # Install the packages
+      require(reshape2) # Remember to load the library after installation
+    }
   
   if (which == "election.statistics") {
 
     #Kunnallisvaalit 2000, äänestystiedot
     url <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa_2000/010_kvaa_2000_2008-10-17_tau_101_fi.px"
-    px <- read.px(url)
+    px <- pxR::read.px(url)
     df <- as.data.frame(px)
     kaava <- as.formula("Alue ~ Äänestystiedot")
-    tab <- reshape::cast(df, kaava, value="dat")
+    tab <- reshape2::cast(df, kaava, value="dat")
     rownames(tab) <- as.character(tab$Alue)
 
     # Keep only municipality-level information, filter out others
@@ -50,7 +58,8 @@ GetMunicipalElectionData2000 <- function (which = "election.statistics") {
     # NOTE: election region information also available
 
     # Parse municipality codes and names
-    v <- ldply(strsplit(ConvertMunicipalityNames(rownames(tab)), " "), function (x) {x})
+
+    v <- ldply(strsplit(sorvi::ConvertMunicipalityNames(rownames(tab)), " "), function (x) {x})
     tab$Kuntakoodi <- v[,1]
     tab$Kunta <- v[,2]
     rownames(tab) <- as.character(tab$Kunta)
@@ -60,9 +69,9 @@ GetMunicipalElectionData2000 <- function (which = "election.statistics") {
 
     #Ehdokkaat puolueittain vaalipiirin ja kunnan mukaan kunnallisvaaleissa 2000
     url <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa_2000/020_kvaa_2000_2008-10-17_tau_102_fi.px"
-    px <- read.px(url)
+    px <- pxR::read.px(url)
     df <- as.data.frame(px)
-    tmp <- reshape::cast(df, Alue ~ Puolue ~ Ehdokastiedot, value="dat")
+    tmp <- reshape2::cast(df, Alue ~ Puolue ~ Ehdokastiedot, value="dat")
 
     tab1 <- tmp[,,"Ehdokkaiden lkm"]
     tab2 <- tmp[,,"Ehdokkaiden osuus (%)"]
@@ -85,7 +94,7 @@ GetMunicipalElectionData2000 <- function (which = "election.statistics") {
     # NOTE: election region information also available but discarded
 
     # Parse municipality codes and names
-    v <- ldply(strsplit(ConvertMunicipalityNames(rownames(tab)), " "), function (x) {x})
+    v <- ldply(strsplit(sorvi::ConvertMunicipalityNames(rownames(tab)), " "), function (x) {x})
     tab$Kuntakoodi <- v[,1]
     tab$Kunta <- v[,2]
     rownames(tab) <- as.character(tab$Kunta)
@@ -96,9 +105,9 @@ GetMunicipalElectionData2000 <- function (which = "election.statistics") {
     #Valitut puolueittain vaalipiirin ja kunnan mukaan kunnallisvaaleissa 2000
     url <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa_2000/030_kvaa_2000_2008-10-17_tau_103_fi.px"
 
-    px <- read.px(url)
+    px <- pxR::read.px(url)
     df <- as.data.frame(px)
-    tmp <- reshape::cast(df, Alue ~ Puolue ~ Valittujen.tiedot, value="dat")
+    tmp <- reshape2::cast(df, Alue ~ Puolue ~ Valittujen.tiedot, value="dat")
 
     tab1 <- tmp[,,"Valittujen lkm"]
     tab2 <- tmp[,,"Valittujen osuus (%)"]
@@ -121,7 +130,7 @@ GetMunicipalElectionData2000 <- function (which = "election.statistics") {
     # NOTE: election region information also available but discarded
 
     # Parse municipality codes and names
-    v <- ldply(strsplit(ConvertMunicipalityNames(rownames(tab)), " "), function (x) {x})
+    v <- ldply(strsplit(sorvi::ConvertMunicipalityNames(rownames(tab)), " "), function (x) {x})
     tab$Kuntakoodi <- v[,1]
     tab$Kunta <- v[,2]
     rownames(tab) <- as.character(tab$Kunta)
@@ -131,10 +140,10 @@ GetMunicipalElectionData2000 <- function (which = "election.statistics") {
 
     #Kunnallisvaalit 2000, puolueiden kannatus
     url <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa_2000/040_kvaa_2000_2008-10-17_tau_104_fi.px"
-    px <- read.px(url)
+    px <- pxR::read.px(url)
     df <- as.data.frame(px)
 
-    tmp <- reshape::cast(df, Alue ~ Puolue ~ Kannatustiedot, value="dat")
+    tmp <- reshape2::cast(df, Alue ~ Puolue ~ Kannatustiedot, value="dat")
 
     tab1 <- tmp[,,"Ääniä yhtensä"]
     tab2 <- tmp[,,"Ennakkoäänet"]
@@ -162,7 +171,7 @@ GetMunicipalElectionData2000 <- function (which = "election.statistics") {
     # NOTE: election region information also available but discarded
 
     # Parse municipality codes and names
-    v <- ldply(strsplit(ConvertMunicipalityNames(rownames(tab)), " "), function (x) {x})
+    v <- plyr::ldply(strsplit(sorvi::ConvertMunicipalityNames(rownames(tab)), " "), function (x) {x})
     tab$Kuntakoodi <- v[,1]
     tab$Kunta <- v[,2]
     rownames(tab) <- as.character(tab$Kunta)
@@ -173,16 +182,16 @@ GetMunicipalElectionData2000 <- function (which = "election.statistics") {
     #Kunnallisvaalit 2000, valitut ehdokkaat
     url <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa_2000/050_kvaa_2000_2008-10-17_tau_105_fi.px"
 
-    px <- read.px(url)
+    px <- pxR::read.px(url)
     df <- as.data.frame(px)
-    tab <- reshape::cast(df, Ehdokas ~ Ehdokastiedot, value="dat")
+    tab <- reshape2::cast(df, Ehdokas ~ Ehdokastiedot, value="dat")
 
   } else if (which == "all.municipality.level.data") {
 
-    tab1 <- GetMunicipalElectionData2000("election.statistics")
-    tab2 <- GetMunicipalElectionData2000("candidates")
-    tab3 <- GetMunicipalElectionData2000("selected.candidates.by.region")
-    tab4 <- GetMunicipalElectionData2000("parties")
+    tab1 <- sorvi::GetMunicipalElectionData2000("election.statistics")
+    tab2 <- sorvi::GetMunicipalElectionData2000("candidates")
+    tab3 <- sorvi::GetMunicipalElectionData2000("selected.candidates.by.region")
+    tab4 <- sorvi::GetMunicipalElectionData2000("parties")
 
     municipalities <- sort(rownames(tab1))
     tab <- cbind(tab1[municipalities, ],
@@ -213,14 +222,26 @@ GetMunicipalElectionData2000 <- function (which = "election.statistics") {
 #' @keywords utilities
 GetMunicipalElectionData2004 <- function (which = "election.statistics") {
 
+    if (!require(plyr)) { 
+      message("Function GetMunicipalElectionData2000 requires package 'plyr'  Package not found, installing...")
+      install.packages(plyr) # Install the packages
+      require(plyr) # Remember to load the library after installation
+    }
+
+    if (!require(reshape2)) { 
+      message("Function GetMunicipalElectionData2000 requires package 'reshape2'  Package not found, installing...")
+      install.packages(reshape2) # Install the packages
+      require(reshape2) # Remember to load the library after installation
+    }
+
   if (which == "election.statistics") {
 
     #Kunnallisvaalit 2004, äänestystiedot
     url <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2004_05/010_KVAA_2004_2008-07-23_TAU_101_FI.px"
-    px <- read.px(url)
+    px <- pxR::read.px(url)
     df <- as.data.frame(px)
     kaava <- as.formula("Alue~Äänestystiedot~Sukupuoli")
-    tmp <- reshape::cast(df, kaava, value="dat")
+    tmp <- reshape2::cast(df, kaava, value="dat")
 
     tab1 <- tmp[,,"Sukupuolet yhteensä"]
     tab2 <- tmp[,,"Miehet"]
@@ -261,7 +282,7 @@ GetMunicipalElectionData2004 <- function (which = "election.statistics") {
     # NOTE: detailed election region information also available (below municipality level) but discarded
 
     # Parse municipality codes and names
-    v <- ldply(strsplit(ConvertMunicipalityNames(rownames(tab)), " "), function (x) {x})
+    v <- plyr::ldply(strsplit(sorvi::ConvertMunicipalityNames(rownames(tab)), " "), function (x) {x})
     tab$Kuntakoodi <- v[,1]
     tab$Kunta <- v[,2]
     rownames(tab) <- as.character(tab$Kunta)
@@ -274,10 +295,10 @@ GetMunicipalElectionData2004 <- function (which = "election.statistics") {
     #Valittujen lukumäärä ja prosenttiosuudet puolueittain ja vaalipiireittäin kunnallisvaaleissa 2004
     url<-"http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2004_05/060_kvaa_2004_2008-08-28_tau_107_fi.px"
 
-    px <- read.px(url)
+    px <- pxR::read.px(url)
     df <- as.data.frame(px)
     kaava <- as.formula("Puolue~Vaalipiiri~Lukumäärätiedot")
-    tmp <- reshape::cast(df, kaava, value="dat")
+    tmp <- reshape2::cast(df, kaava, value="dat")
 
     tab1 <- tmp[,,"Valtuutettujen lukumäärä"]
     tab2 <- tmp[,,"Puolueen osuus"]
@@ -294,10 +315,10 @@ GetMunicipalElectionData2004 <- function (which = "election.statistics") {
     # Kunnallisvaalit 2004, valittujen lukumäärä
     url <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2004_05/010_kvaa_2004_2008-08-28_tau_103_fi.px"
 
-    px <- read.px(url)
+    px <- pxR::read.px(url)
     df <- as.data.frame(px)
     kaava <- as.formula("Alue~Puolue~Sukupuoli~Valittujen.lukumäärä")
-    tmp <- reshape::cast(df, kaava, value="dat")
+    tmp <- reshape2::cast(df, kaava, value="dat")
 
     tab1 <- tmp[,,"Kaikki ehdokkaat", "Valittujen lukumäärä"]
     colnames(tab1) <- paste("Kaikki ehdokkaat", "Valittujen lukumäärä", colnames(tab1))
@@ -329,7 +350,7 @@ GetMunicipalElectionData2004 <- function (which = "election.statistics") {
     tab <- as.data.frame(tab[rnams, ])
     
     # Parse municipality codes and names
-    v <- ldply(strsplit(ConvertMunicipalityNames(rownames(tab)), " "), function (x) {x})
+    v <- plyr::ldply(strsplit(sorvi::ConvertMunicipalityNames(rownames(tab)), " "), function (x) {x})
     tab$Kuntakoodi <- v[,1]
     tab$Kunta <- v[,2]
     rownames(tab) <- as.character(tab$Kunta)
@@ -344,9 +365,9 @@ GetMunicipalElectionData2004 <- function (which = "election.statistics") {
     warning("Vaalipiiritason tietoa. TODO.")
     tab <- NULL
 
-    #px <- read.px(url)
+    #px <- pxR::read.px(url)
     #df <- as.data.frame(px)
-    #tmp <- reshape::cast(df, Alue~Puolue~Sukupuoli~Valittujen.lukumäärä)
+    #tmp <- reshape2::cast(df, Alue~Puolue~Sukupuoli~Valittujen.lukumäärä)
 
   } else if (which == "selected.candidates.count") {
 
@@ -364,15 +385,15 @@ GetMunicipalElectionData2004 <- function (which = "election.statistics") {
     warning("Vaalipiiritason tietoa. TODO.")
     tab <- NULL
 
-    #px <- read.px(url)
+    #px <- pxR::read.px(url)
     #df <- as.data.frame(px)
-    #tmp <- reshape::cast(df, Alue~Puolue~Sukupuoli~Valittujen.lukumäärä)
+    #tmp <- reshape2::cast(df, Alue~Puolue~Sukupuoli~Valittujen.lukumäärä)
 
   } else if (which == "parties") {
 
     #Kunnallisvaalit 2004, puolueiden kannatus
     #url<-"http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2004_05/010_KVAA_2004_2008-08-28_TAU_102_FI.px"
-    #df <- as.data.frame(read.px(url))
+    #df <- as.data.frame(pxR::read.px(url))
     # -> Segmentation fault
     warning("Segmentation fault at Kunnallisvaalit 2004, puolueiden kannatus, ignoring.")
     tab <- NULL
@@ -392,10 +413,10 @@ GetMunicipalElectionData2004 <- function (which = "election.statistics") {
     # verrattuna
     url<-"http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2004_05/060_kvaa_2004_2008-08-27_tau_111_fi.px"
 
-    px <- read.px(url)
+    px <- pxR::read.px(url)
     df <- as.data.frame(px)
-    kaava <- as.fromula("Vaalipiiri.ja.kunta~Puolue~Lukumäärätiedot")
-    tmp <- reshape::cast(df, kaava, value="dat")
+    kaava <- as.formula("Vaalipiiri.ja.kunta~Puolue~Lukumäärätiedot")
+    tmp <- reshape2::cast(df, kaava, value="dat")
 
     tab1 <- tmp[,,"Äänimäärä"]
     tab2 <- tmp[,,"Osuus %"]
@@ -420,7 +441,7 @@ GetMunicipalElectionData2004 <- function (which = "election.statistics") {
     # NOTE: election region information also available but discarded
 
     # Parse municipality codes and names
-    v <- ldply(strsplit(ConvertMunicipalityNames(rownames(tab)), " "), function (x) {x})
+    v <- plyr::ldply(strsplit(sorvi::ConvertMunicipalityNames(rownames(tab)), " "), function (x) {x})
     tab$Kuntakoodi <- v[,1]
     tab$Kunta <- v[,2]
     rownames(tab) <- as.character(tab$Kunta)
@@ -431,10 +452,10 @@ GetMunicipalElectionData2004 <- function (which = "election.statistics") {
     #Puolueiden äänimäärät ja valittujen lukumäärä kunnittain (pienet puolueet), hylätyt liput sekä ennakkoäänestäneet kunnallisvaaleissa 2004
     url <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2004_05/060_kvaa_2004_2008-08-27_tau_114_fi.px"
 
-    px <- read.px(url)
+    px <- pxR::read.px(url)
     df <- as.data.frame(px)
     kaava <- as.formula("Vaalipiiri.ja.kunta~Äänestystiedot.ja.puolueiden.kannatus~Lukumäärätiedot")
-    tmp <- reshape::cast(df, kaava, value="dat")
+    tmp <- reshape2::cast(df, kaava, value="dat")
 
     tab1 <- tmp[,,"Äänimäärä"]
     tab2 <- tmp[,,"Osuus %"]
@@ -457,7 +478,7 @@ GetMunicipalElectionData2004 <- function (which = "election.statistics") {
     # NOTE: election region information also available but discarded
 
     # Parse municipality codes and names
-    v <- ldply(strsplit(ConvertMunicipalityNames(rownames(tab)), " "), function (x) {x})
+    v <- plyr::ldply(strsplit(sorvi::ConvertMunicipalityNames(rownames(tab)), " "), function (x) {x})
     tab$Kuntakoodi <- v[,1]
     tab$Kunta <- v[,2]
     rownames(tab) <- as.character(tab$Kunta)
@@ -465,13 +486,14 @@ GetMunicipalElectionData2004 <- function (which = "election.statistics") {
 
   } else if (which == "voting.stats") {
 
-    # Äänioikeutetut ja äänestäneet sukupuolen mukaan, hyväksytyt äänestysliput, valtuutetuiksi valitut ja ennakkoäänet puolueittain sekä hylättyjen äänestyslippujen lukumäärä kunnittain kunnallisvaaleissa 2004
+    # Aanioikeutetut ja aanestaneet sukupuolen mukaan, hyvaksytyt aanestysliput, valtuutetuiksi valitut ja ennakkoaanet puolueittain sekä hylattyjen 
+    # aanestyslippujen lukumaara kunnittain kunnallisvaaleissa 2004
     url <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2004_05/060_kvaa_2004_2008-08-28_tau_116_fi.px"
 
-    px <- read.px(url)
+    px <- pxR::read.px(url)
     df <- as.data.frame(px)
     kaava <- as.formula("Vaalipiiri.ja.kunta~Äänestystiedot.ja.puolueiden.kannatus~Lukumäärätiedot")
-    tmp <- reshape::cast(df, kaava, value="dat")
+    tmp <- reshape2::cast(df, kaava, value="dat")
 
     tab1 <- tmp[,,"Lukumäärä / Äänimäärä"]
     tab2 <- tmp[,,"Osuus äänistä"]
@@ -500,7 +522,7 @@ GetMunicipalElectionData2004 <- function (which = "election.statistics") {
     # NOTE: election region information also available but discarded
 
     # Parse municipality codes and names
-    v <- ldply(strsplit(ConvertMunicipalityNames(rownames(tab)), " "), function (x) {x})
+    v <- plyr::ldply(strsplit(sorvi::ConvertMunicipalityNames(rownames(tab)), " "), function (x) {x})
     tab$Kuntakoodi <- v[,1]
     tab$Kunta <- v[,2]
     rownames(tab) <- as.character(tab$Kunta)
@@ -510,7 +532,7 @@ GetMunicipalElectionData2004 <- function (which = "election.statistics") {
 
     # Valituiksi tulleiden aikaisempi kokemus valtuustossa kuntatyypin, sukupuolen ja puolueen mukaan kunnallisvaaleissa 2004
     url<-"http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2004_05/730_kvaa_2004_2009-12-30_tau_149_fi.px"
-    #px <- read.px(url)
+    #px <- pxR::read.px(url)
     #df <- as.data.frame(px)
     warning("No municipality level data available. TODO.")
     tab <- NULL
@@ -519,7 +541,7 @@ GetMunicipalElectionData2004 <- function (which = "election.statistics") {
 
     #Hylätyt äänestysliput hylkäysperusteen ja vaalipiirin mukaan kunnallisvaaleissa 2004
     url<-"http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2004_05/740_kvaa_2004_2009-12-30_tau_150_fi.px"
-    px <- read.px(url)
+    px <- pxR::read.px(url)
     df <- as.data.frame(px)
     warning("No municipality level data available. TODO.")
     tab <- NULL
@@ -532,22 +554,22 @@ GetMunicipalElectionData2004 <- function (which = "election.statistics") {
     warning("No municipality level data available. TODO.")
     # NOTE: vaalipiiri level available
     url <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2004_06/810_kvaa_2004_2004-10-27_tau_150_fi.px"
-    #kvaa <- as.data.frame(read.px(url))
+    #kvaa <- as.data.frame(pxR::read.px(url))
     tab <- NULL
 
   } else if (which == "pre") {
 
     #Ennakkoon äänestäneet äänestyspaikan ja vaalipiirin mukaan kunnallisvaaleissa 2004
     url<-"http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2004_05/750_kvaa_2004_2009-12-30_tau_151_fi.px"
-    #kvaa <- as.data.frame(read.px(url))
+    #kvaa <- as.data.frame(pxR::read.px(url))
     warning("No municipality level data available. TODO.")
     tab <- NULL
 
   } else if (which == "abroad") {
 
-    #Suomen ulkomaan edustustoissa ja laivoissa äänestäneet sukupuolen mukaan kunnallisvaaleissa 2004
+    # Suomen ulkomaan edustustoissa ja laivoissa aanestaneet sukupuolen mukaan kunnallisvaaleissa 2004
     url<-"http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2004_05/760_kvaa_2004_2009-12-30_tau_152_fi.px"
-    #kvaa <- as.data.frame(read.px(url))
+    #kvaa <- as.data.frame(pxR::read.px(url))
     warning("No municipality level data available. TODO.")
     tab <- NULL
 
@@ -555,17 +577,17 @@ GetMunicipalElectionData2004 <- function (which = "election.statistics") {
 
     #Äänioikeutetut ja äänestäneet ulkomaalaiset vaalipiirin mukaan kunnallisvaaleissa 2004
     url<-"http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2004_05/770_kvaa_2004_2009-12-30_tau_153_fi.px"
-    kvaa <- as.data.frame(read.px(url))
+    kvaa <- as.data.frame(pxR::read.px(url))
     warning("No municipality level data available. TODO.")
     tab <- NULL
 
   } else if (which == "all.municipal") {
 
-    tab1 <- GetMunicipalElectionData2004("voting.stats")
-    tab2 <- GetMunicipalElectionData2004("party.votes")
-    tab3 <- GetMunicipalElectionData2004("parties.change")
-    tab4 <- GetMunicipalElectionData2004("selected.candidates.count")
-    tab6 <- GetMunicipalElectionData2004("election.statistics")
+    tab1 <- sorvi::GetMunicipalElectionData2004("voting.stats")
+    tab2 <- sorvi::GetMunicipalElectionData2004("party.votes")
+    tab3 <- sorvi::GetMunicipalElectionData2004("parties.change")
+    tab4 <- sorvi::GetMunicipalElectionData2004("selected.candidates.count")
+    tab6 <- sorvi::GetMunicipalElectionData2004("election.statistics")
 
     regs <- rownames(tab1)
 
@@ -594,17 +616,29 @@ GetMunicipalElectionData2004 <- function (which = "election.statistics") {
 #' @keywords utilities
 GetMunicipalElectionData2008 <- function (which = "election.statistics") {
 
-  # Taulukot tilastossa: 5. Kunnallisvaalit 2008 - vaalitulos, äänestäminen
+    if (!require(plyr)) { 
+      message("Function GetMunicipalElectionData2000 requires package 'plyr'  Package not found, installing...")
+      install.packages(plyr) # Install the packages
+      require(plyr) # Remember to load the library after installation
+    }
+
+    if (!require(reshape2)) { 
+      message("Function GetMunicipalElectionData2000 requires package 'reshape2'  Package not found, installing...")
+      install.packages(reshape2) # Install the packages
+      require(reshape2) # Remember to load the library after installation
+    }
+
+  # Taulukot tilastossa: 5. Kunnallisvaalit 2008 - vaalitulos, aanestaminen
   # http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2008_05/2008_05_fi.asp
 
   if (which == "election.statistics") {
 
-    #Kunnallisvaalit 2008, äänestystiedot
+    #Kunnallisvaalit 2008, aanestystiedot
     url <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2008_05/610_kvaa_2008_2009-10-30_tau_137_fi.px"
-    px <- read.px(url)
+    px <- pxR::read.px(url)
     df <- as.data.frame(px)
     kaava <- as.formula("Alue~Äänestystiedot~Sukupuoli")
-    tmp <- reshape::cast(df, kaava, value="dat")
+    tmp <- reshape2::cast(df, kaava, value="dat")
 
     tab1 <- tmp[,,"Sukupuolet yhteensä"]
     tab2 <- tmp[,,"Miehet"]
@@ -645,7 +679,7 @@ GetMunicipalElectionData2008 <- function (which = "election.statistics") {
     # NOTE: detailed election region information also available (below municipality level) but discarded
 
     # Parse municipality codes and names
-    v <- ldply(strsplit(ConvertMunicipalityNames(rownames(tab)), " "), function (x) {x})
+    v <- plyr::ldply(strsplit(sorvi::ConvertMunicipalityNames(rownames(tab)), " "), function (x) {x})
     tab$Kuntakoodi <- v[,1]
     tab$Kunta <- v[,2]
     rownames(tab) <- as.character(tab$Kunta)
@@ -656,9 +690,9 @@ GetMunicipalElectionData2008 <- function (which = "election.statistics") {
     #Naisehdokkaitten vaalitiedot puolueen ja kunnan mukaan kunnallisvaaleissa 2008
     url<-"http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2008_05/720_kvaa_2008_2009-12-30_tau_148_fi.px"
 
-    px <- read.px(url)
+    px <- pxR::read.px(url)
     df <- as.data.frame(px)
-    tmp <- reshape::cast(df, Kunta~Puolue~Naisehdokastiedot)
+    tmp <- reshape2::cast(df, Kunta~Puolue~Naisehdokastiedot)
 
     tab1 <- tmp[,,"Äänimäärä"]
     tab2 <- tmp[,,"Osuus äänistä (%)"]
@@ -689,7 +723,7 @@ GetMunicipalElectionData2008 <- function (which = "election.statistics") {
     # NOTE: election region information also available but discarded
 
     # Parse municipality codes and names
-    v <- ldply(strsplit(ConvertMunicipalityNames(rownames(tab)), " "), function (x) {x})
+    v <- plyr::ldply(strsplit(sorvi::ConvertMunicipalityNames(rownames(tab)), " "), function (x) {x})
     tab$Kuntakoodi <- v[,1]
     tab$Kunta <- v[,2]
     rownames(tab) <- as.character(tab$Kunta)
@@ -702,10 +736,10 @@ GetMunicipalElectionData2008 <- function (which = "election.statistics") {
     #Valittujen lukumäärä ja prosenttiosuudet puolueittain ja vaalipiireittäin kunnallisvaaleissa 2008
     url<-"http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2008_05/690_kvaa_2008_2009-11-02_tau_145_fi.px"
 
-    px <- read.px(url)
+    px <- pxR::read.px(url)
     df <- as.data.frame(px)
     kaava <- as.formula("Puolue~Vaalipiiri~Lukumäärätiedot")
-    tmp <- reshape::cast(df, kaava, value="dat")
+    tmp <- reshape2::cast(df, kaava, value="dat")
 
     tab1 <- tmp[,,"Valtuutettujen lukumäärä"]
     tab2 <- tmp[,,"Puolueen osuus"]
@@ -719,13 +753,13 @@ GetMunicipalElectionData2008 <- function (which = "election.statistics") {
 
   } else if (which == "selected.candidates.count") {
 
-    # Kunnallisvaalit 2008, valittujen lukumäärä
+    # Kunnallisvaalit 2008, valittujen lukumaara
     url <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2008_05/630_kvaa_2008_2009-10-30_tau_139_fi.px"
 
-    px <- read.px(url)
+    px <- pxR::read.px(url)
     df <- as.data.frame(px)
     kaava <- as.formula("Alue~Puolue~Sukupuoli~Valittujen.lukumäärä")
-    tmp <- reshape::cast(df, kaava, value="dat")
+    tmp <- reshape2::cast(df, kaava, value="dat")
 
     tab1 <- tmp[,,"Kaikki ehdokkaat", "Valittujen lukumäärä"]
     colnames(tab1) <- paste("Kaikki ehdokkaat", "Valittujen lukumäärä", colnames(tab1))
@@ -757,7 +791,7 @@ GetMunicipalElectionData2008 <- function (which = "election.statistics") {
     tab <- as.data.frame(tab[rnams, ])
     
     # Parse municipality codes and names
-    v <- ldply(strsplit(ConvertMunicipalityNames(rownames(tab)), " "), function (x) {x})
+    v <- plyr::ldply(strsplit(sorvi::ConvertMunicipalityNames(rownames(tab)), " "), function (x) {x})
     tab$Kuntakoodi <- v[,1]
     tab$Kunta <- v[,2]
     rownames(tab) <- as.character(tab$Kunta)
@@ -766,41 +800,41 @@ GetMunicipalElectionData2008 <- function (which = "election.statistics") {
   } else if (which == "selected.candidates.by.party") {  
 
     # Valittujen lukumäärä ja prosenttiosuudet puolueittain ja 
-    # vaalipiireittäin kunnallisvaaleissa 2008
+    # vaalipiireittain kunnallisvaaleissa 2008
     url<-"http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2008_05/650_kvaa_2008_2009-11-02_tau_141_fi.px"
 
     warning("Vaalipiiritason tietoa. TODO.")
     tab <- NULL
 
-    #px <- read.px(url)
+    #px <- pxR::read.px(url)
     #df <- as.data.frame(px)
-    #tmp <- reshape::cast(df, Alue~Puolue~Sukupuoli~Valittujen.lukumäärä)
+    #tmp <- reshape2::cast(df, Alue~Puolue~Sukupuoli~Valittujen.lukumäärä)
 
   } else if (which == "selected.candidates.count") {
 
     warning("Puoluetason tietoa, ei kuntia. TODO.")
     tab <- NULL
 
-    #Valitut ikäryhmittäin sukupuolen ja puolueen mukaan kunnallisvaaleissa 2008
+    # Valitut ikaryhmittain sukupuolen ja puolueen mukaan kunnallisvaaleissa 2008
     url<-"http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2008_05/660_kvaa_2008_2009-11-02_tau_142_fi.px"
 
   } else if (which == "selected.candidates.count") {
 
-    #Valitut ikäryhmittäin sukupuolen mukaan vaalipiireittäin kunnallisvaaleissa 2008
+    #Valitut ikaryhmittain sukupuolen mukaan vaalipiireittain kunnallisvaaleissa 2008
     url<-"http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2008_05/670_kvaa_2008_2009-11-02_tau_143_fi.px"
 
     warning("Vaalipiiritason tietoa. TODO.")
     tab <- NULL
 
-    #px <- read.px(url)
+    #px <- pxR::read.px(url)
     #df <- as.data.frame(px)
-    #tmp <- reshape::cast(df, Alue~Puolue~Sukupuoli~Valittujen.lukumäärä)
+    #tmp <- reshape2::cast(df, Alue~Puolue~Sukupuoli~Valittujen.lukumäärä)
 
   } else if (which == "parties") {
 
     #Kunnallisvaalit 2008, puolueiden kannatus
     #url<-"http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2008_05/620_kvaa_2008_2009-10-30_tau_138_fi.px"
-    #df <- as.data.frame(read.px(url))
+    #df <- as.data.frame(pxR::read.px(url))
     # -> Segmentation fault
     warning("Segmentation fault at Kunnallisvaalit 2008, puolueiden kannatus, ignoring.")
     tab <- NULL
@@ -815,15 +849,15 @@ GetMunicipalElectionData2008 <- function (which = "election.statistics") {
 
   } else if (which == "parties.change") {
 
-    # Puolueiden äänimäärät ja äänestysprosentti sekä valittujen lukumäärä 
+    # Puolueiden aanimäärät ja aanestysprosentti sekä valittujen lukumaara
     # kunnittain kunnallisvaaleissa 2008 ja muutos edellisiin vaaleihin 
     # verrattuna
     url<-"http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2008_05/680_kvaa_2008_2009-11-02_tau_144_fi.px"
 
-    px <- read.px(url)
+    px <- pxR::read.px(url)
     df <- as.data.frame(px)
     kaava <- as.formula("Vaalipiiri.ja.kunta~Puolue~Lukumäärätiedot")
-    tmp <- reshape::cast(df, kaava, value="dat")
+    tmp <- reshape2::cast(df, kaava, value="dat")
 
     tab1 <- tmp[,,"Äänimäärä"]
     tab2 <- tmp[,,"Osuus %"]
@@ -848,7 +882,7 @@ GetMunicipalElectionData2008 <- function (which = "election.statistics") {
     # NOTE: election region information also available but discarded
 
     # Parse municipality codes and names
-    v <- ldply(strsplit(ConvertMunicipalityNames(rownames(tab)), " "), function (x) {x})
+    v <- plyr::ldply(strsplit(sorvi::ConvertMunicipalityNames(rownames(tab)), " "), function (x) {x})
     tab$Kuntakoodi <- v[,1]
     tab$Kunta <- v[,2]
     rownames(tab) <- as.character(tab$Kunta)
@@ -859,10 +893,10 @@ GetMunicipalElectionData2008 <- function (which = "election.statistics") {
     #Puolueiden äänimäärät ja valittujen lukumäärä kunnittain (pienet puolueet), hylätyt liput sekä ennakkoäänestäneet kunnallisvaaleissa 2008
     url <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2008_05/700_kvaa_2008_2009-11-02_tau_146_fi.px"
 
-    px <- read.px(url)
+    px <- pxR::read.px(url)
     df <- as.data.frame(px)
     kaava <- as.formula("Vaalipiiri.ja.kunta~Äänestystiedot.ja.puolueiden.kannatus~Lukumäärätiedot")
-    tmp <- reshape::cast(df, kaava, value="dat")
+    tmp <- reshape2::cast(df, kaava, value="dat")
 
     tab1 <- tmp[,,"Äänimäärä"]
     tab2 <- tmp[,,"Osuus %"]
@@ -885,7 +919,7 @@ GetMunicipalElectionData2008 <- function (which = "election.statistics") {
     # NOTE: election region information also available but discarded
 
     # Parse municipality codes and names
-    v <- ldply(strsplit(ConvertMunicipalityNames(rownames(tab)), " "), function (x) {x})
+    v <- plyr::ldply(strsplit(sorvi::ConvertMunicipalityNames(rownames(tab)), " "), function (x) {x})
     tab$Kuntakoodi <- v[,1]
     tab$Kunta <- v[,2]
     rownames(tab) <- as.character(tab$Kunta)
@@ -893,13 +927,14 @@ GetMunicipalElectionData2008 <- function (which = "election.statistics") {
 
   } else if (which == "voting.stats") {
 
-    # Äänioikeutetut ja äänestäneet sukupuolen mukaan, hyväksytyt äänestysliput, valtuutetuiksi valitut ja ennakkoäänet puolueittain sekä hylättyjen äänestyslippujen lukumäärä kunnittain kunnallisvaaleissa 2008
+    # Aanioikeutetut ja aanestäneet sukupuolen mukaan, hyvaksytyt aanestysliput, valtuutetuiksi valitut ja ennakkoaanet puolueittain sekä 
+    # hylattyjen aanestyslippujen lukumaara kunnittain kunnallisvaaleissa 2008
     url <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2008_05/710_kvaa_2008_2009-11-02_tau_147_fi.px"
 
-    px <- read.px(url)
+    px <- pxR::read.px(url)
     df <- as.data.frame(px)
     kaava <- as.formula("Vaalipiiri.ja.kunta~Äänestystiedot.ja.puolueiden.kannatus~Lukumäärätiedot")
-    tmp <- reshape::cast(df, kaava, value="dat")
+    tmp <- reshape2::cast(df, kaava, value="dat")
 
     tab1 <- tmp[,,"Lukumäärä / Äänimäärä"]
     tab2 <- tmp[,,"Osuus äänistä"]
@@ -928,7 +963,7 @@ GetMunicipalElectionData2008 <- function (which = "election.statistics") {
     # NOTE: election region information also available but discarded
 
     # Parse municipality codes and names
-    v <- ldply(strsplit(ConvertMunicipalityNames(rownames(tab)), " "), function (x) {x})
+    v <- plyr::ldply(strsplit(sorvi::ConvertMunicipalityNames(rownames(tab)), " "), function (x) {x})
     tab$Kuntakoodi <- v[,1]
     tab$Kunta <- v[,2]
     rownames(tab) <- as.character(tab$Kunta)
@@ -938,16 +973,16 @@ GetMunicipalElectionData2008 <- function (which = "election.statistics") {
 
     # Valituiksi tulleiden aikaisempi kokemus valtuustossa kuntatyypin, sukupuolen ja puolueen mukaan kunnallisvaaleissa 2008
     url<-"http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2008_05/730_kvaa_2008_2009-12-30_tau_149_fi.px"
-    #px <- read.px(url)
+    #px <- pxR::read.px(url)
     #df <- as.data.frame(px)
     warning("No municipality level data available. TODO.")
     tab <- NULL
 
   } else if (which == "rejected") {
 
-    #Hylätyt äänestysliput hylkäysperusteen ja vaalipiirin mukaan kunnallisvaaleissa 2008
+    # Hylatyt aanestysliput hylkaysperusteen ja vaalipiirin mukaan kunnallisvaaleissa 2008
     url<-"http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2008_05/740_kvaa_2008_2009-12-30_tau_150_fi.px"
-    px <- read.px(url)
+    px <- pxR::read.px(url)
     df <- as.data.frame(px)
     warning("No municipality level data available. TODO.")
     tab <- NULL
@@ -960,41 +995,41 @@ GetMunicipalElectionData2008 <- function (which = "election.statistics") {
     warning("No municipality level data available. TODO.")
     # NOTE: vaalipiiri level available
     url <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2008_06/810_kvaa_2008_2008-10-27_tau_150_fi.px"
-    #kvaa <- as.data.frame(read.px(url))
+    #kvaa <- as.data.frame(pxR::read.px(url))
     tab <- NULL
 
   } else if (which == "pre") {
 
-    #Ennakkoon äänestäneet äänestyspaikan ja vaalipiirin mukaan kunnallisvaaleissa 2008
+    #Ennakkoon aanestaneet aanestyspaikan ja vaalipiirin mukaan kunnallisvaaleissa 2008
     url<-"http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2008_05/750_kvaa_2008_2009-12-30_tau_151_fi.px"
-    #kvaa <- as.data.frame(read.px(url))
+    #kvaa <- as.data.frame(pxR::read.px(url))
     warning("No municipality level data available. TODO.")
     tab <- NULL
 
   } else if (which == "abroad") {
 
-    #Suomen ulkomaan edustustoissa ja laivoissa äänestäneet sukupuolen mukaan kunnallisvaaleissa 2008
+    #Suomen ulkomaan edustustoissa ja laivoissa aanestaneet sukupuolen mukaan kunnallisvaaleissa 2008
     url<-"http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2008_05/760_kvaa_2008_2009-12-30_tau_152_fi.px"
-    #kvaa <- as.data.frame(read.px(url))
+    #kvaa <- as.data.frame(pxR::read.px(url))
     warning("No municipality level data available. TODO.")
     tab <- NULL
 
   } else if (which == "abroad2") {
 
-    #Äänioikeutetut ja äänestäneet ulkomaalaiset vaalipiirin mukaan kunnallisvaaleissa 2008
+    #Aanioikeutetut ja aanestaneet ulkomaalaiset vaalipiirin mukaan kunnallisvaaleissa 2008
     url<-"http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2008_05/770_kvaa_2008_2009-12-30_tau_153_fi.px"
-    kvaa <- as.data.frame(read.px(url))
+    kvaa <- as.data.frame(pxR::read.px(url))
     warning("No municipality level data available. TODO.")
     tab <- NULL
 
   } else if (which == "all.municipal") {
 
-    tab1 <- GetMunicipalElectionData2008("voting.stats")
-    tab2 <- GetMunicipalElectionData2008("party.votes")
-    tab3 <- GetMunicipalElectionData2008("parties.change")
-    tab4 <- GetMunicipalElectionData2008("selected.candidates.count")
-    tab5 <- GetMunicipalElectionData2008("woman.candidates")
-    tab6 <- GetMunicipalElectionData2008("election.statistics")
+    tab1 <- sorvi::GetMunicipalElectionData2008("voting.stats")
+    tab2 <- sorvi::GetMunicipalElectionData2008("party.votes")
+    tab3 <- sorvi::GetMunicipalElectionData2008("parties.change")
+    tab4 <- sorvi::GetMunicipalElectionData2008("selected.candidates.count")
+    tab5 <- sorvi::GetMunicipalElectionData2008("woman.candidates")
+    tab6 <- sorvi::GetMunicipalElectionData2008("election.statistics")
 
     regs <- rownames(tab1)
 

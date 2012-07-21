@@ -36,6 +36,12 @@
 GetStaticmapGoogleMaps <- function(center, zoom = 10, GRAYSCALE=FALSE, scale=1, maptype = 'map',
                                      destfile = 'TemporaryMap.png', n_pix = 640, format="png32") {
 
+  if (!try(require(ReadImages))) { 
+    message("Function GetStaticmapGoogleMaps requires package 'ReadImages'  Package not found, installing...")
+    install.packages(ReadImages) # Install the packages
+    require(ReadImages) # Remember to load the library after installation
+  }
+
   # library(RgoogleMaps) 
   # library(png)
   if (!try(require(RgoogleMaps))) { 
@@ -80,7 +86,7 @@ GetStaticmapGoogleMaps <- function(center, zoom = 10, GRAYSCALE=FALSE, scale=1, 
     cat("Colours: no\n")
     nrow <- nrow(map)
     ncol <- ncol(map)
-    map <- grey(rgb2grey(map, coefs = c(0, 1, 0)))
+    map <- grey(ReadImages::rgb2grey(map, coefs = c(0, 1, 0)))
     map <- matrix(map, nrow = nrow, ncol = ncol)
   }
 

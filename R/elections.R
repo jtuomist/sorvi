@@ -178,10 +178,20 @@ GetElectionResultsPresidentti2012 <- function (election.round, level = NULL) {
 
 GetPresidentti2012 <- function(category=c("questions", "candidates", "useranswers"), API, ID=NULL, filter=NULL, page=1, per_page=500, show_total="true") {
 
-#category=c("questions", "candidates", "useranswers"); ID=NULL; filter=NULL; page=1; per_page=500; show_total="true"
+  # category=c("questions", "candidates", "useranswers"); ID=NULL; filter=NULL; page=1; per_page=500; show_total="true"
+  # library(gdata) 
 
-  library(RCurl)
-  library(rjson)
+  if (!require(RCurl)) { 
+    message("Function GetPresidentti2012 requires package 'RCurl'  Package not found, installing...")
+    install.packages(RCurl) # Install the packages
+    require(RCurl) # Remember to load the library after installation
+  }  
+
+  if (!require(rjson)) { 
+    message("Function GetPresidentti2012 requires package 'rjson'  Package not found, installing...")
+    install.packages(rjson) # Install the packages
+    require(rjson) # Remember to load the library after installation
+  }  
 
   curl <- RCurl::getCurlHandle(cookiefile="")
   vaalikone.url <- paste("http://api.vaalikone.fi/presidentti2012/v1/", category, sep="")
@@ -190,7 +200,7 @@ GetPresidentti2012 <- function(category=c("questions", "candidates", "useranswer
   if (category == "questions") {
     params <- list(api_key=API, id=ID)
     if (!is.null(ID))
-      cat("Note! Parameter 'id' doens't work with category 'questions'. Will return all questions.")
+      warning("Note! Parameter 'id' doesn't work with category 'questions'. Will return all questions.")
   } else if (category == "candidates") {
     params <- list(api_key=API, id=ID)
   } else if (category == "useranswers") {
@@ -208,6 +218,7 @@ GetPresidentti2012 <- function(category=c("questions", "candidates", "useranswer
     return(res)
   }
 }
+
 
 #' For Presidentti2012 candidate answers, form numerical rating in [0, 1] for the 
 #' answer options (rougly corresponding to conservative-liberal axis)
@@ -520,10 +531,16 @@ PreprocessPresidentti2012UserData <- function (dat.list, API = API) {
 #' @keywords utilities
 GetParliamentaryElectionData <- function (level) {
 
-  if (!try(require(reshape))) { 
-    message("Function GetParliamentaryElectionData requires package 'reshape' Package not found, installing...")
-    install.packages(reshape) # Install the packages
-    require(reshape) # Remember to load the library after installation
+  if (!try(require(reshape2))) { 
+    message("Function GetParliamentaryElectionData requires package 'reshape2' Package not found, installing...")
+    install.packages(reshape2) # Install the packages
+    require(reshape2) # Remember to load the library after installation
+  }
+
+  if (!try(require(plyr))) { 
+    message("Function GetParliamentaryElectionData requires package 'plyr' Package not found, installing...")
+    install.packages(plyr) # Install the packages
+    require(plyr) # Remember to load the library after installation
   }
 
 
@@ -533,10 +550,10 @@ GetParliamentaryElectionData <- function (level) {
 
     # 2.2 Äänioikeutetut ja äänestäneet sekä ennakolta äänestäneet sukupuolen mukaan kunnittain eduskuntavaaleissa 2011 ja 2007
     url <- "http://pxweb2.stat.fi/database/StatFin/vaa/evaa/120_evaa_tau_104_fi.px"
-    px <- read.px(url)
+    px <- pxR::read.px(url)
     df <- try(as.data.frame(px))
     kaava <- as.formula("Vaalipiiri.ja.kunta~Äänestystiedot~Lukumäärätiedot")
-    tmp <- reshape::cast(df, kaava, value="dat")
+    tmp <- reshape2::cast(df, kaava, value="dat")
 
     # Separate tables and preprocess
     tab1 <- tmp[,,"Lukumäärä 2007"]
@@ -562,7 +579,7 @@ GetParliamentaryElectionData <- function (level) {
     tab <- as.data.frame(tab[rnams, ])
 
     # Parse municipality codes and names
-    v <- ldply(strsplit(ConvertMunicipalityNames(rownames(tab)), " "), function (x) {x})
+    v <- plyr::ldply(strsplit(ConvertMunicipalityNames(rownames(tab)), " "), function (x) {x})
 
     tab$Kuntakoodi <- v[,1]
     tab$Kunta <- v[,2]
@@ -590,10 +607,10 @@ GetParliamentaryElectionData <- function (level) {
     url <- "http://pxweb2.stat.fi/database/StatFin/vaa/evaa/120_evaa_tau_103_fi.px"
 
     # Read election data from Statistics Finland			 
-    px <- read.px(url) 
+    px <- pxR::read.px(url) 
     df <- try(as.data.frame(px))
     kaava <- as.formula("Vaalipiiri~Äänestystiedot~Lukumäärätiedot")
-    tmp <- reshape::cast(df, kaava, value="dat")
+    tmp <- reshape2::cast(df, kaava, value="dat")
 
     # Separate the tables
     tab1 <- tmp[,,1]
@@ -613,10 +630,10 @@ GetParliamentaryElectionData <- function (level) {
     tab$Vaalipiiri.Koodi <- sapply(rnams, function (s) {strsplit(s, " ")[[1]][[1]]})
 
     # Read more election data from Statistics Finland			 
-    px <- read.px("http://pxweb2.stat.fi/database/StatFin/vaa/evaa/120_evaa_tau_105_fi.px") 
+    px <- pxR::read.px("http://pxweb2.stat.fi/database/StatFin/vaa/evaa/120_evaa_tau_105_fi.px") 
     df <- try(as.data.frame(px))
     kaava <- as.formula("Vaalipiiri~Hylkäysperuste")
-    tab2 <- reshape::cast(df, kaava, value="dat")
+    tab2 <- reshape2::cast(df, kaava, value="dat")
 
     # Keep only election.region level data
     rownames(tab2) <- as.character(tab2[,1])
@@ -642,4 +659,3 @@ GetParliamentaryElectionData <- function (level) {
 
 }
 
-##########################################################################
