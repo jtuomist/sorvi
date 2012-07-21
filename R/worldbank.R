@@ -32,7 +32,9 @@ GetWorldbankMigration <- function(countries) {
     require(gdata) # Remember to load the library after installation
   }  
   # Load migration matrix from World Bank
-  migration.matrix <- gdata::read.xls("http://siteresources.worldbank.org/INTPROSPECTS/Resources/334934-1110315015165/T1.Estimates_of_Migrant_Stocks_2010.xls")
+  tmp <- try(migration.matrix <- gdata::read.xls("http://siteresources.worldbank.org/INTPROSPECTS/Resources/334934-1110315015165/T1.Estimates_of_Migrant_Stocks_2010.xls"))
+  if (tmp == "try-error") {stop("gdata::read.xls requires PERL module for Windows. See isntructions at http://louhos.github.com/sorvi/asennus.html")}
+
   data.inds <- 2:214
   
   # Get migration flow in to and out from the given countries
