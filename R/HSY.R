@@ -155,6 +155,12 @@ GetHSY <- function (which.data = "Vaestoruudukko") {
   }
 
   # Unzip the files
+<<<<<<< HEAD
+=======
+#   require(utils)
+
+  # Read info of municipalities and election areas from Tilastoteskus
+>>>>>>> Using .InstallMarginal in elections.R, HRI.R, HSY.R, koulut.R, maps.R, worldbank.R
   .InstallMarginal("utils")
 
   unzip(destfile)

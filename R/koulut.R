@@ -27,9 +27,14 @@ GetLukiot <- function() {
   # Script for processing Finnish school data
   # License: FreeBSD, http://en.wikipedia.org/wiki/BSD_licenses
   # Copyright 2011 Juuso Parkkinen, juuso.parkkinen@gmail.com. All rights reserved.
+<<<<<<< HEAD
 
   .InstallMarginal("XML")
   .InstallMarginal("gdata")
+=======
+  
+  .InstallMarginal("XML")
+>>>>>>> Using .InstallMarginal in elections.R, HRI.R, HSY.R, koulut.R, maps.R, worldbank.R
   
   # Read data about high school performance (HS 31.5.2011)  
   u <- "http://www.hs.fi/kotimaa/artikkeli/1135266565425"

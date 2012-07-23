@@ -40,7 +40,11 @@ GetStaticmapGoogleMaps <- function(center, zoom = 10, GRAYSCALE = FALSE, scale =
   .InstallMarginal("png")
   .InstallMarginal("reshape2")
   .InstallMarginal("plyr")
+<<<<<<< HEAD
   
+=======
+
+>>>>>>> Using .InstallMarginal in elections.R, HRI.R, HSY.R, koulut.R, maps.R, worldbank.R
   # Get map with given scale
   if (scale==1) 
     RgoogleMaps::GetMap(center = center[c('lat','lon')], GRAYSCALE=GRAYSCALE, size = c(n_pix, n_pix), 
@@ -108,7 +112,11 @@ GetStaticmapGoogleMaps <- function(center, zoom = 10, GRAYSCALE = FALSE, scale =
 GetGeocodeGoogleMaps <- function(str) {
 
   .InstallMarginal("XML")
+<<<<<<< HEAD
 
+=======
+  
+>>>>>>> Using .InstallMarginal in elections.R, HRI.R, HSY.R, koulut.R, maps.R, worldbank.R
   u <- paste('http://maps.google.com/maps/api/geocode/xml?sensor=false&address=',str)
   doc <- XML::xmlTreeParse(u, useInternal=TRUE)
   lat <- sapply(XML::getNodeSet(doc, "/GeocodeResponse/result/geometry/location/lat"), function(el) XML::xmlValue(el))
@@ -154,6 +162,7 @@ GetGeocodeOpenStreetMap <- function(query) {
 GetThemeMap <- function() {
   
   .InstallMarginal("ggplot2")
+<<<<<<< HEAD
 
   theme_map <- theme_bw()
   theme_map$panel.background <- theme_blank()
@@ -164,6 +173,18 @@ GetThemeMap <- function() {
   theme_map$axis.text.y <- theme_blank()
   theme_map$axis.title.x <- theme_blank()
   theme_map$axis.title.y <- theme_blank()
+=======
+  
+  theme_map <- ggplot2::theme_bw()
+  theme_map$panel.background <- ggplot2::theme_blank()
+  theme_map$panel.grid.major <- ggplot2::theme_blank()
+  theme_map$panel.grid.minor <- ggplot2::theme_blank()
+  theme_map$axis.ticks <- ggplot2::theme_blank()
+  theme_map$axis.text.x <- ggplot2::theme_blank()
+  theme_map$axis.text.y <- ggplot2::theme_blank()
+  theme_map$axis.title.x <- ggplot2::theme_blank()
+  theme_map$axis.title.y <- ggplot2::theme_blank()
+>>>>>>> Using .InstallMarginal in elections.R, HRI.R, HSY.R, koulut.R, maps.R, worldbank.R
   return(theme_map)  
 }
 

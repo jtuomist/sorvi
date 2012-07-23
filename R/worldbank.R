@@ -27,6 +27,10 @@ GetWorldbankMigration <- function(countries) {
 
   .InstallMarginal("gdata")
   
+<<<<<<< HEAD
+=======
+ .InstallMarginal("gdata")
+>>>>>>> Using .InstallMarginal in elections.R, HRI.R, HSY.R, koulut.R, maps.R, worldbank.R
   # Load migration matrix from World Bank
   tmp <- try(migration.matrix <- gdata::read.xls("http://siteresources.worldbank.org/INTPROSPECTS/Resources/334934-1110315015165/T1.Estimates_of_Migrant_Stocks_2010.xls"))
   if (tmp == "try-error") {stop("gdata::read.xls requires PERL module for Windows. See instructions at http://louhos.github.com/sorvi/asennus.html")}
