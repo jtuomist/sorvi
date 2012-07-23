@@ -26,17 +26,10 @@
 #' @keywords utilities
 GetMunicipalElectionData2000 <- function (which = "election.statistics") {
 
-    if (!require(plyr)) { 
-      message("Function GetMunicipalElectionData2000 requires package 'plyr'  Package not found, installing...")
-      install.packages(plyr) # Install the packages
-      require(plyr) # Remember to load the library after installation
-    }
 
-    if (!require(reshape2)) { 
-      message("Function GetMunicipalElectionData2000 requires package 'reshape2'  Package not found, installing...")
-      install.packages(reshape2) # Install the packages
-      require(reshape2) # Remember to load the library after installation
-    }
+  .InstallMarginal("plyr")
+  .InstallMarginal("reshape2")
+
   
   if (which == "election.statistics") {
 
@@ -222,17 +215,8 @@ GetMunicipalElectionData2000 <- function (which = "election.statistics") {
 #' @keywords utilities
 GetMunicipalElectionData2004 <- function (which = "election.statistics") {
 
-    if (!require(plyr)) { 
-      message("Function GetMunicipalElectionData2000 requires package 'plyr'  Package not found, installing...")
-      install.packages(plyr) # Install the packages
-      require(plyr) # Remember to load the library after installation
-    }
-
-    if (!require(reshape2)) { 
-      message("Function GetMunicipalElectionData2000 requires package 'reshape2'  Package not found, installing...")
-      install.packages(reshape2) # Install the packages
-      require(reshape2) # Remember to load the library after installation
-    }
+  .InstallMarginal("plyr")
+  .InstallMarginal("reshape2")
 
   if (which == "election.statistics") {
 
@@ -616,17 +600,8 @@ GetMunicipalElectionData2004 <- function (which = "election.statistics") {
 #' @keywords utilities
 GetMunicipalElectionData2008 <- function (which = "election.statistics") {
 
-    if (!require(plyr)) { 
-      message("Function GetMunicipalElectionData2000 requires package 'plyr'  Package not found, installing...")
-      install.packages(plyr) # Install the packages
-      require(plyr) # Remember to load the library after installation
-    }
-
-    if (!require(reshape2)) { 
-      message("Function GetMunicipalElectionData2000 requires package 'reshape2'  Package not found, installing...")
-      install.packages(reshape2) # Install the packages
-      require(reshape2) # Remember to load the library after installation
-    }
+  .InstallMarginal("plyr")
+  .InstallMarginal("reshape2")
 
   # Taulukot tilastossa: 5. Kunnallisvaalit 2008 - vaalitulos, aanestaminen
   # http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2008_05/2008_05_fi.asp

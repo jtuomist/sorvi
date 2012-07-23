@@ -172,7 +172,7 @@ ConvertGADMPosition2Region <- function (coordinates,
  
   # Form data.frame with the coordinates
 
-  require(sp)
+  #.InstallMarginal("sp") # Key dependency
   
   x <- coordinates[, "x"]
   y <- coordinates[, "y"]

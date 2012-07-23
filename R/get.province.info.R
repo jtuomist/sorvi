@@ -25,11 +25,7 @@
 
 GetProvinceInfo <- function (url = "http://fi.wikipedia.org/wiki/V%C3%A4est%C3%B6tiheys") {
 
-  if (!try(require(XML))) { 
-    message("Function GetVaalipiiri requires package 'XML'  Package not found, installing...")
-    install.packages(XML) # Install the packages
-    require(XML) # Remember to load the library after installation
-  }
+  .InstallMarginal("XML")
 
   # Read tables from the website
   tables <- XML::readHTMLTable(url)
@@ -125,11 +121,7 @@ GetMunicipalityInfo <- function (url = "http://pxweb2.stat.fi/Database/Kuntien%2
 
 GetMunicipalityInfoStatFi <- function (url = "http://pxweb2.stat.fi/Database/Kuntien%20perustiedot/Kuntien%20perustiedot/Kuntaportaali.px") {
 
-  if (!try(require(reshape2))) { 
-    message("Function GetMunicipalityInfoStatFi requires package 'reshape2'  Package not found, installing...")
-    install.packages(reshape2) # Install the packages
-    require(reshape2) # Remember to load the library after installation
-  }
+  .InstallMarginal("reshape2")
 
   # FIXME: merge GetPopulationRegister function in here
 
@@ -179,12 +171,7 @@ GetMunicipalityInfoStatFi <- function (url = "http://pxweb2.stat.fi/Database/Kun
 
 GetMunicipalityInfoMML <- function (MML) {
 
-
-  if (!try(require(reshape2))) { 
-    message("Function GetMunicipalityInfoStatFi requires package 'reshape2'  Package not found, installing...")
-    install.packages(reshape2) # Install the packages
-    require(reshape2) # Remember to load the library after installation
-  }
+  .InstallMarginal("reshape2")
 
   # Municipality information table from Maanmittauslaitos
   mml.table <- MML[["1_milj_Shape_etrs_shape"]][["kunta1_p"]]

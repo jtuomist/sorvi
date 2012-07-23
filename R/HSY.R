@@ -155,14 +155,7 @@ GetHSY <- function (which.data = "Vaestoruudukko") {
   }
 
   # Unzip the files
-  require(utils)
-
-  # Read info of municipalities and election areas from Tilastoteskus
-  if (!try(require(utils))) { 
-    message("Function GetHSY requires package 'utils'  Package not found, installing...")
-    install.packages(utils) # Install the packages
-    require(utils) # Remember to load the library after installation
-  }
+  .InstallMarginal("utils")
 
   unzip(destfile)
 
@@ -172,11 +165,7 @@ GetHSY <- function (which.data = "Vaestoruudukko") {
     # handling this file
 
     # Read info of municipalities and election areas from Tilastoteskus
-    if (!try(require(rgdal))) { 
-      message("Function GetHSY requires package 'rgdal'  Package not found, installing...")
-      install.packages(rgdal) # Install the packages
-      require(rgdal) # Remember to load the library after installation
-    }
+    .InstallMarginal("rgdal")
 
     sp <- rgdal::readOGR(".", layer = "SeutuRAMAVA_2010")
     # Convert to UTF-8 where needed 

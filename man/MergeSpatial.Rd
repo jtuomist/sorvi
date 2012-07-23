@@ -33,8 +33,8 @@
   used as FIDs. It's up to the user to check that FID
   values are unique.
 }
-\examples{
-# sp <- GetHKK("Aanestysaluejako", data.dir="C:/data")
+\note{
+  Not tested (at all)
 }
 \author{
   Joona Lehtomaki

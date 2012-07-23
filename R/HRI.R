@@ -28,21 +28,11 @@ GetHRIaluejakokartat <- function() {
 #   library(ggplot2)
 #   library(gpclib)
 #   library(gdata)
-  if (!try(require(rgdal))) { 
-    message("Function GetHRIaluejakokartat requires package 'rgdal'  Package not found, installing...")
-    install.packages(rgdal) # Install the packages
-    require(rgdal) # Remember to load the library after installation
-  }
-  if (!try(require(gpclib))) { 
-    message("Function GetHRIaluejakokartat requires package 'gpclib'  Package not found, installing...")
-    install.packages(gpclib) # Install the packages
-    require(gpclib) # Remember to load the library after installation
-  }
-  if (!try(require(ggplot2))) { 
-    message("Function GetHRIaluejakokartat requires package 'ggplot2'  Package not found, installing...")
-    install.packages(ggplot2) # Install the packages
-    require(ggplot2) # Remember to load the library after installation
-  }
+
+  .InstallMarginal("rgdal")
+  .InstallMarginal("gpclib")
+  .InstallMarginal("ggplot2")
+
   gpclibPermit()
   
   # Download KML files from http://www.hri.fi/fi/data/paakaupunkiseudun-aluejakokartat/
@@ -90,9 +80,9 @@ GetHRIaluejakokartat <- function() {
 #' @examples # event.categories <- GetOmakaupunki("event/categories", LOGIN, PASSWORD, API)
 GetOmakaupunki <- function(query, login, password, api_key, ...) {
   
-  require(RCurl)
-  require(rjson)
-  
+  .InstallMarginal("RCurl")
+  .InstallMarginal("rjson")
+
   api.url <- "http://api.omakaupunki.fi/v1/"
   query.url <- paste(api.url, query, sep="")
   curl <- RCurl::getCurlHandle(cookiefile = "")
@@ -119,8 +109,8 @@ GetOmakaupunki <- function(query, login, password, api_key, ...) {
 #' @examples # pk.services <- GetPalvelukartta("service")
 GetPalvelukartta <- function(category, ...) {
   
-  require(RCurl)
-  require(rjson)
+  .InstallMarginal("RCurl")
+  .InstallMarginal("rjson")
 
   api.url <- paste("http://www.hel.fi/palvelukarttaws/rest/v2/", category, "/", sep="")
   curl <- RCurl::getCurlHandle(cookiefile = "")

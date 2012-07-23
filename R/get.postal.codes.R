@@ -28,12 +28,7 @@
 
 GetPostalCodeInfo <- function (url = "http://fi.wikipedia.org/wiki/Luettelo_Suomen_postinumeroista_kunnittain") {
 
-  if (!try(require(plyr))) { 
-    message("Function GetPostalCodeInfo requires package 'plyr'  Package not found, installing...")
-    install.packages(plyr) # Install the packages
-    require(plyr) # Remember to load the library after installation
-  }
-
+  .InstallMarginal("plyr")
 
   # Read URL site
   txt <- readLines(url)

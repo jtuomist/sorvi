@@ -27,14 +27,9 @@ GetLukiot <- function() {
   # Script for processing Finnish school data
   # License: FreeBSD, http://en.wikipedia.org/wiki/BSD_licenses
   # Copyright 2011 Juuso Parkkinen, juuso.parkkinen@gmail.com. All rights reserved.
-  
-#  library(gdata)
-#  library(XML) 
-  if (!try(require(XML))) { 
-    message("Function GetLukiot requires package 'XML'  Package not found, installing...")
-    install.packages(XML) # Install the packages
-    require(XML) # Remember to load the library after installation
-  }
+
+  .InstallMarginal("XML")
+  .InstallMarginal("gdata")
   
   # Read data about high school performance (HS 31.5.2011)  
   u <- "http://www.hs.fi/kotimaa/artikkeli/1135266565425"

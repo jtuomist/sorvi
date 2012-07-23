@@ -10,8 +10,6 @@
 # but WITHOUT ANY WARRANTY; without even the implied warranty of 
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-
-
 #' Visualize the specified fields of a shape object on using 1- or 2-way color scale. 
 #' 
 #' This function is used for fast investigation of shape objects; standard visualization choices are made
@@ -43,12 +41,8 @@ PlotShape <- function (sp, varname, type = "oneway", ncol = 10, at = NULL, palet
 
   # type = "oneway"; ncol = 10; at = NULL; palette = NULL; main = NULL; colorkey = TRUE; lwd = .4; border.col = "black"; col.regions = NULL
 
-  # FIXME: check if we could here use standard palettes, and avoid dependency
-  if (!require(RColorBrewer)) { 
-    message("Function GetWorldbankMigration requires package 'RColorBrewer'  Package not found, installing...")
-    install.packages(RColorBrewer) # Install the packages
-    require(RColorBrewer) # Remember to load the library after installation
-  }  
+  # FIXME: check if we could here use standard palettes and avoid dependency
+  .InstallMarginal("RColorBrewer")
 
   pic <- NULL
 

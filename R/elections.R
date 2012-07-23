@@ -32,12 +32,9 @@ GetVaalipiiri <- function (url = "http://www.stat.fi/meta/luokitukset/vaalipiiri
   message(paste("Reading Vaalipiiri information from ", url))
 
   # Read info of municipalities and election areas from Tilastoteskus
-  #  library(XML) 
-  if (!try(require(XML))) { 
-    message("Function GetVaalipiiri requires package 'XML'  Package not found, installing...")
-    install.packages(XML) # Install the packages
-    require(XML) # Remember to load the library after installation
-  }
+
+  .InstallMarginal("XML") 
+
   temp <- XML::readHTMLTable(url)
 
   # Extract info that we want
@@ -181,17 +178,9 @@ GetPresidentti2012 <- function(category=c("questions", "candidates", "useranswer
   # category=c("questions", "candidates", "useranswers"); ID=NULL; filter=NULL; page=1; per_page=500; show_total="true"
   # library(gdata) 
 
-  if (!require(RCurl)) { 
-    message("Function GetPresidentti2012 requires package 'RCurl'  Package not found, installing...")
-    install.packages(RCurl) # Install the packages
-    require(RCurl) # Remember to load the library after installation
-  }  
+  .InstallMarginal("RCurl") 
+  .InstallMarginal("rjson") 
 
-  if (!require(rjson)) { 
-    message("Function GetPresidentti2012 requires package 'rjson'  Package not found, installing...")
-    install.packages(rjson) # Install the packages
-    require(rjson) # Remember to load the library after installation
-  }  
 
   curl <- RCurl::getCurlHandle(cookiefile="")
   vaalikone.url <- paste("http://api.vaalikone.fi/presidentti2012/v1/", category, sep="")
@@ -531,17 +520,8 @@ PreprocessPresidentti2012UserData <- function (dat.list, API = API) {
 #' @keywords utilities
 GetParliamentaryElectionData <- function (level) {
 
-  if (!try(require(reshape2))) { 
-    message("Function GetParliamentaryElectionData requires package 'reshape2' Package not found, installing...")
-    install.packages(reshape2) # Install the packages
-    require(reshape2) # Remember to load the library after installation
-  }
-
-  if (!try(require(plyr))) { 
-    message("Function GetParliamentaryElectionData requires package 'plyr' Package not found, installing...")
-    install.packages(plyr) # Install the packages
-    require(plyr) # Remember to load the library after installation
-  }
+  .InstallMarginal("plyr") 
+  .InstallMarginal("reshape2") 
 
 
   if (level == "municipality") {

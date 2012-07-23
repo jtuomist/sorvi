@@ -33,37 +33,13 @@
 #' 
 #' @author Juuso Parkkinen \email{sorvi-commits@@lists.r-forge.r-project.org}
 #' @export
-GetStaticmapGoogleMaps <- function(center, zoom = 10, GRAYSCALE=FALSE, scale=1, maptype = 'map',
-                                     destfile = 'TemporaryMap.png', n_pix = 640, format="png32") {
+GetStaticmapGoogleMaps <- function(center, zoom = 10, GRAYSCALE = FALSE, scale = 1, maptype = 'map', destfile = 'TemporaryMap.png', n_pix = 640, format = "png32") {
 
-  if (!try(require(ReadImages))) { 
-    message("Function GetStaticmapGoogleMaps requires package 'ReadImages'  Package not found, installing...")
-    install.packages(ReadImages) # Install the packages
-    require(ReadImages) # Remember to load the library after installation
-  }
-
-  # library(RgoogleMaps) 
-  # library(png)
-  if (!try(require(RgoogleMaps))) { 
-    message("Function GetStaticmapGoogleMaps requires package 'RgoogleMaps'  Package not found, installing...")
-    install.packages(RgoogleMaps) # Install the packages
-    require(RgoogleMaps) # Remember to load the library after installation
-  }
-  if (!try(require(png))) { 
-    message("Function GetStaticmapGoogleMaps requires package 'png'  Package not found, installing...")
-    install.packages(png) # Install the packages
-    require(png) # Remember to load the library after installation
-  }
-  if (!try(require(reshape2))) { 
-    message("Function GetStaticmapGoogleMaps requires package 'reshape2'  Package not found, installing...")
-    install.packages(reshape2) # Install the packages
-    require(reshape2) # Remember to load the library after installation
-  }
-  if (!try(require(plyr))) { 
-    message("Function GetStaticmapGoogleMaps requires package 'plyr'  Package not found, installing...")
-    install.packages(plyr) # Install the packages
-    require(plyr) # Remember to load the library after installation
-  }
+  .InstallMarginal("ReadImages")
+  .InstallMarginal("RgoogleMaps")
+  .InstallMarginal("png")
+  .InstallMarginal("reshape2")
+  .InstallMarginal("plyr")
   
   # Get map with given scale
   if (scale==1) 
@@ -131,12 +107,8 @@ GetStaticmapGoogleMaps <- function(center, zoom = 10, GRAYSCALE=FALSE, scale=1, 
 #' @export
 GetGeocodeGoogleMaps <- function(str) {
 
-  #  library(XML) 
-  if (!try(require(XML))) { 
-    message("Function GetGeocodeGoogleMaps requires package 'XML'  Package not found, installing...")
-    install.packages(XML) # Install the packages
-    require(XML) # Remember to load the library after installation
-  }
+  .InstallMarginal("XML")
+
   u <- paste('http://maps.google.com/maps/api/geocode/xml?sensor=false&address=',str)
   doc <- XML::xmlTreeParse(u, useInternal=TRUE)
   lat <- sapply(XML::getNodeSet(doc, "/GeocodeResponse/result/geometry/location/lat"), function(el) XML::xmlValue(el))
@@ -158,8 +130,9 @@ GetGeocodeGoogleMaps <- function(str) {
 #' @export
 GetGeocodeOpenStreetMap <- function(query) {
   
-  library(RCurl)
-  library(rjson)
+  .InstallMarginal("RCurl")
+  .InstallMarginal("rjson")
+
   u <- paste("http://nominatim.openstreetmap.org/search?q=",query,"&format=json", sep="")
   val <- RCurl::getURI(u)
   res <- rjson::fromJSON(val)
@@ -180,12 +153,8 @@ GetGeocodeOpenStreetMap <- function(query) {
 #' @export
 GetThemeMap <- function() {
   
-#  library(ggplot2)
-  if (!try(require(ggplot2))) { 
-    message("Function GetThemeMap requires package 'ggplot2'  Package not found, installing...")
-    install.packages(ggplot2) # Install the packages
-    require(ggplot2) # Remember to load the library after installation
-  }
+  .InstallMarginal("ggplot2")
+
   theme_map <- theme_bw()
   theme_map$panel.background <- theme_blank()
   theme_map$panel.grid.major <- theme_blank()
