@@ -24,21 +24,11 @@ GetHRIaluejakokartat <- function() {
   message("Loading aluejakokartat from HRI...")
   # Need to install package rgdal
   # Mac users, see http://www.r-bloggers.com/installing-rgdal-on-mac-os-x-2/
-<<<<<<< HEAD
-#   library(rgdal)
-#   library(ggplot2)
-#   library(gpclib)
-#   library(gdata)
-=======
->>>>>>> Using .InstallMarginal in elections.R, HRI.R, HSY.R, koulut.R, maps.R, worldbank.R
 
   .InstallMarginal("rgdal")
   .InstallMarginal("gpclib")
   .InstallMarginal("ggplot2")
-<<<<<<< HEAD
 
-=======
->>>>>>> Using .InstallMarginal in elections.R, HRI.R, HSY.R, koulut.R, maps.R, worldbank.R
   gpclibPermit()
   
   # Download KML files from http://www.hri.fi/fi/data/paakaupunkiseudun-aluejakokartat/

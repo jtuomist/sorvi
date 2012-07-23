@@ -40,11 +40,7 @@ GetStaticmapGoogleMaps <- function(center, zoom = 10, GRAYSCALE = FALSE, scale =
   .InstallMarginal("png")
   .InstallMarginal("reshape2")
   .InstallMarginal("plyr")
-<<<<<<< HEAD
-  
-=======
 
->>>>>>> Using .InstallMarginal in elections.R, HRI.R, HSY.R, koulut.R, maps.R, worldbank.R
   # Get map with given scale
   if (scale==1) 
     RgoogleMaps::GetMap(center = center[c('lat','lon')], GRAYSCALE=GRAYSCALE, size = c(n_pix, n_pix), 

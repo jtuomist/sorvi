@@ -29,16 +29,10 @@
 
 GetVaalipiiri <- function (url = "http://www.stat.fi/meta/luokitukset/vaalipiiri/001-2012/luokitusavain_kunta.html") {
 
-  message(paste("Reading Vaalipiiri information from ", url))
-
-  # Read info of municipalities and election areas from Tilastoteskus
-
-<<<<<<< HEAD
-  .InstallMarginal("XML") 
-
-=======
   .InstallMarginal("XML")
->>>>>>> Using .InstallMarginal in elections.R, HRI.R, HSY.R, koulut.R, maps.R, worldbank.R
+  
+  message(paste("Reading Vaalipiiri information from ", url))
+  # Read info of municipalities and election areas from Tilastoteskus
   temp <- XML::readHTMLTable(url)
 
   # Extract info that we want
@@ -524,14 +518,8 @@ PreprocessPresidentti2012UserData <- function (dat.list, API = API) {
 #' @keywords utilities
 GetParliamentaryElectionData <- function (level) {
 
-<<<<<<< HEAD
-  .InstallMarginal("plyr") 
-  .InstallMarginal("reshape2") 
-
-=======
   .InstallMarginal("reshape2")
   .InstallMarginal("plyr")  
->>>>>>> Using .InstallMarginal in elections.R, HRI.R, HSY.R, koulut.R, maps.R, worldbank.R
 
   if (level == "municipality") {
 
