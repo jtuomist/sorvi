@@ -494,10 +494,10 @@ PreprocessPresidentti2012UserData <- function (dat.list, API = API) {
 
   # Reorder factor levels, some by abundance, some in the natural way
   # 'attach' lets us use the factors without repeating the data frame name every time
-  Presidentti2012.df$Koulutustaso <- reorder(Presidentti2012.df$Koulutustaso, id, length)
-  Presidentti2012.df$Ykkosehdokas <- reorder(Presidentti2012.df$Ykkosehdokas, id, length)
-  Presidentti2012.df$Puolue <- reorder(Presidentti2012.df$Puolue, id, length)
-  Presidentti2012.df$Asuinpaikka <- reorder(Presidentti2012.df$Asuinpaikka, id, length)
+  Presidentti2012.df$Koulutustaso <- reorder(Presidentti2012.df$Koulutustaso, Presidentti2012.df$id, length)
+  Presidentti2012.df$Ykkosehdokas <- reorder(Presidentti2012.df$Ykkosehdokas, Presidentti2012.df$id, length)
+  Presidentti2012.df$Puolue <- reorder(Presidentti2012.df$Puolue, Presidentti2012.df$id, length)
+  Presidentti2012.df$Asuinpaikka <- reorder(Presidentti2012.df$Asuinpaikka, Presidentti2012.df$id, length)
   Presidentti2012.df$Tulot <- factor(Presidentti2012.df$Tulot, levels=levels(Presidentti2012.df$Tulot)[c(1,9,2,3,5:8,10:12,4)])
 
   Presidentti2012.df
