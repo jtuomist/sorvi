@@ -36,8 +36,8 @@
 GetStaticmapGoogleMaps <- function(center, zoom = 10, GRAYSCALE = FALSE, scale = 1, maptype = 'map', destfile = 'TemporaryMap.png', n_pix = 640, format = "png32") {
 
   .InstallMarginal("ReadImages")
-  .InstallMarginal("RgoogleMaps")
   .InstallMarginal("png")
+  .InstallMarginal("RgoogleMaps")
   .InstallMarginal("reshape2")
   .InstallMarginal("plyr")
 
@@ -51,8 +51,15 @@ GetStaticmapGoogleMaps <- function(center, zoom = 10, GRAYSCALE = FALSE, scale =
   else
     stop("Invalid scale-value!")
   
+  # Read downloaded map png and delete the temporary files
   map <- png::readPNG(destfile)
-  n_pix <- n_pix*scale #Double number of pixels if scale==2
+  if (file.exists("TemporaryMap.png"))
+    file.remove("TemporaryMap.png")
+  if (file.exists("TemporaryMap.png.rda"))
+    file.remove("TemporaryMap.png.rda")
+  
+  # Double the number of pixels if scale==2
+  n_pix <- n_pix*scale 
   
   # Deal with color
   if(GRAYSCALE == FALSE) {
