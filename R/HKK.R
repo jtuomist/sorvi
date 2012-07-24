@@ -42,33 +42,6 @@
   return(paste(paste(rep("0", char.diff), collapse=""), x, sep=""))
 }
 
-.parse.df <- function(df) {
-  # Create an empty list to hold the expanded rows as elements
-  new.rows <- list()
-  # Loop over the rows in the data frame
-  for (i in 1:nrow(df)) {
-    # Get the current row (2 elements)
-    row <- df[i,]
-    # Split the 1st elemnt by white space -> ressult in character vector with 
-    # 3 or 4 elements (kuntaID, piiriID, piiri (A-part) [piiri (B-part)])
-    cell.raw <- unlist(strsplit(row[[1]], "\\s"))
-    # Created the expanded verision by joining elemnents 1 and 2 as they are
-    # and concatenating elements 3 and 4 (A- and B-part) together if piiri 
-    # constitutes of 2 parts
-    cell.expanded <- c(cell.raw[1:2], paste(cell.raw[3:length(cell.raw)], 
-                                            collapse=' '))
-    # Create a new 4 item row by joining the expanded cell with aanestysaluekoodi
-    # (also trim the leading white space)
-    new.rows[[i]] <- c(cell.expanded, trim(row[[2]]))
-  }
-  # Merge the list of vectors (new rows) into a matrix
-  new.df <- do.call("rbind", new.rows)
-  # Create the header
-  colnames(new.df) <- c("kuntaID", "piiriID", "piiri", "aanestysaluekoodi")
-  # Return a data frame
-  return(data.frame(new.df))
-}
-
 #' Retrieve HKK data 
 #'
 #' This script retrieves data from Helsinki Real Estate Department (Helsingin 
