@@ -52,7 +52,7 @@ GetMunicipalElectionData2000 <- function (which = "election.statistics") {
 
     # Parse municipality codes and names
 
-    v <- ldply(strsplit(sorvi::ConvertMunicipalityNames(rownames(tab)), " "), function (x) {x})
+    v <- plyr::ldply(strsplit(sorvi::ConvertMunicipalityNames(rownames(tab)), " "), function (x) {x})
     tab$Kuntakoodi <- v[,1]
     tab$Kunta <- v[,2]
     rownames(tab) <- as.character(tab$Kunta)
