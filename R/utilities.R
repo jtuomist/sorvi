@@ -15,27 +15,25 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 
-#' Sort data frame
-#'
-#' @param df data.frame to be sorted by the specified columns
-#' @param sortvar variable/s according which the data.frame shall be sorted
-#' @param ... Other arguments to pass
-#' @return data.frame (sorted version)
+#' SorviData
+# '
+#' @param data.id
+#' @param sorvi.data.url Data URL path
+#' @return url connection
 #' @export
 #' @references
 #' See citation("sorvi") 
 #' @author Leo Lahti \email{sorvi-commits@@lists.r-forge.r-project.org}
-#' @examples # dfsort(df, x, -z) 
+#' @examples # load(SorviData("MML"))
 #' @keywords utilities
 
-
-ReadRData <- function(df, sortvar, ...) {
-
-  con <- url("http://beta.datavaalit.fi/storage/louhos/MML.rda") 
-  load(con); 
-  close(con)
+SorviData <- function(data.id, sorvi.data.url = "http://beta.datavaalit.fi/storage/louhos/") {
+  
+  con <- url(paste(sorvi.data.url, data.id, ".rda", sep = ""))
+  con
 
 }
+
 
 #' Sort data frame
 #'
