@@ -1,8 +1,6 @@
-
 # To call in the statistician after the experiment is done may be no more
 # than asking him to perform a post-mortem examination: he may be able to
 # say what the experiment died of. ~ Sir Ronald Aylmer Fisher
-
 
 # This file is a part of the soRvi program (http://louhos.github.com/sorvi/)
 
@@ -15,6 +13,29 @@
 # This program is distributed in the hope that it will be useful, 
 # but WITHOUT ANY WARRANTY; without even the implied warranty of 
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+
+#' Sort data frame
+#'
+#' @param df data.frame to be sorted by the specified columns
+#' @param sortvar variable/s according which the data.frame shall be sorted
+#' @param ... Other arguments to pass
+#' @return data.frame (sorted version)
+#' @export
+#' @references
+#' See citation("sorvi") 
+#' @author Leo Lahti \email{sorvi-commits@@lists.r-forge.r-project.org}
+#' @examples # dfsort(df, x, -z) 
+#' @keywords utilities
+
+
+ReadRData <- function(df, sortvar, ...) {
+
+  con <- url("http://beta.datavaalit.fi/storage/louhos/MML.rda") 
+  load(con); 
+  close(con)
+
+}
 
 #' Sort data frame
 #'
