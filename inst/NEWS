@@ -1,3 +1,7 @@
+CHANGES IN VERSION 0.1.79 (2012-08-08)
+
+  o removed data/ directory, moved rda files in beta.datavaalit.fi/storage/louhos
+
 CHANGES IN VERSION 0.1.73 (2012-07-09)
 
   o Removed several dependencies and made them marginal (see wiki for description)
