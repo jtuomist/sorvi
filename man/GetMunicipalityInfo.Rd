@@ -12,7 +12,8 @@ help(GetShapeMML).}
   \item{url}{URL for Tilastokeskus municipality
   information}
 
-  \item{MML}{MML data, obtain with 'data(MML)'}
+  \item{MML}{MML data, obtain with
+  'load(SorviData("MML"))'}
 }
 \value{
   A data frame with municipality data
@@ -23,7 +24,7 @@ help(GetShapeMML).}
   details of MML data, see help(GetShapeMML).
 }
 \examples{
-# data(MML); tmp <- GetMunicipalityInfo(MML = MML)
+# load(SorviData("MML")); tmp <- GetMunicipalityInfo(MML = MML)
 }
 \author{
   Leo Lahti

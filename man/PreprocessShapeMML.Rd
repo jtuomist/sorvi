@@ -25,11 +25,11 @@
   have been preprocessed with this function, and the
   preprocessed versions are included in soRvi package. Load
   the readily preprocessed data for use by typing in R:
-  'data(MML)'. Alternatively, one can download the files
-  from the above URL and apply this function.
+  'load(SorviData("MML"))'. Alternatively, one can download
+  the files from the above URL and apply this function.
 }
 \examples{
-# data(MML); sp <- MML[[1]][[1]]; sp2 <- PreprocessShapeMML(sp)
+# load(url(paste(sorvi.data.url, "MML.rda", sep = ""))); sp <- MML[[1]][[1]]; sp2 <- PreprocessShapeMML(sp)
 }
 \author{
   Leo Lahti
