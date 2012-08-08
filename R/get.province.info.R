@@ -82,13 +82,13 @@ ConvertMunicipalityNames <- function (municipality.names) {
 #' 
 #' @aliases get.municipality.info
 #' @param url URL for Tilastokeskus municipality information 
-#' @param MML MML data, obtain with 'load(SorviData("MML"))'
+#' @param MML MML data, obtain with 'LoadData("MML")'
 #' @return A data frame with municipality data
 #' @export 
 #' @references
 #' See citation("sorvi") 
 #' @author Leo Lahti \email{sorvi-commits@@lists.r-forge.r-project.org}
-#' @examples # load(SorviData("MML")); tmp <- GetMunicipalityInfo(MML = MML)
+#' @examples # LoadData("MML"); tmp <- GetMunicipalityInfo(MML = MML)
 #' @keywords utilities
 
 GetMunicipalityInfo <- function (url = "http://pxweb2.stat.fi/Database/Kuntien%20perustiedot/Kuntien%20perustiedot/Kuntaportaali.px", MML) {
@@ -160,13 +160,13 @@ GetMunicipalityInfoStatFi <- function (url = "http://pxweb2.stat.fi/Database/Kun
 #' (C) Maanmittauslaitos MML 2012. For details of MML data, see 
 #' help(GetShapeMML).
 #' 
-#' @param MML MML data, obtain with load(SorviData("MML"))
+#' @param MML MML data, obtain with LoadData("MML")
 #' @return A data frame with municipality data
 #' @export 
 #' @references
 #' See citation("sorvi") 
 #' @author Leo Lahti \email{sorvi-commits@@lists.r-forge.r-project.org}
-#' @examples # load(SorviData("MML")); tab <- GetMunicipalityInfoMML(MML)
+#' @examples # LoadData("MML"); tab <- GetMunicipalityInfoMML(MML)
 #' @keywords utilities
 
 GetMunicipalityInfoMML <- function (MML) {

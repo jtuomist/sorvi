@@ -26,7 +26,7 @@
 #' is responsible of data preprocessing.
 #' @seealso Description of the data identifiers: MML[["1_milj_Shape_etrs_shape"]] http://www.maanmittauslaitos.fi/digituotteet/yleiskartta-11-000-000; MML[["4_5_milj_shape_etrs-tm35fin"]] http://www.maanmittauslaitos.fi/digituotteet/yleiskartta-14-500-000
 #' @references \url{http://www.maanmittauslaitos.fi/aineistot-palvelut/digitaaliset-tuotteet/ilmaiset-aineistot/hankinta lisenssiehtojen mukaisesti: http://www.maanmittauslaitos.fi/node/6417}
-#' @usage load(SorviData("MML"))
+#' @usage LoadData("MML")
 #' @format list
 #' @keywords data
 NULL
@@ -42,7 +42,7 @@ NULL
 #' @docType data
 #' @author Leo Lahti \email{sorvi-commits@@lists.r-forge.r-project.org} 
 #' @references See cite(sorvi)
-#' @usage load(SorviData("translations"))
+#' @usage LoadData("translations")
 #' @format list
 #' @keywords data misc
 NULL
@@ -55,7 +55,7 @@ NULL
 #' @name fi.en.maakunnat
 #' @docType data
 #' @author Leo Lahti \email{sorvi-commits@@lists.r-forge.r-project.org} 
-#' @usage load(SorviData("translations")) 
+#' @usage LoadData("translations")
 #' @format list
 #' @keywords data
 NULL
@@ -72,7 +72,7 @@ NULL
 #' @docType data
 #' @author Juuso Parkkinen \email{sorvi-commits@@lists.r-forge.r-project.org} 
 #' @references See cite(sorvi)
-#' @usage load(SorviData("HRI.aluejakokartat"))  
+#' @usage LoadData("HRI.aluejakokartat")
 #' @format list of SpatialPolygonsDataFrames
 #' @keywords data misc
 NULL

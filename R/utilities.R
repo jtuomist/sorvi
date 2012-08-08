@@ -15,7 +15,7 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 
-#' SorviData
+#' LoadData
 # '
 #' @param data.id
 #' @param sorvi.data.url Data URL path
@@ -24,13 +24,12 @@
 #' @references
 #' See citation("sorvi") 
 #' @author Leo Lahti \email{sorvi-commits@@lists.r-forge.r-project.org}
-#' @examples # load(SorviData("MML"))
+#' @examples # LoadData("MML")
 #' @keywords utilities
 
-SorviData <- function(data.id, sorvi.data.url = "http://beta.datavaalit.fi/storage/louhos/") {
+LoadData <- function(data.id, sorvi.data.url = "http://beta.datavaalit.fi/storage/louhos/") {
   
-  con <- url(paste(sorvi.data.url, data.id, ".rda", sep = ""))
-  con
+  load(url(paste(sorvi.data.url, data.id, ".rda", sep = "")), envir = .GlobalEnv)
 
 }
 
