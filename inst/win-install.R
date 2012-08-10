@@ -1,9 +1,10 @@
-if (!require("devtools")) {
-  install.packages("devtools")
-}
 
-if (!require("httr")) {
-  install.packages("httr")
+install.prequisites <- function(package, ...) {
+  if (suppressWarnings(!require(package, character.only=TRUE, quietly=TRUE))){
+    install.packages(package, ...) # Install the packages
+    require(package, character.only=TRUE) # Remember to load the library after installation
+  }
+  invisible(NULL)
 }
 
 decompress <- function(src, target = tempdir()) {
@@ -196,5 +197,8 @@ install_deps <- function(pkg = NULL) {
   install.packages(deps)
   invisible(deps)
 }
-
+prequisities <- c("devtools", "httr")
+for (pkg in prequisities) {
+  install.prequisites(pkg)
+}
 install_url("http://win-builder.r-project.org/dfjsf1l1Jv6v/sorvi_0.1.78.zip", binary=T)
