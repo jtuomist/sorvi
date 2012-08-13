@@ -7,7 +7,7 @@ help(GetShapeMML).}
   GetMunicipalityInfoMML(MML)
 }
 \arguments{
-  \item{MML}{MML data, obtain with load(SorviData("MML"))}
+  \item{MML}{MML data, obtain with LoadData("MML")}
 }
 \value{
   A data frame with municipality data
@@ -18,7 +18,7 @@ help(GetShapeMML).}
   details of MML data, see help(GetShapeMML).
 }
 \examples{
-# load(SorviData("MML")); tab <- GetMunicipalityInfoMML(MML)
+# LoadData("MML"); tab <- GetMunicipalityInfoMML(MML)
 }
 \author{
   Leo Lahti

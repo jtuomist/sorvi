@@ -1,4 +1,3 @@
-
 export(CenterData)
 export(ConvertGADMPosition2Region)
 export(ConvertMunicipalityNames)
@@ -36,6 +35,7 @@ export(GetWMSlayers)
 export(GetWMSraster)
 export(GetWorldbankMigration)
 export(ListWMSurls)
+export(LoadData)
 export(LoadWMSurl)
 export(MergeSpatial)
 export(PlotMatrix)

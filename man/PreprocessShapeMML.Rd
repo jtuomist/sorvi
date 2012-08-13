@@ -25,8 +25,8 @@
   have been preprocessed with this function, and the
   preprocessed versions are included in soRvi package. Load
   the readily preprocessed data for use by typing in R:
-  'load(SorviData("MML"))'. Alternatively, one can download
-  the files from the above URL and apply this function.
+  'LoadData("MML")'. Alternatively, one can download the
+  files from the above URL and apply this function.
 }
 \examples{
 # load(url(paste(sorvi.data.url, "MML.rda", sep = ""))); sp <- MML[[1]][[1]]; sp2 <- PreprocessShapeMML(sp)

@@ -1,7 +1,7 @@
 \name{GetShapeMML}
 \alias{GetShapeMML}
 \title{Shows how the MML Shape files have been converted into
-the Rdata files included in soRvi package (load using load(SorviData("MML"))).}
+the Rdata files included in soRvi package (load using LoadData("MML")).}
 \usage{
   GetShapeMML(input.data.dir = "./", verbose = TRUE)
 }
@@ -23,10 +23,9 @@ the Rdata files included in soRvi package (load using load(SorviData("MML"))).}
   have been preprocessed using this script, and the
   preprocessed versions are made available in soRvi
   package. Load the readily preprocessed data for use by
-  typing in R: 'load(SorviData("MML"))'. Procedure for
-  obtaining the load(SorviData("MML")) in soRvi package: 1)
-  Download the MML shape files zip archives
-  1_milj_Shape_etrs_shape.zip and
+  typing in R: 'LoadData("MML")'. Procedure for obtaining
+  the LoadData("MML") in soRvi package: 1) Download the MML
+  shape files zip archives 1_milj_Shape_etrs_shape.zip and
   4_5_milj_shape_etrs-tm35fin.zip from
   http://www.maanmittauslaitos.fi/aineistot-palvelut/digitaaliset-tuotteet/ilmaiset-aineistot/hankinta
   and place them in temporary data directory

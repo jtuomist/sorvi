@@ -23,7 +23,6 @@
   http://www.maanmittauslaitos.fi/node/6417}
 }
 \seealso{
-  help(LoadData);
   Description of the data identifiers:
   MML[["1_milj_Shape_etrs_shape"]]
   http://www.maanmittauslaitos.fi/digituotteet/yleiskartta-11-000-000;
