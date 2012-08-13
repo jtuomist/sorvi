@@ -1,3 +1,18 @@
+# This file is a part of the soRvi program (http://louhos.github.com/sorvi/)
+
+# Copyright (C) 2010-2012 Louhos <louhos.github.com>. All rights reserved.
+
+# This program is open source software; you can redistribute it and/or modify 
+# it under the terms of the FreeBSD License (keep this notice): 
+# http://en.wikipedia.org/wiki/BSD_licenses
+
+# This program is distributed in the hope that it will be useful, 
+# but WITHOUT ANY WARRANTY; without even the implied warranty of 
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+# Installation script is almost completely based on code from devtools package 
+# developed by Hadley Wickham <h.wickham@gmail.com> available at 
+# https://github.com/hadley/devtools and realeased under the MIT license
 
 install.prequisites <- function(package, ...) {
   if (suppressWarnings(!require(package, character.only=TRUE, quietly=TRUE))){
@@ -201,4 +216,6 @@ prequisities <- c("devtools", "httr")
 for (pkg in prequisities) {
   install.prequisites(pkg)
 }
-install_url("http://win-builder.r-project.org/dfjsf1l1Jv6v/sorvi_0.1.78.zip", binary=T)
+
+install_url("https://github.com/downloads/louhos/sorvi/sorvi_0.1.78.zip", 
+            binary=T)
