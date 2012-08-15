@@ -1,8 +1,8 @@
 Package: sorvi
 Type: Package
 Title: sorvi - avoimen datan tyokalupakki
-Version: 0.1.80
-Date: 2012-13-08
+Version: 0.1.81
+Date: 2012-14-08
 Author: Leo Lahti, Juuso Parkkinen and Joona Lehtomaki
 Maintainer: Louhos team <sorvi-admin@lists.r-forge.r-project.org>
 Description: Avoimen datan algoritmeja
@@ -42,4 +42,5 @@ Collate:
     'HKK.R'
     'elections.R'
     'Tilastokeskus-vaalidata.R'
+    'datavaalit.R'
 Packaged: 2011-12-29 14:19:39 UTC; lei
