@@ -1,3 +1,9 @@
+CHANGES IN VERSION 0.1.81 (2012-14-08)
+
+  o MML data Kunta.FI field updated: Lansi-Turunmaa -> Parainen;
+    Pedersoren kunta -> Pedersore
+  o added R/datavaalit.R
+
 CHANGES IN VERSION 0.1.79 (2012-08-08)
 
   o removed data/ directory, moved rda files in beta.datavaalit.fi/storage/louhos and 
