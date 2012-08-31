@@ -18,7 +18,7 @@
 #' Hae kaikki äänestykset eduskuntarajapinnasta
 #' @param no params
 #' @return list
-#' @author Juuso Haapanen
+#' @author Juuso Haapanen 2012
 
 GetAllAanestykset <- function() {
   if(!require(XML)) {
