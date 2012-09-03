@@ -5,9 +5,9 @@
 #' @return Finnish personal identification number object. Returns NA if the given string is not a valid Finnish personal identification number.
 #' \item{hetu}{Finnish personal identification number as a string.}
 #' \item{gender}{Gender of the person. Male or Female.}
-#' \item{date}{Birthdate.}
 #' \item{personal.number}{Personal number part of the identification number.}
 #' \item{checksum}{Checksum for the personal identification number.}
+#' \item{date}{Birthdate.}
 #' \item{day}{Day of the birthdate.}
 #' \item{month}{Month of the birthdate.}
 #' \item{year}{Year of the birthdate.}
@@ -55,6 +55,10 @@ hetu <- function(hetu) {
   }
   
   # Construct complete year from century character and 2-digit year
+  
+  ## Pad leading zero to a 2-digit year if needed
+  year <- formatC(year, flag=0, width=2) 
+  
   if (century == "+") {
     full.year <- as.numeric(paste("18", year, sep=""))
   }
@@ -98,7 +102,7 @@ hetu <- function(hetu) {
     }
 
   # Create hetu-object
-  object <- list(hetu = hetu, gender=gender,  date=date, personal.number=personal,  checksum=check, day=day, month=month, year=full.year, century.char=century, short.year=year)
+  object <- list(hetu = hetu, gender=gender, personal.number=personal,  checksum=check, date=date, day=day, month=month, year=full.year, century.char=century)
   class(object) <- "hetu"
   return (object)
 }

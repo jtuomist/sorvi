@@ -13,12 +13,12 @@
   if the given string is not a valid Finnish personal
   identification number. \item{hetu}{Finnish personal
   identification number as a string.} \item{gender}{Gender
-  of the person. Male or Female.} \item{date}{Birthdate.}
+  of the person. Male or Female.}
   \item{personal.number}{Personal number part of the
   identification number.} \item{checksum}{Checksum for the
-  personal identification number.} \item{day}{Day of the
-  birthdate.} \item{month}{Month of the birthdate.}
-  \item{year}{Year of the birthdate.}
+  personal identification number.} \item{date}{Birthdate.}
+  \item{day}{Day of the birthdate.} \item{month}{Month of
+  the birthdate.} \item{year}{Year of the birthdate.}
   \item{century.char}{Century of the birthdate: + (1800), -
   (1900) or A (2000). }
 }
