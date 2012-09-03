@@ -1,17 +1,14 @@
-# This file is a part of the soRvi program
-# http://sorvi.r-forge.r-project.org
+# This file is a part of the soRvi program (http://louhos.github.com/sorvi/)
 
-# Copyright (C) 2011 Joona Lehtomaki <joona.lehtomaki@gmail.com>. All rights 
-# reserved.
+# Copyright (C) 2010-2012 Louhos <louhos.github.com>. All rights reserved.
 
-# This program is open source software; you can redistribute it and/or
-# modify it under the terms of the FreeBSD License (keep this notice):
+# This program is open source software; you can redistribute it and/or modify 
+# it under the terms of the FreeBSD License (keep this notice): 
 # http://en.wikipedia.org/wiki/BSD_licenses
 
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# This program is distributed in the hope that it will be useful, 
+# but WITHOUT ANY WARRANTY; without even the implied warranty of 
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-
 
 .check.schema <- function(sp.object1, sp.object2) {
   
@@ -45,33 +42,6 @@
   return(paste(paste(rep("0", char.diff), collapse=""), x, sep=""))
 }
 
-.parse.df <- function(df) {
-  # Create an empty list to hold the expanded rows as elements
-  new.rows <- list()
-  # Loop over the rows in the data frame
-  for (i in 1:nrow(df)) {
-    # Get the current row (2 elements)
-    row <- df[i,]
-    # Split the 1st elemnt by white space -> ressult in character vector with 
-    # 3 or 4 elements (kuntaID, piiriID, piiri (A-part) [piiri (B-part)])
-    cell.raw <- unlist(strsplit(row[[1]], "\\s"))
-    # Created the expanded verision by joining elemnents 1 and 2 as they are
-    # and concatenating elements 3 and 4 (A- and B-part) together if piiri 
-    # constitutes of 2 parts
-    cell.expanded <- c(cell.raw[1:2], paste(cell.raw[3:length(cell.raw)], 
-                                            collapse=' '))
-    # Create a new 4 item row by joining the expanded cell with aanestysaluekoodi
-    # (also trim the leading white space)
-    new.rows[[i]] <- c(cell.expanded, trim(row[[2]]))
-  }
-  # Merge the list of vectors (new rows) into a matrix
-  new.df <- do.call("rbind", new.rows)
-  # Create the header
-  colnames(new.df) <- c("kuntaID", "piiriID", "piiri", "aanestysaluekoodi")
-  # Return a data frame
-  return(data.frame(new.df))
-}
-
 #' Retrieve HKK data 
 #'
 #' This script retrieves data from Helsinki Real Estate Department (Helsingin 
@@ -92,6 +62,9 @@
 #' @examples # sp <- GetHKK("Aanestysaluejako", data.dir="C:/data")
 
 GetHKK <- function(which.data, data.dir) {
+  
+  .InstallMarginal("rgdal")
+  
   # TODO: shold all the urls/paths be defined independently from the functions?
   data.url <- "http://kartta.hel.fi/avoindata/aineistot/"
   
@@ -155,7 +128,7 @@ GetHKK <- function(which.data, data.dir) {
 #' @references
 #' See citation("sorvi") 
 #' @author Joona Lehtomaki \email{sorvi-commits@@lists.r-forge.r-project.org}
-#' @examples # sp <- GetHKK("Aanestysaluejako", data.dir="C:/data")
+#' @note Not tested (at all)
 
 MergeSpatial <- function(sp.list, CRS=NA, FID=NA) {
   
@@ -220,7 +193,7 @@ MergeSpatial <- function(sp.list, CRS=NA, FID=NA) {
 #' geometries are coming from a common source.
 #'
 #' @param sp.object  A Spatial*DataFrame object to be splitted
-#' @param spit.field A string describing the identifier field for the subregions
+#' @param split.field A string describing the identifier field for the subregions
 #'
 #' @return a list of Shape objects (from SpatialPolygonsDataFrame class)
 #' @export
@@ -250,7 +223,7 @@ SplitSpatial <- function(sp.object, split.field) {
   # Convert identifier field into a factor if it isn't one already
   sp.object[[split.field]] <- factor(sp.object[[split.field]])
   # Make sure that there are no dangling levels in the splitter field
-  sp.object[[split.field]] <- drop.levels(sp.object[[split.field]], 
+  sp.object[[split.field]] <- droplevels(sp.object[[split.field]], 
                                           reorder=FALSE)
   # Get all the levels for the subregions
   sub.region.levels <- levels(sp.object[[split.field]])
@@ -263,7 +236,7 @@ SplitSpatial <- function(sp.object, split.field) {
 
   # Drop the unused levels in all the fields
   for (i in 1:length(sub.regions)) {
-    sub.regions[[i]]@data <- drop.levels(sub.regions[[i]]@data)
+    sub.regions[[i]]@data <- droplevels(sub.regions[[i]]@data)
   }
   return(sub.regions)
 }

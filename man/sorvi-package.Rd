@@ -9,7 +9,7 @@
 \details{
   \tabular{ll}{ Package: \tab sorvi\cr Type: \tab
   Package\cr Version: \tab See sessionInfo() or DESCRIPTION
-  file\cr Date: \tab 2011\cr License: \tab FreeBSD\cr
+  file\cr Date: \tab 2012\cr License: \tab FreeBSD\cr
   LazyLoad: \tab yes\cr }
 
   Algorithmic tools for Open Data in Finland -
@@ -25,7 +25,7 @@ library(sorvi)
 }
 \references{
   See citation("sorvi")
-  \url{http://sorvi.r-forge.r-project.org}
+  \url{http://louhos.github.com/sorvi}
 }
 \keyword{package}
 

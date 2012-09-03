@@ -1,16 +1,13 @@
-# This file is a part of the soRvi program
-# http://sorvi.r-forge.r-project.org
+# This file is a part of the soRvi program (http://louhos.github.com/sorvi/)
 
-# Copyright (C) 2011-2012 Leo Lahti 
-# <sorvi-commits@lists.r-forge.r-project.org>
-# All rights reserved.
+# Copyright (C) 2010-2012 Louhos <louhos.github.com>. All rights reserved.
 
-# This program is open source software; you can redistribute it and/or
-# modify it under the terms of the FreeBSD License (keep this notice):
+# This program is open source software; you can redistribute it and/or modify 
+# it under the terms of the FreeBSD License (keep this notice): 
 # http://en.wikipedia.org/wiki/BSD_licenses
 
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# This program is distributed in the hope that it will be useful, 
+# but WITHOUT ANY WARRANTY; without even the implied warranty of 
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 #' Visualize the specified fields of a shape object on using 1- or 2-way color scale. 
@@ -43,6 +40,9 @@
 PlotShape <- function (sp, varname, type = "oneway", ncol = 10, at = NULL, palette = NULL, main = NULL, colorkey = TRUE, lwd = .4, border.col = "black", col.regions = NULL) {
 
   # type = "oneway"; ncol = 10; at = NULL; palette = NULL; main = NULL; colorkey = TRUE; lwd = .4; border.col = "black"; col.regions = NULL
+
+  # FIXME: check if we could here use standard palettes and avoid dependency
+  .InstallMarginal("RColorBrewer")
 
   pic <- NULL
 
@@ -132,12 +132,15 @@ PlotShape <- function (sp, varname, type = "oneway", ncol = 10, at = NULL, palet
     if (is.null(col.regions) && length(sp[[varname]]) == length(levels(sp[[varname]]))) {
       # Aims to find colors such that neighboring polygons have 
       # distinct colors
-      cols <- GenerateMapColours(sp) # Generate color indices
-      col.regions <- brewer.pal(max(cols), "Paired")[cols]
-    } else if (is.null(col.regions)) {
+      cols <- sorvi::GenerateMapColours(sp) # Generate color indices
+      col.regions <- RColorBrewer::brewer.pal(max(cols), "Paired")[cols]
+
+    } else if ( is.null(col.regions) ) {
       
       # Use ncol colors, loop them to fill all regions    
-      col.regions <- rep(brewer.pal(ncol, "Paired"), ceiling(length(levels(vars))/ncol))[1:length(levels(vars))]
+      nlevels <- length(levels(vars))
+      col.regions <- rep(RColorBrewer::brewer.pal(ncol, "Paired"), ceiling(nlevels/ncol))[1:nlevels]
+
     }
 
     colorkey <- FALSE
@@ -310,7 +313,7 @@ PlotScale <- function (breaks, colors = NULL, m = NULL, label.step = 2, interval
   if (two.sided) {
     
     if (length(m)>0) {
-      breaks <- set.breaks(m, interval)
+      breaks <- sorvi::set.breaks(m, interval)
       image(t(as.matrix(seq(-mm, mm, length = 100))), col = colors, xaxt = 'n', yaxt = 'n', zlim = range(breaks), breaks=breaks)
     } else {
       image(t(as.matrix(breaks)), col = colors, xaxt = 'n',yaxt = 'n', zlim = range(breaks), breaks = breaks)
@@ -335,13 +338,13 @@ PlotScale <- function (breaks, colors = NULL, m = NULL, label.step = 2, interval
     mm <- max(breaks) + 1e6 # infty
     m <- max(breaks)
  
-    labs = seq(0,m,label.step)
+    labs <- seq(0,m,label.step)
     #inds = sapply(labs,function(lab){min(which(lab<=breaks))})
     start.position <- which.min(abs(round(labs, ndigits) - (-label.start)))
     end.position <- which.min(abs(round(labs, ndigits) - (label.start)))
     inds <- seq(start.position,end.position,length=Nlab)  
 
-    image(t(as.matrix(seq(0, m, length = 100))), col = colors, xaxt='n',yaxt='n', zlim=range(breaks), breaks=breaks)
+    image(t(as.matrix(seq(0, m, length = 100))), col = colors, xaxt='n', yaxt='n', zlim=range(breaks), breaks=breaks)
     
     axis(2, at = seq(0, 1, length=Nlab), labels=labs[inds], las=2, ...)
   }

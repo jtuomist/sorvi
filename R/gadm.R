@@ -1,15 +1,15 @@
-# Copyright (C) 2011-2012 Leo Lahti <leo.lahti@iki.fi>. All rights reserved.
+# This file is a part of the soRvi program (http://louhos.github.com/sorvi/)
 
-# This program is open source software; you can redistribute it and/or
-# modify it under the terms of the FreeBSD License (keep this notice):
+# Copyright (C) 2010-2012 Louhos <louhos.github.com>. All rights reserved.
+
+# This program is open source software; you can redistribute it and/or modify 
+# it under the terms of the FreeBSD License (keep this notice): 
 # http://en.wikipedia.org/wiki/BSD_licenses
 
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# This program is distributed in the hope that it will be useful, 
+# but WITHOUT ANY WARRANTY; without even the implied warranty of 
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-# This file is a part of the soRvi program
-# http://sorvi.r-forge.r-project.org
 
 #' Get map data in GADM format
 #'
@@ -51,7 +51,7 @@ GetGADM <- function (map = "FIN_adm",
   # url <- "http://gadm.org/data/rda/FIN_adm"
 
   # Convert string input to corresponding integer
-  resolution <- ConvertGADMResolution(resolution, "integer") 
+  resolution <- sorvi::ConvertGADMResolution(resolution, "integer") 
 
   # Load map of Finland with the given resolution
   con <- url(paste(url, map, resolution, ".RData", sep=""))
@@ -171,7 +171,8 @@ ConvertGADMPosition2Region <- function (coordinates,
   # Modified from http://www.r-ohjelmointi.org/?p=894
  
   # Form data.frame with the coordinates
-  require(sp)
+
+  #.InstallMarginal("sp") # Key dependency
   
   x <- coordinates[, "x"]
   y <- coordinates[, "y"]
@@ -180,11 +181,11 @@ ConvertGADMPosition2Region <- function (coordinates,
   coordinates(dat) = ~x + y
 
   # Load Finland map, divided into provinces (laanit)
-  gadm <- GetGADM(map, resolution)
+  gadm <- sorvi::GetGADM(map, resolution)
   info <- overlay(gadm, dat)
 
-  resolution.int <- ConvertGADMResolution(resolution, "integer")
-  resolution.str <- ConvertGADMResolution(resolution, "string")
+  resolution.int <- sorvi::ConvertGADMResolution(resolution, "integer")
+  resolution.str <- sorvi::ConvertGADMResolution(resolution, "string")
   name.field <- paste("NAME_", resolution.int, sep = "")
 
   # Merge the location information for the coordinate into a single data.frame

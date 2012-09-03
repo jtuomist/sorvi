@@ -1,15 +1,16 @@
-# Copyright (C) 2011 Juuso Parkkinen <juuso.parkkinen(at)gmail.com. All rights reserved.
+# This file is a part of the soRvi program (http://louhos.github.com/sorvi/)
 
-# This program is open source software; you can redistribute it and/or
-# modify it under the terms of the FreeBSD License (keep this notice):
+# Copyright (C) 2010-2012 Louhos <louhos.github.com>. All rights reserved.
+
+# This program is open source software; you can redistribute it and/or modify 
+# it under the terms of the FreeBSD License (keep this notice): 
 # http://en.wikipedia.org/wiki/BSD_licenses
 
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# This program is distributed in the hope that it will be useful, 
+# but WITHOUT ANY WARRANTY; without even the implied warranty of 
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-# This file is a part of the soRvi program
-# http://sorvi.r-forge.r-project.org
+
 
 #' Preprocess Oikotie data
 #'
@@ -22,7 +23,7 @@
 GetOikotie <- function() {
      
   message("Loading Oikotie data...")
-  library(gdata)
+#  library(gdata)
     # First download and unzip data from http://www2.hs.fi/extrat/hsnext/oikotie-data.zip
   myynnit <- read.csv("data/myynnit.csv", sep=";", quote="", fileEncoding="ISO-8859-1")
   
@@ -69,6 +70,6 @@ GetOikotie <- function() {
   hr.myynnit$Street <- factor(iconv(hr.myynnit$Street, from="ISO-8859-1", to="UTF-8"))
   hr.myynnit$Room.configuration <- factor(iconv(hr.myynnit$Room.configuration, from="ISO-8859-1", to="UTF-8"))
   
-  message("DONE\n")
+  message("DONE")
   return(list(myynnit=myynnit, hr.myynnit=hr.myynnit))
 }

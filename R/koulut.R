@@ -1,9 +1,17 @@
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# This file is a part of the soRvi program (http://louhos.github.com/sorvi/)
+
+# Copyright (C) 2010-2012 Louhos <louhos.github.com>. All rights reserved.
+
+# This program is open source software; you can redistribute it and/or modify 
+# it under the terms of the FreeBSD License (keep this notice): 
+# http://en.wikipedia.org/wiki/BSD_licenses
+
+# This program is distributed in the hope that it will be useful, 
+# but WITHOUT ANY WARRANTY; without even the implied warranty of 
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-# This file is a part of the soRvi program
-# http://sorvi.r-forge.r-project.org
+
+
 
 #' Preprocess lukio data
 #'
@@ -19,9 +27,9 @@ GetLukiot <- function() {
   # Script for processing Finnish school data
   # License: FreeBSD, http://en.wikipedia.org/wiki/BSD_licenses
   # Copyright 2011 Juuso Parkkinen, juuso.parkkinen@gmail.com. All rights reserved.
-  
-  library(XML)
-  library(gdata)
+
+  .InstallMarginal("XML")
+  .InstallMarginal("gdata")
   
   # Read data about high school performance (HS 31.5.2011)  
   u <- "http://www.hs.fi/kotimaa/artikkeli/1135266565425"
@@ -42,7 +50,7 @@ GetLukiot <- function() {
   hr.lukiot <- hr.lukiot[hr.lukiot$Kunta %in% c("Helsinki", "Espoo", "Vantaa", "Kauniainen"),]
 
   hr.lukiot <- hr.lukiot[-grep("aikuis", hr.lukiot$Koulu),]
-  hr.lukiot <- drop.levels(hr.lukiot)
+  hr.lukiot <- droplevels(hr.lukiot)
   
   # Query OSM with high school names
   hr.lukiot$lon <- hr.lukiot$lat <- NA
@@ -57,31 +65,32 @@ GetLukiot <- function() {
   }
   
   # Some coordinates are missing
+  message("Some school coordinates are missing. Try fetching them manually.")
   # hr.lukiot$Koulu[is.na(hr.lukiot$lon)]
   # Get mising coordinates manually with school addresses (should find a better way!)
-  addresses <- c("Kevatkatu+2,Helsinki", "Kalevankatu+8,Helsinki", "Urheilukatu+10-12,Helsinki", 
-                 "Kettutie+6,Helsinki", "Mantytie+14,Helsinki", "Laajalahdentie+21,Helsinki", 
-                 "Sandelsgatan+3,Helsinki", "Unioninkatu+2,Helsinki", "Elevhemsvagen+23,Grankulla",
-                 "Kasavuorentie+1,Kauniainen", "Pietari+Hannikaisen+tie+6,Helsinki", "Martinlaaksontie+36,Vantaa",
-                 "Ylastontie+3,Vantaa", "Sotungintie+19,Vantaa", "Lucina+Hagmanin+polku+4,Helsinki",
-                 "Moisiontie+3,Helsinki", "Makipellontie+19,Helsinki", "Louhentie+3,Helsinki",
-                 "Arkadiankatu+26,Helsinki", "Rintinpolku+2,Helsinki", "Arentipolku+1+,Helsinki")
-  
-  # Query OSM with high school addresses
-  lats <- lons <- rep(NA, length(addresses))
-  for (i in 1:length(addresses)) {
-    Sys.sleep(1)
-    latlon <- GetGeocodeOpenStreetMap(addresses[i])
-    if (!is.null(latlon)) {
-      lats[i] <- latlon[1]
-      lons[i] <- latlon[2]
-    }
-  }
-  
-  # Add the rest of the coordinates
-  stopifnot(length(which(is.na(hr.lukiot$lon))) == length(lons))
-  hr.lukiot$lat[is.na(hr.lukiot$lat)] <- lats
-  hr.lukiot$lon[is.na(hr.lukiot$lon)] <- lons
+#   addresses <- c("Kevatkatu+2,Helsinki", "Kalevankatu+8,Helsinki", "Urheilukatu+10-12,Helsinki", 
+#                  "Kettutie+6,Helsinki", "Mantytie+14,Helsinki", "Laajalahdentie+21,Helsinki", 
+#                  "Sandelsgatan+3,Helsinki", "Unioninkatu+2,Helsinki", "Elevhemsvagen+23,Grankulla",
+#                  "Kasavuorentie+1,Kauniainen", "Pietari+Hannikaisen+tie+6,Helsinki", "Martinlaaksontie+36,Vantaa",
+#                  "Ylastontie+3,Vantaa", "Sotungintie+19,Vantaa", "Lucina+Hagmanin+polku+4,Helsinki",
+#                  "Moisiontie+3,Helsinki", "Makipellontie+19,Helsinki", "Louhentie+3,Helsinki",
+#                  "Arkadiankatu+26,Helsinki", "Rintinpolku+2,Helsinki", "Arentipolku+1+,Helsinki")
+#   
+#   # Query OSM with high school addresses
+#   lats <- lons <- rep(NA, length(addresses))
+#   for (i in 1:length(addresses)) {
+#     Sys.sleep(1)
+#     latlon <- GetGeocodeOpenStreetMap(addresses[i])
+#     if (!is.null(latlon)) {
+#       lats[i] <- latlon[1]
+#       lons[i] <- latlon[2]
+#     }
+#   }
+#   
+#   # Add the rest of the coordinates
+#   stopifnot(length(which(is.na(hr.lukiot$lon))) == length(lons))
+#   hr.lukiot$lat[is.na(hr.lukiot$lat)] <- lats
+#   hr.lukiot$lon[is.na(hr.lukiot$lon)] <- lons
   
   # Convert to UTF-8
   hr.lukiot$Koulu <- factor(iconv(hr.lukiot$Koulu, from="ISO-8859-1", to="UTF-8"))

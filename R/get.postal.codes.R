@@ -1,15 +1,15 @@
-# This file is a part of the soRvi program
-# http://sorvi.r-forge.r-project.org
+# This file is a part of the soRvi program (http://louhos.github.com/sorvi/)
 
-# Copyright (C) 2011-2012 Leo Lahti <leo.lahti@iki.fi>. All rights reserved.
+# Copyright (C) 2010-2012 Louhos <louhos.github.com>. All rights reserved.
 
-# This program is open source software; you can redistribute it and/or
-# modify it under the terms of the FreeBSD License (keep this notice):
+# This program is open source software; you can redistribute it and/or modify 
+# it under the terms of the FreeBSD License (keep this notice): 
 # http://en.wikipedia.org/wiki/BSD_licenses
 
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# This program is distributed in the hope that it will be useful, 
+# but WITHOUT ANY WARRANTY; without even the implied warranty of 
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
 
 #' Get Finnish postal codes vs. municipalities table from Wikipedia. 
 #' @aliases get.postal.codes
@@ -27,6 +27,8 @@
 #' @keywords utilities
 
 GetPostalCodeInfo <- function (url = "http://fi.wikipedia.org/wiki/Luettelo_Suomen_postinumeroista_kunnittain") {
+
+  .InstallMarginal("plyr")
 
   # Read URL site
   txt <- readLines(url)
@@ -52,10 +54,9 @@ GetPostalCodeInfo <- function (url = "http://fi.wikipedia.org/wiki/Luettelo_Suom
     }
   }
 
-  library(plyr)
-  map <- ldply(map)
+  map <- plyr::ldply(map)
   colnames(map) <- c("postal.code", "municipality")
-  map$municipality.ascii <- korvaa.skandit(map$municipality)
+  map$municipality.ascii <- sorvi::korvaa.skandit(map$municipality)
 
   # Remove the last row
   map <- map[-nrow(map),]

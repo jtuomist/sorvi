@@ -1,3 +1,16 @@
+# This file is a part of the soRvi program (http://louhos.github.com/sorvi/)
+
+# Copyright (C) 2010-2012 Louhos <louhos.github.com>. All rights reserved.
+
+# This program is open source software; you can redistribute it and/or modify 
+# it under the terms of the FreeBSD License (keep this notice): 
+# http://en.wikipedia.org/wiki/BSD_licenses
+
+# This program is distributed in the hope that it will be useful, 
+# but WITHOUT ANY WARRANTY; without even the implied warranty of 
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+
 #' MML data documentation 
 #'
 #' The MML data set contains preprocessed map data obtained from 
@@ -13,7 +26,7 @@
 #' is responsible of data preprocessing.
 #' @seealso Description of the data identifiers: MML[["1_milj_Shape_etrs_shape"]] http://www.maanmittauslaitos.fi/digituotteet/yleiskartta-11-000-000; MML[["4_5_milj_shape_etrs-tm35fin"]] http://www.maanmittauslaitos.fi/digituotteet/yleiskartta-14-500-000
 #' @references \url{http://www.maanmittauslaitos.fi/aineistot-palvelut/digitaaliset-tuotteet/ilmaiset-aineistot/hankinta lisenssiehtojen mukaisesti: http://www.maanmittauslaitos.fi/node/6417}
-#' @usage data(MML)
+#' @usage LoadData("MML")
 #' @format list
 #' @keywords data
 NULL
@@ -29,7 +42,7 @@ NULL
 #' @docType data
 #' @author Leo Lahti \email{sorvi-commits@@lists.r-forge.r-project.org} 
 #' @references See cite(sorvi)
-#' @usage data(translations)
+#' @usage LoadData("translations")
 #' @format list
 #' @keywords data misc
 NULL
@@ -42,7 +55,7 @@ NULL
 #' @name fi.en.maakunnat
 #' @docType data
 #' @author Leo Lahti \email{sorvi-commits@@lists.r-forge.r-project.org} 
-#' @usage data(translations)
+#' @usage LoadData("translations")
 #' @format list
 #' @keywords data
 NULL
@@ -59,7 +72,7 @@ NULL
 #' @docType data
 #' @author Juuso Parkkinen \email{sorvi-commits@@lists.r-forge.r-project.org} 
 #' @references See cite(sorvi)
-#' @usage data(HRI.aluejakokartat)
+#' @usage LoadData("HRI.aluejakokartat")
 #' @format list of SpatialPolygonsDataFrames
 #' @keywords data misc
 NULL

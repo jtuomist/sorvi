@@ -1,3 +1,17 @@
+# This file is a part of the soRvi program (http://louhos.github.com/sorvi/)
+
+# Copyright (C) 2010-2012 Louhos <louhos.github.com>. All rights reserved.
+
+# This program is open source software; you can redistribute it and/or modify 
+# it under the terms of the FreeBSD License (keep this notice): 
+# http://en.wikipedia.org/wiki/BSD_licenses
+
+# This program is distributed in the hope that it will be useful, 
+# but WITHOUT ANY WARRANTY; without even the implied warranty of 
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+
+
 #' Load migration data for given countries from Worldbank
 #' 
 #' Data about countrywise migration in and out from given countries 
@@ -10,11 +24,13 @@
 #' @author Juuso Parkkinen \email{sorvi-commits@@lists.r-forge.r-project.org}
 #' @export
 GetWorldbankMigration <- function(countries) {
-  
-  library(gdata)
+
+  .InstallMarginal("gdata")
   
   # Load migration matrix from World Bank
-  migration.matrix <- read.xls("http://siteresources.worldbank.org/INTPROSPECTS/Resources/334934-1110315015165/T1.Estimates_of_Migrant_Stocks_2010.xls")
+  tmp <- try(migration.matrix <- gdata::read.xls("http://siteresources.worldbank.org/INTPROSPECTS/Resources/334934-1110315015165/T1.Estimates_of_Migrant_Stocks_2010.xls"))
+  if (tmp == "try-error") {stop("gdata::read.xls requires PERL module for Windows. See instructions at http://louhos.github.com/sorvi/asennus.html")}
+
   data.inds <- 2:214
   
   # Get migration flow in to and out from the given countries

@@ -1,3 +1,40 @@
+CHANGES IN VERSION 0.1.83 (2012-09-03)
+  
+  o Fixed a bug with handling years in hetu-function.
+
+CHANGES IN VERSION 0.1.82 (2012-08-31)
+  
+  o Added functions hetu and valid.hetu for processing Finnish personal identification numbers.
+
+CHANGES IN VERSION 0.1.81 (2012-08-14)
+
+  o MML data Kunta.FI field updated: Lansi-Turunmaa -> Parainen;
+    Pedersoren kunta -> Pedersore
+  o added R/datavaalit.R
+
+CHANGES IN VERSION 0.1.79 (2012-08-08)
+
+  o removed data/ directory, moved rda files in beta.datavaalit.fi/storage/louhos and 
+  o added LoadData function
+
+CHANGES IN VERSION 0.1.73 (2012-07-09)
+
+  o Removed several dependencies and made them marginal (see wiki for description)
+
+CHANGES IN VERSION 0.1.71 (2012-05-12)
+
+  o GetMunicipalityInfo modified 
+  o added ConvertMunicipalityNames function
+  o added GetParliamentaryElectionData function
+  o GetMunicipalityInfoMML 
+  o GetMunicipalityInfoStatFi
+  o elections*.R functions added for datavaalit
+
+CHANGES IN VERSION 0.1.59 (2012-03-10)
+
+  o Added functions GetOmakaupunki, GetPalvelukartta, GetThemeMap
+  o Joined files googlemaps.R and OpenStreetMap.R to file maps.R
+
 CHANGES IN VERSION 0.1.58 (2012-03-06)
 
   o XML removed from dependencies
