@@ -1,8 +1,8 @@
 \name{GetEdustajaData}
 \alias{GetEdustajaData}
-\title{Hakee äänestyksen tiedot äänestystunnisteen perusteella}
+\title{Hakee edustajan tiedot äänestystunnisteen perusteella}
 \usage{
-  aanestykset <- GetAllAanestykset(tunniste)
+  aanestykset <- GetEdustajaData(tunniste)
 }
 \value{
   Äänestyksen tulos data.framena, jossa kansanedustajan nimi, puolue ja äänestystulos
