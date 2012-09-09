@@ -15,10 +15,16 @@
 # Versio 0.1
 
 
-#' Hae kaikki äänestykset eduskuntarajapinnasta
+#' Hakee kaikki äänestykset eduskuntarajapinnasta
 #' @param no params
 #' @return list
-#' @author Juuso Haapanen
+#' @author Juuso Haapanen \email{sorvi-commits@@lists.r-forge.r-project.org}
+#' @examples
+#' # aanestykset <- GetAllAanestykset()
+#' @export 
+#' @keywords eduskunta
+#' @references
+#' See citation("sorvi") 
 
 GetAllAanestykset <- function() {
   if(!require(XML)) {
@@ -33,11 +39,18 @@ GetAllAanestykset <- function() {
   
 }
 
-
+#' Hakee tietyn äänestyksen tulokset edustajaittain
+#' 
 #' @param aanestys äänestyksen tunniste.
 #' @return data.frame jossa valinta, puolue ja nimi
-#' @author Juuso Haapanen
-#' 
+#' @author Juuso Haapanen \email{sorvi-commits@@lists.r-forge.r-project.org}
+#' @examples 
+#' # edustajat <- GetEdustajaData('a3_80-2011')
+#' @export
+#' @references
+#' See citation("sorvi") 
+#' @keywords eduskunta
+
 GetEdustajaData <- function(aanestys)
 {
   if(!require(XML)) {
@@ -62,9 +75,16 @@ GetEdustajaData <- function(aanestys)
   return(df)
 }
 
+#' Hakee tietyn kansanedustajan äänestykset
 #' @param edustajan nimi muodossa Sukunimi Etunimi
 #' @return data.frame
-#' @author Juuso Haapanen
+#' @author Juuso Haapanen \email{sorvi-commits@@lists.r-forge.r-project.org}
+#' @examples
+#' # paavo <- GetEdustajanAanestykset('Lipponen Paavo')
+#' @export
+#' @references
+#' See citation("sorvi") 
+#' @keywords eduskunta
 
 GetEdustajanAanestykset <- function(edustaja) {
   if(!require(XML)) {
@@ -81,11 +101,18 @@ GetEdustajanAanestykset <- function(edustaja) {
   return(df)
 }
 
-
+#' Hakee hakusanalla äänestyksiä eduskuntarajapinnasta
 #' @param hakusana string
 #' @return data.frame
-#' @author Juuso Haapanen
-haeHakuSanalla <- function(hakusana) {
+#' @author Juuso Haapanen \email{sorvi-commits@@lists.r-forge.r-project.org}
+#' @examples
+#' # luonto <- haeHakusanalla('luonto')
+#' @export
+#' @references
+#' See citation("sorvi") 
+#' @keywords eduskunta 
+
+haeHakusanalla <- function(hakusana) {
 
   require(XML)
   
