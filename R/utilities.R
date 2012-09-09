@@ -16,7 +16,7 @@
 
 
 #' LoadData
-# '
+#'
 #' @param data.id
 #' @param sorvi.data.url Data URL path
 #' @return url connection
