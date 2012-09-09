@@ -1,6 +1,6 @@
 \name{GetAllAanestykset}
 \alias{GetAllAanestykset}
-\title{Hae eduskunnan äänestysdataa}
+\title{Hakee eduskunnan äänestysrajanpinnan kautta kaikki äänestykset}
 \usage{
   aanestykset <- GetAllAanestykset()
 }
