@@ -10,7 +10,6 @@
 # but WITHOUT ANY WARRANTY; without even the implied warranty of 
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-
 #' Load data sets from datavaalit.fi web service
 #'
 #' @param data.id Data set ID
@@ -33,7 +32,11 @@ ReadDatavaalit <- function (data.id) {
     f <- "http://beta.datavaalit.fi/api/v1/municipality/?format=json&limit=500"
     dat <- fromJSON(paste(readLines(f), collapse = ""))
 
+  } else if (data.id == "hel.council.members") {
+    f <- "http://beta.datavaalit.fi/api/v1/council_member/?format=json&limit=85"
+    # FIXME: Extremely bad idea to have the function to return different value
+    # types depending on the data.id
+    dat <- council <- new("council", f)
   }
-
   dat  
 }
