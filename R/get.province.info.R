@@ -1,4 +1,3 @@
-
 # This file is a part of the soRvi program (http://louhos.github.com/sorvi/)
 
 # Copyright (C) 2010-2012 Louhos <louhos.github.com>. All rights reserved.
@@ -127,6 +126,7 @@ this is required as an argument for GetMunicipalityInfo function.")}
 GetMunicipalityInfoStatFi <- function (url = "http://pxweb2.stat.fi/Database/Kuntien%20perustiedot/Kuntien%20perustiedot/Kuntaportaali.px") {
 
   .InstallMarginal("reshape2")
+  .InstallMarginal("reshape")
 
   # FIXME: merge GetPopulationRegister function in here
 
@@ -141,7 +141,7 @@ GetMunicipalityInfoStatFi <- function (url = "http://pxweb2.stat.fi/Database/Kun
   municipality.info$value <- municipality.info$dat
   
   # Convert to wide format
-  municipality.info <- reshape2::cast(municipality.info[, c("Alue", "Tunnusluku", "value")], Alue ~ Tunnusluku) 
+  municipality.info <- reshape::cast(municipality.info[, c("Alue", "Tunnusluku", "value")], Alue ~ Tunnusluku) 
 
   kuntanimi.statfin <- as.character(municipality.info$Alue)
 

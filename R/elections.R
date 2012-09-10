@@ -519,6 +519,7 @@ PreprocessPresidentti2012UserData <- function (dat.list, API = API) {
 GetParliamentaryElectionData <- function (level) {
 
   .InstallMarginal("reshape2")
+  .InstallMarginal("reshape")
   .InstallMarginal("plyr")  
 
   if (level == "municipality") {
@@ -530,7 +531,7 @@ GetParliamentaryElectionData <- function (level) {
     px <- pxR::read.px(url)
     df <- try(as.data.frame(px))
     kaava <- as.formula("Vaalipiiri.ja.kunta~Äänestystiedot~Lukumäärätiedot")
-    tmp <- reshape2::cast(df, kaava, value="dat")
+    tmp <- reshape::cast(df, kaava, value="dat")
 
     # Separate tables and preprocess
     tab1 <- tmp[,,"Lukumäärä 2007"]
@@ -587,7 +588,7 @@ GetParliamentaryElectionData <- function (level) {
     px <- pxR::read.px(url) 
     df <- try(as.data.frame(px))
     kaava <- as.formula("Vaalipiiri~Äänestystiedot~Lukumäärätiedot")
-    tmp <- reshape2::cast(df, kaava, value="dat")
+    tmp <- reshape::cast(df, kaava, value="dat")
 
     # Separate the tables
     tab1 <- tmp[,,1]
@@ -610,7 +611,7 @@ GetParliamentaryElectionData <- function (level) {
     px <- pxR::read.px("http://pxweb2.stat.fi/database/StatFin/vaa/evaa/120_evaa_tau_105_fi.px") 
     df <- try(as.data.frame(px))
     kaava <- as.formula("Vaalipiiri~Hylkäysperuste")
-    tab2 <- reshape2::cast(df, kaava, value="dat")
+    tab2 <- reshape::cast(df, kaava, value="dat")
 
     # Keep only election.region level data
     rownames(tab2) <- as.character(tab2[,1])
