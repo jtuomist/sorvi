@@ -91,7 +91,12 @@ ConvertMunicipalityNames <- function (municipality.names) {
 #' @examples # LoadData("MML"); tmp <- GetMunicipalityInfo(MML = MML)
 #' @keywords utilities
 
-GetMunicipalityInfo <- function (url = "http://pxweb2.stat.fi/Database/Kuntien%20perustiedot/Kuntien%20perustiedot/Kuntaportaali.px", MML) {
+GetMunicipalityInfo <- function (url =
+"http://pxweb2.stat.fi/Database/Kuntien%20perustiedot/Kuntien%20perustiedot/Kuntaportaali.px",
+MML = NULL) {
+
+  if (is.null(MML)) {stop("Use LoadData('MML') to retrieve MML data;
+this is required as an argument for GetMunicipalityInfo function.")}
 
   mml <- sorvi::GetMunicipalityInfoMML(MML)    # (C) MML 2012
   statfi <- sorvi::GetMunicipalityInfoStatFi() # (C) Tilastokeskus 2012
