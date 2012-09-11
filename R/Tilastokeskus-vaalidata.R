@@ -36,7 +36,7 @@ GetMunicipalElectionData2000 <- function (which = "election.statistics") {
 
     #Kunnallisvaalit 2000, äänestystiedot
     url <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa_2000/010_kvaa_2000_2008-10-17_tau_101_fi.px"
-    px <- pxR::read.px(url)
+    px <- pxR::read.px(url, na.strings='"-"')
     df <- as.data.frame(px)
     kaava <- as.formula("Alue ~ Äänestystiedot")
     tab <- reshape::cast(df, kaava, value="dat")
@@ -63,7 +63,7 @@ GetMunicipalElectionData2000 <- function (which = "election.statistics") {
 
     #Ehdokkaat puolueittain vaalipiirin ja kunnan mukaan kunnallisvaaleissa 2000
     url <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa_2000/020_kvaa_2000_2008-10-17_tau_102_fi.px"
-    px <- pxR::read.px(url)
+    px <- pxR::read.px(url, na.strings='"-"')
     df <- as.data.frame(px)
     tmp <- reshape::cast(df, Alue ~ Puolue ~ Ehdokastiedot, value="dat")
 
@@ -99,7 +99,7 @@ GetMunicipalElectionData2000 <- function (which = "election.statistics") {
     #Valitut puolueittain vaalipiirin ja kunnan mukaan kunnallisvaaleissa 2000
     url <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa_2000/030_kvaa_2000_2008-10-17_tau_103_fi.px"
 
-    px <- pxR::read.px(url)
+    px <- pxR::read.px(url, na.strings='"-"')
     df <- as.data.frame(px)
     tmp <- reshape::cast(df, Alue ~ Puolue ~ Valittujen.tiedot, value="dat")
 
@@ -134,7 +134,7 @@ GetMunicipalElectionData2000 <- function (which = "election.statistics") {
 
     #Kunnallisvaalit 2000, puolueiden kannatus
     url <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa_2000/040_kvaa_2000_2008-10-17_tau_104_fi.px"
-    px <- pxR::read.px(url)
+    px <- pxR::read.px(url, na.strings='"-"')
     df <- as.data.frame(px)
 
     tmp <- reshape::cast(df, Alue ~ Puolue ~ Kannatustiedot, value="dat")
@@ -176,7 +176,7 @@ GetMunicipalElectionData2000 <- function (which = "election.statistics") {
     #Kunnallisvaalit 2000, valitut ehdokkaat
     url <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa_2000/050_kvaa_2000_2008-10-17_tau_105_fi.px"
 
-    px <- pxR::read.px(url)
+    px <- pxR::read.px(url, na.strings='"-"')
     df <- as.data.frame(px)
     tab <- reshape::cast(df, Ehdokas ~ Ehdokastiedot, value="dat")
 
@@ -224,7 +224,7 @@ GetMunicipalElectionData2004 <- function (which = "election.statistics") {
 
     #Kunnallisvaalit 2004, äänestystiedot
     url <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2004_05/010_KVAA_2004_2008-07-23_TAU_101_FI.px"
-    px <- pxR::read.px(url)
+    px <- pxR::read.px(url, na.strings='"-"')
     df <- as.data.frame(px)
     kaava <- as.formula("Alue~Äänestystiedot~Sukupuoli")
     tmp <- reshape::cast(df, kaava, value="dat")
@@ -281,7 +281,7 @@ GetMunicipalElectionData2004 <- function (which = "election.statistics") {
     #Valittujen lukumäärä ja prosenttiosuudet puolueittain ja vaalipiireittäin kunnallisvaaleissa 2004
     url<-"http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2004_05/060_kvaa_2004_2008-08-28_tau_107_fi.px"
 
-    px <- pxR::read.px(url)
+    px <- pxR::read.px(url, na.strings='"-"')
     df <- as.data.frame(px)
     kaava <- as.formula("Puolue~Vaalipiiri~Lukumäärätiedot")
     tmp <- reshape::cast(df, kaava, value="dat")
@@ -301,7 +301,7 @@ GetMunicipalElectionData2004 <- function (which = "election.statistics") {
     # Kunnallisvaalit 2004, valittujen lukumäärä
     url <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2004_05/010_kvaa_2004_2008-08-28_tau_103_fi.px"
 
-    px <- pxR::read.px(url)
+    px <- pxR::read.px(url, na.strings='"-"')
     df <- as.data.frame(px)
     kaava <- as.formula("Alue~Puolue~Sukupuoli~Valittujen.lukumäärä")
     tmp <- reshape::cast(df, kaava, value="dat")
@@ -351,7 +351,7 @@ GetMunicipalElectionData2004 <- function (which = "election.statistics") {
     warning("Vaalipiiritason tietoa. TODO.")
     tab <- NULL
 
-    #px <- pxR::read.px(url)
+    #px <- pxR::read.px(url, na.strings='"-"')
     #df <- as.data.frame(px)
     #tmp <- reshape::cast(df, Alue~Puolue~Sukupuoli~Valittujen.lukumäärä)
 
@@ -371,7 +371,7 @@ GetMunicipalElectionData2004 <- function (which = "election.statistics") {
     warning("Vaalipiiritason tietoa. TODO.")
     tab <- NULL
 
-    #px <- pxR::read.px(url)
+    #px <- pxR::read.px(url, na.strings='"-"')
     #df <- as.data.frame(px)
     #tmp <- reshape::cast(df, Alue~Puolue~Sukupuoli~Valittujen.lukumäärä)
 
@@ -379,7 +379,7 @@ GetMunicipalElectionData2004 <- function (which = "election.statistics") {
 
     #Kunnallisvaalit 2004, puolueiden kannatus
     #url<-"http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2004_05/010_KVAA_2004_2008-08-28_TAU_102_FI.px"
-    #df <- as.data.frame(pxR::read.px(url))
+    #df <- as.data.frame(pxR::read.px(url, na.strings='"-"'))
     # -> Segmentation fault
     warning("Segmentation fault at Kunnallisvaalit 2004, puolueiden kannatus, ignoring.")
     tab <- NULL
@@ -399,7 +399,7 @@ GetMunicipalElectionData2004 <- function (which = "election.statistics") {
     # verrattuna
     url<-"http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2004_05/060_kvaa_2004_2008-08-27_tau_111_fi.px"
 
-    px <- pxR::read.px(url)
+    px <- pxR::read.px(url, na.strings='"-"')
     df <- as.data.frame(px)
     kaava <- as.formula("Vaalipiiri.ja.kunta~Puolue~Lukumäärätiedot")
     tmp <- reshape::cast(df, kaava, value="dat")
@@ -438,7 +438,7 @@ GetMunicipalElectionData2004 <- function (which = "election.statistics") {
     #Puolueiden äänimäärät ja valittujen lukumäärä kunnittain (pienet puolueet), hylätyt liput sekä ennakkoäänestäneet kunnallisvaaleissa 2004
     url <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2004_05/060_kvaa_2004_2008-08-27_tau_114_fi.px"
 
-    px <- pxR::read.px(url)
+    px <- pxR::read.px(url, na.strings='"-"')
     df <- as.data.frame(px)
     kaava <- as.formula("Vaalipiiri.ja.kunta~Äänestystiedot.ja.puolueiden.kannatus~Lukumäärätiedot")
     tmp <- reshape::cast(df, kaava, value="dat")
@@ -476,7 +476,7 @@ GetMunicipalElectionData2004 <- function (which = "election.statistics") {
     # aanestyslippujen lukumaara kunnittain kunnallisvaaleissa 2004
     url <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2004_05/060_kvaa_2004_2008-08-28_tau_116_fi.px"
 
-    px <- pxR::read.px(url)
+    px <- pxR::read.px(url, na.strings='"-"')
     df <- as.data.frame(px)
     kaava <- as.formula("Vaalipiiri.ja.kunta~Äänestystiedot.ja.puolueiden.kannatus~Lukumäärätiedot")
     tmp <- reshape::cast(df, kaava, value="dat")
@@ -518,7 +518,7 @@ GetMunicipalElectionData2004 <- function (which = "election.statistics") {
 
     # Valituiksi tulleiden aikaisempi kokemus valtuustossa kuntatyypin, sukupuolen ja puolueen mukaan kunnallisvaaleissa 2004
     url<-"http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2004_05/730_kvaa_2004_2009-12-30_tau_149_fi.px"
-    #px <- pxR::read.px(url)
+    #px <- pxR::read.px(url, na.strings='"-"')
     #df <- as.data.frame(px)
     warning("No municipality level data available. TODO.")
     tab <- NULL
@@ -527,7 +527,7 @@ GetMunicipalElectionData2004 <- function (which = "election.statistics") {
 
     #Hylätyt äänestysliput hylkäysperusteen ja vaalipiirin mukaan kunnallisvaaleissa 2004
     url<-"http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2004_05/740_kvaa_2004_2009-12-30_tau_150_fi.px"
-    px <- pxR::read.px(url)
+    px <- pxR::read.px(url, na.strings='"-"')
     df <- as.data.frame(px)
     warning("No municipality level data available. TODO.")
     tab <- NULL
@@ -540,14 +540,14 @@ GetMunicipalElectionData2004 <- function (which = "election.statistics") {
     warning("No municipality level data available. TODO.")
     # NOTE: vaalipiiri level available
     url <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2004_06/810_kvaa_2004_2004-10-27_tau_150_fi.px"
-    #kvaa <- as.data.frame(pxR::read.px(url))
+    #kvaa <- as.data.frame(pxR::read.px(url, na.strings='"-"'))
     tab <- NULL
 
   } else if (which == "pre") {
 
     #Ennakkoon äänestäneet äänestyspaikan ja vaalipiirin mukaan kunnallisvaaleissa 2004
     url<-"http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2004_05/750_kvaa_2004_2009-12-30_tau_151_fi.px"
-    #kvaa <- as.data.frame(pxR::read.px(url))
+    #kvaa <- as.data.frame(pxR::read.px(url, na.strings='"-"'))
     warning("No municipality level data available. TODO.")
     tab <- NULL
 
@@ -555,7 +555,7 @@ GetMunicipalElectionData2004 <- function (which = "election.statistics") {
 
     # Suomen ulkomaan edustustoissa ja laivoissa aanestaneet sukupuolen mukaan kunnallisvaaleissa 2004
     url<-"http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2004_05/760_kvaa_2004_2009-12-30_tau_152_fi.px"
-    #kvaa <- as.data.frame(pxR::read.px(url))
+    #kvaa <- as.data.frame(pxR::read.px(url, na.strings='"-"'))
     warning("No municipality level data available. TODO.")
     tab <- NULL
 
@@ -563,7 +563,7 @@ GetMunicipalElectionData2004 <- function (which = "election.statistics") {
 
     #Äänioikeutetut ja äänestäneet ulkomaalaiset vaalipiirin mukaan kunnallisvaaleissa 2004
     url<-"http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2004_05/770_kvaa_2004_2009-12-30_tau_153_fi.px"
-    kvaa <- as.data.frame(pxR::read.px(url))
+    kvaa <- as.data.frame(pxR::read.px(url, na.strings='"-"'))
     warning("No municipality level data available. TODO.")
     tab <- NULL
 
@@ -613,7 +613,7 @@ GetMunicipalElectionData2008 <- function (which = "election.statistics") {
 
     #Kunnallisvaalit 2008, aanestystiedot
     url <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2008_05/610_kvaa_2008_2009-10-30_tau_137_fi.px"
-    px <- pxR::read.px(url)
+    px <- pxR::read.px(url, na.strings='"-"')
     df <- as.data.frame(px)
     kaava <- as.formula("Alue~Äänestystiedot~Sukupuoli")
     tmp <- reshape::cast(df, kaava, value="dat")
@@ -668,7 +668,7 @@ GetMunicipalElectionData2008 <- function (which = "election.statistics") {
     #Naisehdokkaitten vaalitiedot puolueen ja kunnan mukaan kunnallisvaaleissa 2008
     url<-"http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2008_05/720_kvaa_2008_2009-12-30_tau_148_fi.px"
 
-    px <- pxR::read.px(url)
+    px <- pxR::read.px(url, na.strings='"-"')
     df <- as.data.frame(px)
     tmp <- reshape::cast(df, Kunta~Puolue~Naisehdokastiedot)
 
@@ -714,7 +714,7 @@ GetMunicipalElectionData2008 <- function (which = "election.statistics") {
     #Valittujen lukumäärä ja prosenttiosuudet puolueittain ja vaalipiireittäin kunnallisvaaleissa 2008
     url<-"http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2008_05/690_kvaa_2008_2009-11-02_tau_145_fi.px"
 
-    px <- pxR::read.px(url)
+    px <- pxR::read.px(url, na.strings='"-"')
     df <- as.data.frame(px)
     kaava <- as.formula("Puolue~Vaalipiiri~Lukumäärätiedot")
     tmp <- reshape::cast(df, kaava, value="dat")
@@ -734,7 +734,7 @@ GetMunicipalElectionData2008 <- function (which = "election.statistics") {
     # Kunnallisvaalit 2008, valittujen lukumaara
     url <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2008_05/630_kvaa_2008_2009-10-30_tau_139_fi.px"
 
-    px <- pxR::read.px(url)
+    px <- pxR::read.px(url, na.strings='"-"')
     df <- as.data.frame(px)
     kaava <- as.formula("Alue~Puolue~Sukupuoli~Valittujen.lukumäärä")
     tmp <- reshape::cast(df, kaava, value="dat")
@@ -784,7 +784,7 @@ GetMunicipalElectionData2008 <- function (which = "election.statistics") {
     warning("Vaalipiiritason tietoa. TODO.")
     tab <- NULL
 
-    #px <- pxR::read.px(url)
+    #px <- pxR::read.px(url, na.strings='"-"')
     #df <- as.data.frame(px)
     #tmp <- reshape::cast(df, Alue~Puolue~Sukupuoli~Valittujen.lukumäärä)
 
@@ -804,7 +804,7 @@ GetMunicipalElectionData2008 <- function (which = "election.statistics") {
     warning("Vaalipiiritason tietoa. TODO.")
     tab <- NULL
 
-    #px <- pxR::read.px(url)
+    #px <- pxR::read.px(url, na.strings='"-"')
     #df <- as.data.frame(px)
     #tmp <- reshape::cast(df, Alue~Puolue~Sukupuoli~Valittujen.lukumäärä)
 
@@ -812,7 +812,7 @@ GetMunicipalElectionData2008 <- function (which = "election.statistics") {
 
     #Kunnallisvaalit 2008, puolueiden kannatus
     #url<-"http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2008_05/620_kvaa_2008_2009-10-30_tau_138_fi.px"
-    #df <- as.data.frame(pxR::read.px(url))
+    #df <- as.data.frame(pxR::read.px(url, na.strings='"-"'))
     # -> Segmentation fault
     warning("Segmentation fault at Kunnallisvaalit 2008, puolueiden kannatus, ignoring.")
     tab <- NULL
@@ -832,7 +832,7 @@ GetMunicipalElectionData2008 <- function (which = "election.statistics") {
     # verrattuna
     url<-"http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2008_05/680_kvaa_2008_2009-11-02_tau_144_fi.px"
 
-    px <- pxR::read.px(url)
+    px <- pxR::read.px(url, na.strings='"-"')
     df <- as.data.frame(px)
     kaava <- as.formula("Vaalipiiri.ja.kunta~Puolue~Lukumäärätiedot")
     tmp <- reshape::cast(df, kaava, value="dat")
@@ -871,7 +871,7 @@ GetMunicipalElectionData2008 <- function (which = "election.statistics") {
     #Puolueiden äänimäärät ja valittujen lukumäärä kunnittain (pienet puolueet), hylätyt liput sekä ennakkoäänestäneet kunnallisvaaleissa 2008
     url <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2008_05/700_kvaa_2008_2009-11-02_tau_146_fi.px"
 
-    px <- pxR::read.px(url)
+    px <- pxR::read.px(url, na.strings='"-"')
     df <- as.data.frame(px)
     kaava <- as.formula("Vaalipiiri.ja.kunta~Äänestystiedot.ja.puolueiden.kannatus~Lukumäärätiedot")
     tmp <- reshape::cast(df, kaava, value="dat")
@@ -909,7 +909,7 @@ GetMunicipalElectionData2008 <- function (which = "election.statistics") {
     # hylattyjen aanestyslippujen lukumaara kunnittain kunnallisvaaleissa 2008
     url <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2008_05/710_kvaa_2008_2009-11-02_tau_147_fi.px"
 
-    px <- pxR::read.px(url)
+    px <- pxR::read.px(url, na.strings='"-"')
     df <- as.data.frame(px)
     kaava <- as.formula("Vaalipiiri.ja.kunta~Äänestystiedot.ja.puolueiden.kannatus~Lukumäärätiedot")
     tmp <- reshape::cast(df, kaava, value="dat")
@@ -951,7 +951,7 @@ GetMunicipalElectionData2008 <- function (which = "election.statistics") {
 
     # Valituiksi tulleiden aikaisempi kokemus valtuustossa kuntatyypin, sukupuolen ja puolueen mukaan kunnallisvaaleissa 2008
     url<-"http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2008_05/730_kvaa_2008_2009-12-30_tau_149_fi.px"
-    #px <- pxR::read.px(url)
+    #px <- pxR::read.px(url, na.strings='"-"')
     #df <- as.data.frame(px)
     warning("No municipality level data available. TODO.")
     tab <- NULL
@@ -960,7 +960,7 @@ GetMunicipalElectionData2008 <- function (which = "election.statistics") {
 
     # Hylatyt aanestysliput hylkaysperusteen ja vaalipiirin mukaan kunnallisvaaleissa 2008
     url<-"http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2008_05/740_kvaa_2008_2009-12-30_tau_150_fi.px"
-    px <- pxR::read.px(url)
+    px <- pxR::read.px(url, na.strings='"-"')
     df <- as.data.frame(px)
     warning("No municipality level data available. TODO.")
     tab <- NULL
@@ -973,14 +973,14 @@ GetMunicipalElectionData2008 <- function (which = "election.statistics") {
     warning("No municipality level data available. TODO.")
     # NOTE: vaalipiiri level available
     url <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2008_06/810_kvaa_2008_2008-10-27_tau_150_fi.px"
-    #kvaa <- as.data.frame(pxR::read.px(url))
+    #kvaa <- as.data.frame(pxR::read.px(url, na.strings='"-"'))
     tab <- NULL
 
   } else if (which == "pre") {
 
     #Ennakkoon aanestaneet aanestyspaikan ja vaalipiirin mukaan kunnallisvaaleissa 2008
     url<-"http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2008_05/750_kvaa_2008_2009-12-30_tau_151_fi.px"
-    #kvaa <- as.data.frame(pxR::read.px(url))
+    #kvaa <- as.data.frame(pxR::read.px(url, na.strings='"-"'))
     warning("No municipality level data available. TODO.")
     tab <- NULL
 
@@ -988,7 +988,7 @@ GetMunicipalElectionData2008 <- function (which = "election.statistics") {
 
     #Suomen ulkomaan edustustoissa ja laivoissa aanestaneet sukupuolen mukaan kunnallisvaaleissa 2008
     url<-"http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2008_05/760_kvaa_2008_2009-12-30_tau_152_fi.px"
-    #kvaa <- as.data.frame(pxR::read.px(url))
+    #kvaa <- as.data.frame(pxR::read.px(url, na.strings='"-"'))
     warning("No municipality level data available. TODO.")
     tab <- NULL
 
@@ -996,7 +996,7 @@ GetMunicipalElectionData2008 <- function (which = "election.statistics") {
 
     #Aanioikeutetut ja aanestaneet ulkomaalaiset vaalipiirin mukaan kunnallisvaaleissa 2008
     url<-"http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2008_05/770_kvaa_2008_2009-12-30_tau_153_fi.px"
-    kvaa <- as.data.frame(pxR::read.px(url))
+    kvaa <- as.data.frame(pxR::read.px(url, na.strings='"-"'))
     warning("No municipality level data available. TODO.")
     tab <- NULL
 

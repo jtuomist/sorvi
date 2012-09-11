@@ -528,7 +528,7 @@ GetParliamentaryElectionData <- function (level) {
 
     # 2.2 Äänioikeutetut ja äänestäneet sekä ennakolta äänestäneet sukupuolen mukaan kunnittain eduskuntavaaleissa 2011 ja 2007
     url <- "http://pxweb2.stat.fi/database/StatFin/vaa/evaa/120_evaa_tau_104_fi.px"
-    px <- pxR::read.px(url)
+    px <- pxR::read.px(url, na.strings='"-"')
     df <- try(as.data.frame(px))
     kaava <- as.formula("Vaalipiiri.ja.kunta~Äänestystiedot~Lukumäärätiedot")
     tmp <- reshape::cast(df, kaava, value="dat")
@@ -585,7 +585,7 @@ GetParliamentaryElectionData <- function (level) {
     url <- "http://pxweb2.stat.fi/database/StatFin/vaa/evaa/120_evaa_tau_103_fi.px"
 
     # Read election data from Statistics Finland			 
-    px <- pxR::read.px(url) 
+    px <- pxR::read.px(url, na.strings='"-"') 
     df <- try(as.data.frame(px))
     kaava <- as.formula("Vaalipiiri~Äänestystiedot~Lukumäärätiedot")
     tmp <- reshape::cast(df, kaava, value="dat")
@@ -608,7 +608,7 @@ GetParliamentaryElectionData <- function (level) {
     tab$Vaalipiiri.Koodi <- sapply(rnams, function (s) {strsplit(s, " ")[[1]][[1]]})
 
     # Read more election data from Statistics Finland			 
-    px <- pxR::read.px("http://pxweb2.stat.fi/database/StatFin/vaa/evaa/120_evaa_tau_105_fi.px") 
+    px <- pxR::read.px("http://pxweb2.stat.fi/database/StatFin/vaa/evaa/120_evaa_tau_105_fi.px", na.strings='"-"') 
     df <- try(as.data.frame(px))
     kaava <- as.formula("Vaalipiiri~Hylkäysperuste")
     tab2 <- reshape::cast(df, kaava, value="dat")
