@@ -26,6 +26,9 @@
 #' @param lwd Optional. Line width for shape polygon borders.
 #' @param border.col Optional. Color for shape polygon borders.
 #' @param col.regions Optional. Specify color for the shape object regions manually.
+#' @param min.color Color for minimum values in the color scale
+#' @param max.color Color for maximum values in the color scale
+#'
 #' @return ggplot2 object
 #' @details Visualization types include: oneway/sequential (color scale ranges from white to dark red, or custom color given with the palette argument); twoway/bipolar/diverging (color scale ranges from dark blue through white to dark red; or custom colors); discrete/qualitative (discrete color scale; the colors are used to visually separate regions); and "custom" (specify colors with the col.regions argument)
 #' @export
@@ -37,7 +40,7 @@
 #' @keywords utilities
 
 
-PlotShape <- function (sp, varname, type = "oneway", ncol = 10, at = NULL, palette = NULL, main = NULL, colorkey = TRUE, lwd = .4, border.col = "black", col.regions = NULL) {
+PlotShape <- function (sp, varname, type = "oneway", ncol = 10, at = NULL, palette = NULL, main = NULL, colorkey = TRUE, lwd = .4, border.col = "black", col.regions = NULL, min.color = "white", max.color = "red") {
 
   # type = "oneway"; ncol = 10; at = NULL; palette = NULL; main = NULL; colorkey = TRUE; lwd = .4; border.col = "black"; col.regions = NULL
 
@@ -58,13 +61,15 @@ PlotShape <- function (sp, varname, type = "oneway", ncol = 10, at = NULL, palet
   if (type %in% c("oneway", "quantitative", "sequential")) {
     # Define color palette
     if (is.null(palette)) {
-      palette <- colorRampPalette(c("white", "red"), space = "rgb")
+      palette <- colorRampPalette(c(min.color, max.color), space = "rgb")
     }
 
     sp[[varname]] <- as.numeric(as.character(sp[[varname]]))
 
     if (is.null(at)) { 
-      at <- seq(min(sp[[varname]]), max(sp[[varname]]), length = ncol) 
+      mini <- min(sp[[varname]]) - 1
+      maxi <- max(sp[[varname]]) + 1
+      at <- seq(mini, maxi, length = ncol) 
     } else {
       # Override ncol if at is given
       ncol <- length(at)
@@ -84,8 +89,8 @@ PlotShape <- function (sp, varname, type = "oneway", ncol = 10, at = NULL, palet
 	    colorkey = colorkey,
 	    lwd = lwd,
 	    col = border.col,
-	    at = at
-           )
+	    at = at)
+           
 
   } else if (type %in% c("twoway", "bipolar", "diverging")) { 
 
@@ -98,10 +103,12 @@ PlotShape <- function (sp, varname, type = "oneway", ncol = 10, at = NULL, palet
     }
 
     if (is.null(at)) { 
+
       # Linear color palette around the average
-      min <- min(sp[[varname]])
-      max <- max(sp[[varname]])
-      at <- seq(min, max, length = ncol) 
+      mini <- min(sp[[varname]])
+      maxi <- max(sp[[varname]])
+      at <- seq(mini - 1, maxi + 1, length = ncol) 
+
     } else {
       # Override ncol if at is given
       ncol <- length(at)
@@ -122,8 +129,8 @@ PlotShape <- function (sp, varname, type = "oneway", ncol = 10, at = NULL, palet
 	    colorkey = colorkey,
 	    lwd = lwd,
 	    col = border.col,
-	    at = at
-           )
+	    at = at)
+
   } else if (type %in% c("qualitative", "discrete")) {
 
     vars <- factor(sp[[varname]])
@@ -166,6 +173,7 @@ PlotShape <- function (sp, varname, type = "oneway", ncol = 10, at = NULL, palet
   }
 	  
   print(pic)
+
   pic
 }
 

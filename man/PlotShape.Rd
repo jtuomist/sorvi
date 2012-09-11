@@ -5,7 +5,8 @@
   PlotShape(sp, varname, type = "oneway", ncol = 10,
     at = NULL, palette = NULL, main = NULL,
     colorkey = TRUE, lwd = 0.4, border.col = "black",
-    col.regions = NULL)
+    col.regions = NULL, min.color = "white",
+    max.color = "red")
 }
 \arguments{
   \item{sp}{Shape object}
@@ -36,6 +37,12 @@
 
   \item{col.regions}{Optional. Specify color for the shape
   object regions manually.}
+
+  \item{min.color}{Color for minimum values in the color
+  scale}
+
+  \item{max.color}{Color for maximum values in the color
+  scale}
 }
 \value{
   ggplot2 object
