@@ -6,7 +6,7 @@
     sorvi.data.url = "http://beta.datavaalit.fi/storage/louhos/")
 }
 \arguments{
-  \item{data.id}{}
+  \item{data.id}{data ID}
 
   \item{sorvi.data.url}{Data URL path}
 }
