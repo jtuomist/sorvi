@@ -16,7 +16,7 @@
 #'
 #' @return rjson object
 #' 
-#' @author Leo Lahti \email{sorvi-commits@@lists.r-forge.r-project.org}
+#' @author Leo Lahti \email{louhos@@googlegroups.com}
 #' @export
 
 ReadDatavaalit <- function (data.id) {

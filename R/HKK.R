@@ -58,7 +58,7 @@
 #' @export
 #' @references
 #' See citation("sorvi") 
-#' @author Joona Lehtomaki \email{sorvi-commits@@lists.r-forge.r-project.org}
+#' @author Joona Lehtomaki \email{louhos@@googlegroups.com}
 #' @examples # sp <- GetHKK("Aanestysaluejako", data.dir="C:/data")
 
 GetHKK <- function(which.data, data.dir) {
@@ -127,7 +127,7 @@ GetHKK <- function(which.data, data.dir) {
 #' @seealso spChFIDs, spRbind
 #' @references
 #' See citation("sorvi") 
-#' @author Joona Lehtomaki \email{sorvi-commits@@lists.r-forge.r-project.org}
+#' @author Joona Lehtomaki \email{louhos@@googlegroups.com}
 #' @note Not tested (at all)
 
 MergeSpatial <- function(sp.list, CRS=NA, FID=NA) {
@@ -200,7 +200,7 @@ MergeSpatial <- function(sp.list, CRS=NA, FID=NA) {
 #' 
 #' @references
 #' See citation("sorvi") 
-#' @author Joona Lehtomaki \email{sorvi-commits@@lists.r-forge.r-project.org}
+#' @author Joona Lehtomaki \email{louhos@@googlegroups.com}
 #' @examples #
 
 SplitSpatial <- function(sp.object, split.field) {

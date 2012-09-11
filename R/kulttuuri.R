@@ -18,7 +18,7 @@
 #'
 #' @return apurahat Data frame
 #' 
-#' @author Juuso Parkkinen \email{sorvi-commits@@lists.r-forge.r-project.org}
+#' @author Juuso Parkkinen \email{louhos@@googlegroups.com}
 #' @export
 
 GetApurahat <- function() {

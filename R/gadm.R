@@ -37,7 +37,7 @@
 #'
 #' @references
 #' See citation("sorvi") 
-#' @author Leo Lahti \email{sorvi-commits@@lists.r-forge.r-project.org}
+#' @author Leo Lahti \email{louhos@@googlegroups.com}
 #' @examples # Suomen kunnat: gadm <- get.gadm(map = "FIN_adm", resolution = 4)
 #' @keywords utilities
 
@@ -106,7 +106,7 @@ GetGADM <- function (map = "FIN_adm",
 #'
 #' @references
 #' See citation("sorvi") 
-#' @author Leo Lahti \email{sorvi-commits@@lists.r-forge.r-project.org}
+#' @author Leo Lahti \email{louhos@@googlegroups.com}
 #' @keywords utilities
 
 ConvertGADMResolution <- function (resolution, output.type = "integer") {
@@ -161,7 +161,7 @@ ConvertGADMResolution <- function (resolution, output.type = "integer") {
 #'
 #' @references
 #' See citation("sorvi") 
-#' @author Leo Lahti \email{sorvi-commits@@lists.r-forge.r-project.org}
+#' @author Leo Lahti \email{louhos@@googlegroups.com}
 #' @keywords utilities
 
 ConvertGADMPosition2Region <- function (coordinates, 

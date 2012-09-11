@@ -19,7 +19,7 @@
 #' 
 #' @return list Data for all high schools and separately for the Helsinki Region
 #'
-#' @author Juuso Parkkinen \email{sorvi-commits@@lists.r-forge.r-project.org}
+#' @author Juuso Parkkinen \email{louhos@@googlegroups.com}
 #' @export
 GetLukiot <- function() {
 

@@ -18,7 +18,7 @@
 #' @export 
 #' @references
 #' See citation("sorvi") 
-#' @author Leo Lahti \email{sorvi-commits@@lists.r-forge.r-project.org}
+#' @author Leo Lahti \email{louhos@@googlegroups.com}
 #' @examples # tab <- GetProvinceInfo()
 #' @keywords utilities
 
@@ -51,7 +51,7 @@ GetProvinceInfo <- function (url = "http://fi.wikipedia.org/wiki/V%C3%A4est%C3%B
 #' @export 
 #' @references
 #' See citation("sorvi") 
-#' @author Leo Lahti \email{sorvi-commits@@lists.r-forge.r-project.org}
+#' @author Leo Lahti \email{louhos@@googlegroups.com}
 #' @examples # tmp <- ConvertMunicipalityNames(municipality.names)
 #' @keywords utilities
 ConvertMunicipalityNames <- function (municipality.names) {
@@ -86,7 +86,7 @@ ConvertMunicipalityNames <- function (municipality.names) {
 #' @export 
 #' @references
 #' See citation("sorvi") 
-#' @author Leo Lahti \email{sorvi-commits@@lists.r-forge.r-project.org}
+#' @author Leo Lahti \email{louhos@@googlegroups.com}
 #' @examples # LoadData("MML"); tmp <- GetMunicipalityInfo(MML = MML)
 #' @keywords utilities
 
@@ -119,7 +119,7 @@ this is required as an argument for GetMunicipalityInfo function.")}
 #' @export 
 #' @references
 #' See citation("sorvi") 
-#' @author Leo Lahti \email{sorvi-commits@@lists.r-forge.r-project.org}
+#' @author Leo Lahti \email{louhos@@googlegroups.com}
 #' @examples # tmp <- GetMunicipalityInfo()
 #' @keywords utilities
 
@@ -170,7 +170,7 @@ GetMunicipalityInfoStatFi <- function (url = "http://pxweb2.stat.fi/Database/Kun
 #' @export 
 #' @references
 #' See citation("sorvi") 
-#' @author Leo Lahti \email{sorvi-commits@@lists.r-forge.r-project.org}
+#' @author Leo Lahti \email{louhos@@googlegroups.com}
 #' @examples # LoadData("MML"); tab <- GetMunicipalityInfoMML(MML)
 #' @keywords utilities
 
@@ -212,7 +212,7 @@ GetMunicipalityInfoMML <- function (MML) {
 #' @export 
 #' @references
 #' See citation("sorvi") 
-#' @author Leo Lahti \email{sorvi-commits@@lists.r-forge.r-project.org}
+#' @author Leo Lahti \email{louhos@@googlegroups.com}
 #' @examples 
 #' # Info table for municipalities:
 #' # municipality.info <- GetMunicipalityInfo()

@@ -21,7 +21,7 @@
 #' @export 
 #' @references
 #' See citation("sorvi") 
-#' @author Leo Lahti \email{sorvi-commits@@lists.r-forge.r-project.org}
+#' @author Leo Lahti \email{louhos@@googlegroups.com}
 #' @examples # 
 #' @keywords utilities
 GetMunicipalElectionData2000 <- function (which = "election.statistics") {
@@ -211,7 +211,7 @@ GetMunicipalElectionData2000 <- function (which = "election.statistics") {
 #' @export 
 #' @references
 #' See citation("sorvi") 
-#' @author Leo Lahti \email{sorvi-commits@@lists.r-forge.r-project.org}
+#' @author Leo Lahti \email{louhos@@googlegroups.com}
 #' @examples # 
 #' @keywords utilities
 GetMunicipalElectionData2004 <- function (which = "election.statistics") {
@@ -597,7 +597,7 @@ GetMunicipalElectionData2004 <- function (which = "election.statistics") {
 #' @export 
 #' @references
 #' See citation("sorvi") 
-#' @author Leo Lahti \email{sorvi-commits@@lists.r-forge.r-project.org}
+#' @author Leo Lahti \email{louhos@@googlegroups.com}
 #' @examples # 
 #' @keywords utilities
 GetMunicipalElectionData2008 <- function (which = "election.statistics") {

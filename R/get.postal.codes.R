@@ -20,7 +20,7 @@
 #' @export 
 #' @references
 #' See citation("sorvi") 
-#' @author Juuso Parkkinen and Leo Lahti \email{sorvi-commits@@lists.r-forge.r-project.org}
+#' @author Juuso Parkkinen and Leo Lahti \email{louhos@@googlegroups.com}
 #' @note Previous version of this function was named: get.postal.codes	      
 #' @examples 
 #' #postal.code.table <- GetPostalCodeInfo() 

@@ -13,7 +13,7 @@
 #' \item{year}{Year of the birthdate.}
 #' \item{century.char}{Century of the birthdate: + (1800), - (1900) or A  (2000). }
 #' 
-#' @author Jussi Paananen \email{sorvi-commits@@lists.r-forge.r-project.org}
+#' @author Jussi Paananen \email{louhos@@googlegroups.com}
 #' 
 #' @seealso \code{\link{valid.hetu}} For validating Finnish personal identification number.
 #' @examples
@@ -113,7 +113,7 @@ hetu <- function(hetu) {
 #'
 #' @return Is the given string a valid Finnish personal identification number, TRUE or FALSE.
 #' 
-#' @author Jussi Paananen \email{sorvi-commits@@lists.r-forge.r-project.org}
+#' @author Jussi Paananen \email{louhos@@googlegroups.com}
 #' 
 #' @seealso \code{\link{hetu}} For extracting information from a Finnish personal identification number. 
 #' 

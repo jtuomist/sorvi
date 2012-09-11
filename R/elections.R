@@ -24,7 +24,7 @@
 #'
 #' @return data.frame listing election regions (Vaalipiiri), region IDs (Aluenumero) and municipalities (Alue)
 #' 
-#' @author Juuso Parkkinen and Leo Lahti \email{sorvi-commits@@lists.r-forge.r-project.org}
+#' @author Juuso Parkkinen and Leo Lahti \email{louhos@@googlegroups.com}
 #' @export
 
 GetVaalipiiri <- function (url = "http://www.stat.fi/meta/luokitukset/vaalipiiri/001-2012/luokitusavain_kunta.html") {
@@ -64,7 +64,7 @@ GetVaalipiiri <- function (url = "http://www.stat.fi/meta/luokitukset/vaalipiiri
 #' @param level Optional. Pick results for particular region type. Options: "municipalities" (kunnat)
 #' @return Votes table
 #' 
-#' @author Juuso Parkkinen and Leo Lahti \email{sorvi-commits@@lists.r-forge.r-project.org}
+#' @author Juuso Parkkinen and Leo Lahti \email{louhos@@googlegroups.com}
 #' @export
 
 GetElectionResultsPresidentti2012 <- function (election.round, level = NULL) {
@@ -168,7 +168,7 @@ GetElectionResultsPresidentti2012 <- function (election.round, level = NULL) {
 #'
 #' @return res List of data
 #' 
-#' @author Juuso Parkkinen \email{sorvi-commits@@lists.r-forge.r-project.org}
+#' @author Juuso Parkkinen \email{louhos@@googlegroups.com}
 #' @export
 
 GetPresidentti2012 <- function(category=c("questions", "candidates", "useranswers"), API, ID=NULL, filter=NULL, page=1, per_page=500, show_total="true") {
@@ -218,7 +218,7 @@ GetPresidentti2012 <- function(category=c("questions", "candidates", "useranswer
 #' @return matrix A matrix: each row corresponds to a candidate. For each candidate, 
 #'              the answer options (columns) are rated within [0, 1]
 #' 
-#' @author Leo Lahti \email{sorvi-commits@@lists.r-forge.r-project.org}
+#' @author Leo Lahti \email{louhos@@googlegroups.com}
 #' @export
 
 Presidentti2012CandidateAnswers2Numeric <- function (candidates, questions, type = "rate") {
@@ -270,7 +270,7 @@ Presidentti2012CandidateAnswers2Numeric <- function (candidates, questions, type
 #'         answer (user answers). The answer options are rated within [0, 1]. 
 #'         Each row corresponds to a user in each of the two data.frames.
 #' 
-#' @author Leo Lahti \email{sorvi-commits@@lists.r-forge.r-project.org}
+#' @author Leo Lahti \email{louhos@@googlegroups.com}
 #' @export
 
 Presidentti2012ConvertOptionsToNumeric <- function (df, questions, type = "rate") {
@@ -320,7 +320,7 @@ Presidentti2012ConvertOptionsToNumeric <- function (df, questions, type = "rate"
 #'              the answer options are given an index, roughly corresponding to their
 #'              position on conservative-liberal axis
 #' 
-#' @author Leo Lahti \email{sorvi-commits@@lists.r-forge.r-project.org}
+#' @author Leo Lahti \email{louhos@@googlegroups.com}
 #' @export
 
 Presidentti2012RateChoices <- function (questions, type = "rate") {
@@ -362,7 +362,7 @@ Presidentti2012RateChoices <- function (questions, type = "rate") {
 #'
 #' @return list A list with the fields question, answer id, answer text and answer rate for the given question.
 #' 
-#' @author Leo Lahti \email{sorvi-commits@@lists.r-forge.r-project.org}
+#' @author Leo Lahti \email{louhos@@googlegroups.com}
 #' @export
 
 Presidentti2012RetrieveAnswerText <- function (question.id, questions) { 
@@ -383,7 +383,7 @@ Presidentti2012RetrieveAnswerText <- function (question.id, questions) {
 #'        questions <- GetPresidentti2012(category="questions", API=API)
 #' @return list A list with the fields Questions and Choices
 #' @note A wrapper 
-#' @author Leo Lahti \email{sorvi-commits@@lists.r-forge.r-project.org}
+#' @author Leo Lahti \email{louhos@@googlegroups.com}
 #' @export
 
 PreprocessPresidentti2012 <- function (questions) {
@@ -405,7 +405,7 @@ PreprocessPresidentti2012 <- function (questions) {
 #' @param per.page maximum number of results to retrieve at one query in the for loop
 #' @return dat.list list containing user answer data for the specified dates
 #' @note A wrapper 
-#' @author Leo Lahti \email{sorvi-commits@@lists.r-forge.r-project.org}
+#' @author Leo Lahti \email{louhos@@googlegroups.com}
 #' @export
 
 Presidentti2012GetUserData <- function (dates, API, per.page = 10000) {
@@ -446,7 +446,7 @@ Presidentti2012GetUserData <- function (dates, API, per.page = 10000) {
 #' @param API API key
 #' @return data.frame with user answer data
 #' @note A wrapper 
-#' @author Leo Lahti \email{sorvi-commits@@lists.r-forge.r-project.org}
+#' @author Leo Lahti \email{louhos@@googlegroups.com}
 #' @export
 
 
@@ -513,7 +513,7 @@ PreprocessPresidentti2012UserData <- function (dat.list, API = API) {
 #' @export 
 #' @references
 #' See citation("sorvi") 
-#' @author Leo Lahti \email{sorvi-commits@@lists.r-forge.r-project.org}
+#' @author Leo Lahti \email{louhos@@googlegroups.com}
 #' @examples # 
 #' @keywords utilities
 GetParliamentaryElectionData <- function (level) {

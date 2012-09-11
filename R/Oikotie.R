@@ -18,7 +18,7 @@
 #' 
 #' @return list with Oikotie myynnit data
 #'
-#' @author Juuso Parkkinen \email{sorvi-commits@@lists.r-forge.r-project.org}
+#' @author Juuso Parkkinen \email{louhos@@googlegroups.com}
 #' @export
 GetOikotie <- function() {
      

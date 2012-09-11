@@ -31,7 +31,7 @@
 #'
 #' @return df Map data frame
 #' 
-#' @author Juuso Parkkinen \email{sorvi-commits@@lists.r-forge.r-project.org}
+#' @author Juuso Parkkinen \email{louhos@@googlegroups.com}
 #' @export
 GetStaticmapGoogleMaps <- function(center, zoom = 10, GRAYSCALE = FALSE, scale = 1, maptype = 'map', destfile = 'TemporaryMap.png', n_pix = 640, format = "png32") {
 
@@ -110,7 +110,7 @@ GetStaticmapGoogleMaps <- function(center, zoom = 10, GRAYSCALE = FALSE, scale =
 #'
 #' @return coordinates (lat, lon)
 #' 
-#' @author Juuso Parkkinen \email{sorvi-commits@@lists.r-forge.r-project.org}
+#' @author Juuso Parkkinen \email{louhos@@googlegroups.com}
 #' @export
 GetGeocodeGoogleMaps <- function(str) {
 
@@ -133,7 +133,7 @@ GetGeocodeGoogleMaps <- function(str) {
 #'
 #' @return coordinates (lat, lon)
 #' 
-#' @author Juuso Parkkinen \email{sorvi-commits@@lists.r-forge.r-project.org}
+#' @author Juuso Parkkinen \email{louhos@@googlegroups.com}
 #' @export
 GetGeocodeOpenStreetMap <- function(query) {
   
@@ -156,7 +156,7 @@ GetGeocodeOpenStreetMap <- function(query) {
 #'
 #' @return theme_map A ggplot2 theme object
 #' 
-#' @author Juuso Parkkinen \email{sorvi-commits@@lists.r-forge.r-project.org}
+#' @author Juuso Parkkinen \email{louhos@@googlegroups.com}
 #' @export
 GetThemeMap <- function() {
   

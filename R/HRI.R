@@ -16,7 +16,7 @@
 #'
 #' Preprocess 'aluejakokartat' from Helsinki Region Infoshare
 #' 
-#' @author Juuso Parkkinen \email{sorvi-commits@@lists.r-forge.r-project.org}
+#' @author Juuso Parkkinen \email{louhos@@googlegroups.com}
 #' @export
 GetHRIaluejakokartat <- function() {
   
@@ -71,7 +71,7 @@ GetHRIaluejakokartat <- function() {
 #'
 #' @return List of results
 #'
-#' @author Juuso Parkkinen \email{sorvi-commits@@lists.r-forge.r-project.org}
+#' @author Juuso Parkkinen \email{louhos@@googlegroups.com}
 #' @export
 #' @examples # event.categories <- GetOmakaupunki("event/categories", LOGIN, PASSWORD, API)
 GetOmakaupunki <- function(query, login, password, api_key, ...) {
@@ -100,7 +100,7 @@ GetOmakaupunki <- function(query, login, password, api_key, ...) {
 #'
 #' @return List of results
 #'
-#' @author Juuso Parkkinen \email{sorvi-commits@@lists.r-forge.r-project.org}
+#' @author Juuso Parkkinen \email{louhos@@googlegroups.com}
 #' @export
 #' @examples # pk.services <- GetPalvelukartta("service")
 GetPalvelukartta <- function(category, ...) {

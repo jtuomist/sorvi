@@ -30,7 +30,7 @@
 #' @export
 #' @references
 #' See citation("sorvi") 
-#' @author Leo Lahti \email{sorvi-commits@@lists.r-forge.r-project.org}
+#' @author Leo Lahti \email{louhos@@googlegroups.com}
 #' @examples # load(url(paste(sorvi.data.url, "MML.rda", sep = ""))); sp <- MML[[1]][[1]]; sp2 <- PreprocessShapeMML(sp)
 #' @keywords utilities
 
@@ -141,7 +141,7 @@ PreprocessShapeMML <- function (sp) {
 #' 
 #' @references
 #' See citation("sorvi") 
-#' @author Leo Lahti \email{sorvi-commits@@lists.r-forge.r-project.org}
+#' @author Leo Lahti \email{louhos@@googlegroups.com}
 #' @export
 #' @examples 
 #' # MML <- GetShapeMML(data.dir = "./")

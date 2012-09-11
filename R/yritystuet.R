@@ -10,7 +10,6 @@
 # but WITHOUT ANY WARRANTY; without even the implied warranty of 
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-
 #' Load Finnish company funding information from MOT website
 #'
 #' Source: (C) Yle MOT-toimitus; published under CC-BY-SA 3.0
@@ -20,7 +19,7 @@
 #'
 #' @return data frame
 #' 
-#' @author Leo Lahti \email{sorvi-commits@@lists.r-forge.r-project.org}
+#' @author Leo Lahti \email{louhos@@googlegroups.com}
 #' @export
 #' @examples # tuet <- GetMOTYritystuet()
 

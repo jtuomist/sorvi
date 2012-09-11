@@ -23,7 +23,7 @@
 #' @export
 #' @references
 #' See citation("sorvi") 
-#' @author Leo Lahti \email{sorvi-commits@@lists.r-forge.r-project.org}
+#' @author Leo Lahti \email{louhos@@googlegroups.com}
 #' @examples # LoadData("MML")
 #' @keywords utilities
 
@@ -43,7 +43,7 @@ LoadData <- function(data.id, sorvi.data.url = "http://beta.datavaalit.fi/storag
 #' @export
 #' @references
 #' See citation("sorvi") 
-#' @author Leo Lahti \email{sorvi-commits@@lists.r-forge.r-project.org}
+#' @author Leo Lahti \email{louhos@@googlegroups.com}
 #' @examples # dfsort(df, x, -z) 
 #' @keywords utilities
 
@@ -66,7 +66,7 @@ dfsort <- function(df, sortvar, ...) {
 #' This function is kept for compatibility with the older versions.
 #' @references
 #' See citation("sorvi") 
-#' @author Leo Lahti \email{sorvi-commits@@lists.r-forge.r-project.org}
+#' @author Leo Lahti \email{louhos@@googlegroups.com}
 #' @examples # korvaa.skandit("my.string.here") # if no, special chars, the same string is returned
 #' @keywords utilities
 
@@ -94,7 +94,7 @@ korvaa.skandit <- function (s) {
 #' @export
 #' @references
 #' See citation("sorvi") 
-#' @author Leo Lahti \email{sorvi-commits@@lists.r-forge.r-project.org}
+#' @author Leo Lahti \email{louhos@@googlegroups.com}
 #' @examples # is.url("http://aa.px")
 #' @keywords utilities
 is.url <- function (s) {
@@ -114,7 +114,7 @@ is.url <- function (s) {
 #' @export 
 #' @references
 #' See citation("sorvi") 
-#' @author Leo Lahti \email{sorvi-commits@@lists.r-forge.r-project.org}
+#' @author Leo Lahti \email{louhos@@googlegroups.com}
 #' @examples # ReadShape(files)
 #' @keywords utilities
 
@@ -149,7 +149,7 @@ ReadShape <- function (files, proj4string = NA) {
 #' @export
 #' @references
 #' See citation("sorvi") 
-#' @author Leo Lahti \email{sorvi-commits@@lists.r-forge.r-project.org}
+#' @author Leo Lahti \email{louhos@@googlegroups.com}
 #' @examples # strstrip("a b") # returns "ab"
 #' @keywords utilities
 
@@ -172,7 +172,7 @@ strstrip <- function (s) {
 #' @return string without spaces
 #' @references
 #' See citation("sorvi") 
-#' @author Leo Lahti \email{sorvi-commits@@lists.r-forge.r-project.org}
+#' @author Leo Lahti \email{louhos@@googlegroups.com}
 #' @examples # strstrip.single("a b") # returns "ab"
 #' @keywords utilities
 
@@ -200,7 +200,7 @@ strstrip.single <- function (s) {
 #' @export 
 #' @references
 #' See citation("sorvi") 
-#' @author Leo Lahti \email{sorvi-commits@@lists.r-forge.r-project.org}
+#' @author Leo Lahti \email{louhos@@googlegroups.com}
 #' @examples 
 #' #s2 <- Strip(s) 
 #' @keywords utilities
@@ -233,7 +233,7 @@ Strip <- function (s) {
 #'
 #' @return shifted data matrix
 #' 
-#' @author Leo Lahti \email{sorvi-commits@@lists.r-forge.r-project.org}
+#' @author Leo Lahti \email{louhos@@googlegroups.com}
 #' @export
 
 CenterData <- function (X, rm.na = TRUE, meanvalue = 0) {
@@ -267,7 +267,7 @@ CenterData <- function (X, rm.na = TRUE, meanvalue = 0) {
 #'
 #' @return scaled data matrix
 #' 
-#' @author Leo Lahti \email{sorvi-commits@@lists.r-forge.r-project.org}
+#' @author Leo Lahti \email{louhos@@googlegroups.com}
 #' @export
 
 UnitScale <- function(X, rm.na = TRUE, sd.value = NULL) {
@@ -309,7 +309,7 @@ UnitScale <- function(X, rm.na = TRUE, sd.value = NULL) {
 #' @return Invisible NULL
 #' 
 #' @note meant for package internal use only
-#' @author Joona Lehtomaki \email{sorvi-commits@@lists.r-forge.r-project.org}
+#' @author Joona Lehtomaki \email{louhos@@googlegroups.com}
 #' @keywords utilities
 
 .InstallMarginal <- function(package, ...) {

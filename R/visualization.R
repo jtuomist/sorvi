@@ -34,7 +34,7 @@
 #' @export
 #' @references
 #' See citation("sorvi") 
-#' @author Leo Lahti \email{sorvi-commits@@lists.r-forge.r-project.org}
+#' @author Leo Lahti \email{louhos@@googlegroups.com}
 #' @examples # PlotShape(sp, varname) 
 #' @seealso \code{\link{get.hsy}}
 #' @keywords utilities
@@ -204,7 +204,7 @@ PlotShape <- function (sp, varname, type = "oneway", ncol = 10, at = NULL, palet
 #' @return A list with the color palette (colors), color breakpoints (breaks), and palette function (palette.function)
 #' @export
 #' @references See citation("sorvi") 
-#' @author Leo Lahti \email{sorvi-commits@@lists.r-forge.r-project.org}
+#' @author Leo Lahti \email{louhos@@googlegroups.com}
 #' @examples # mat <- rbind(c(1,2,3,4,5), c(1, 3, 1), c(4,2,2)); PlotMatrix(mat, "twoway", midpoint = 3) 
 #' @keywords utilities
 
@@ -312,7 +312,7 @@ PlotMatrix <- function (mat, type = "twoway", midpoint = 0,
 #' @return A list with the color palette (palette), color breakpoints (breaks), and palette function (palette.function)
 #' @export
 #' @references See citation("sorvi") 
-#' @author Leo Lahti \email{sorvi-commits@@lists.r-forge.r-project.org}
+#' @author Leo Lahti \email{louhos@@googlegroups.com}
 #' @examples # mat <- rbind(c(1,2,3,4,5), c(1, 3, 1), c(4,2,2)); pm <- PlotMatrix(mat, "twoway", midpoint = 3); PlotScale(pm$colors, pm$breaks)
 #' @keywords utilitie
 
@@ -366,7 +366,7 @@ PlotScale <- function (breaks, colors = NULL, m = NULL, label.step = 2, interval
 #' @param interval interval of color breaks
 #' @return A vector of breakpoints
 #' @references See citation("sorvi") 
-#' @author Leo Lahti \email{sorvi-commits@@lists.r-forge.r-project.org}
+#' @author Leo Lahti \email{louhos@@googlegroups.com}
 #' @examples # mat <- rbind(c(1,2,3,4,5), c(1, 3, 1), c(4,2,2)); pm <- PlotMatrix(mat, "twoway", midpoint = 3); PlotScale(pm$colors, pm$breaks)
 #' @keywords utilities
 
