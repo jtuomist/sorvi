@@ -12,6 +12,17 @@
 
 
 #setGeneric("get.subnets", function( model, get.names = TRUE, min.size = 2, max.size = Inf, min.responses = 2){ standardGeneric ("get.subnets") })
+#' Get members of a particular council
+#'
+#' @param x object
+#' @param name name of a person
+#'
+#' @return candidate object
+#' 
+#' @author Joona Lehtomaki \email{louhos@@googlegroups.com}
+#' @export
 setGeneric("GetMember", function(x, name) standardGeneric("GetMember"))
+
+#' @export
 setGeneric("GetParties", function(x) standardGeneric("GetParties"))
 

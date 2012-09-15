@@ -36,7 +36,7 @@ ReadDatavaalit <- function (data.id) {
     f <- "http://beta.datavaalit.fi/api/v1/council_member/?format=json&limit=85"
     # FIXME: Extremely bad idea to have the function to return different value
     # types depending on the data.id
-    dat <- council <- new("council", f)
+    dat <- new("council", f)
   }
   dat  
 }
