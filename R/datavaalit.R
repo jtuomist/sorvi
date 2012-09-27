@@ -40,3 +40,233 @@ ReadDatavaalit <- function (data.id) {
   }
   dat  
 }
+
+
+#' Description:
+#' Function for reading in Finnish Municipal Election candidate data published
+#' by Ministry of justice. As of 27-09-2012, the data and descriptions are
+#' available from http://192.49.229.35/K2012/s/ehd_listat/kokomaa.htm#ladattavat
+#'
+#' Candidate data comes in divided into 14 Election districts (vaalipiiri).
+#'
+#' @param district.id integer marking the election district ID. Options: [1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+#' @param cache character directory path to location where files are cached
+#'
+#' @return Data frame
+#' @export 
+#' @references
+#' See citation("sorvi") 
+#' @author Joona Lehtomaki \email{louhos@@googlegroups.com}
+#' @examples # 
+#' @keywords utilities
+
+ReadCandidates <- function(district.id, cache=NA) {
+
+  ReadElectionData("candidates", district.id, cache)
+  
+}
+
+#' Description:
+#' Wrapper function for ReadCandidates that gets all 14 districts and returns
+#' all data in a single data frame.
+#'
+#' @param cache character directory path to location where files are cached
+#'
+#' @return Data frame
+#' @export 
+#' @references
+#' See citation("sorvi") 
+#' @author Joona Lehtomaki \email{louhos@@googlegroups.com}
+#' @examples # 
+#' @keywords utilities
+
+ReadAllCandidates <- function(cache=NA) {
+  
+  election.district.ids  <- 1:15
+  # Remember, there is no id 5!
+  election.district.ids  <- election.district.ids[-c(5)]
+
+  # Determine the cache dir if needed
+  # cache = "."  
+  all.districts <- lapply(election.district.ids, 
+                          function(x) {ReadCandidates(x, cache)})
+  
+  # Bind everything into a single data frame
+  candidates <- do.call("rbind", all.districts)
+  
+  return(candidates)
+}
+
+#' Description:
+#' Wrapper function for ReadParties that gets all 14 districts and returns
+#' all data in a single data frame.
+#'
+#' @param cache character directory path to location where files are cached
+#'
+#' @return Data frame
+#' @export 
+#' @references
+#' See citation("sorvi") 
+#' @author Leo Lahti \email{louhos@@googlegroups.com}
+#' @examples # 
+#' @keywords utilities
+
+ReadAllParties <- function(cache=NA) {
+  
+  election.district.ids  <- 1:15
+  # Remember, there is no id 5!
+  election.district.ids  <- election.district.ids[-c(5)]
+
+  # Determine the cache dir if needed
+  # cache = "."  
+  all.districts <- lapply(election.district.ids, 
+                          function(x) {ReadParties(x, cache)})
+  
+  # Bind everything into a single data frame
+  parties <- do.call("rbind", all.districts)
+  
+  return(parties)
+}
+
+
+# Private functions -------------------------------------------------------
+
+.readCommonData <- function() {
+  require(rjson)
+  data.file <- system.file("extdata/common_data.json", package = "sorvi")
+  return(fromJSON(paste(readLines(data.file), collapse = "")))
+} 
+
+.readCommonData2 <- function() {
+  require(rjson)
+  data.file <- system.file("extdata/common_data2.json", package = "sorvi")
+  return(fromJSON(paste(readLines(data.file), collapse = "")))
+} 
+
+# ---------------------------------------------------------------
+
+
+#' Description:
+#' Function for reading in Finnish Municipal Election political party data 
+#  published by Ministry of justice. As of 27-09-2012, the data and 
+#  descriptions are
+#' available from http://192.49.229.35/K2012/s/ehd_listat/kokomaa.htm#ladattavat
+#  
+#' Party data comes divided into 14 Election districts (vaalipiiri).
+#'
+#' @param district.id integer marking the election district ID. Options: [1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+#' @param cache character directory path to location where files are cached
+#'
+#' @return Data frame
+#' @export 
+#' @references
+#' See citation("sorvi") 
+#' @author Leo Lahti \email{louhos@@googlegroups.com}
+#' @examples # 
+#' @keywords utilities
+
+ReadParties <- function(district.id, cache=NA) {
+  
+  ReadElectionData("parties", district.id, cache)
+
+}
+
+
+#' Description:
+#' Function for reading in Finnish Municipal Election data 
+#  published by Ministry of justice. As of 27-09-2012, the data and 
+#  descriptions are
+#' available from http://192.49.229.35/K2012/s/ehd_listat/kokomaa.htm#ladattavat
+#  
+#' Data comes divided into 14 Election districts (vaalipiiri).
+#' @param which.data Options: "candidates", "parties"
+#' @param district.id integer marking the election district ID. Options: [1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+#' @param cache character directory path to location where files are cached
+#'
+#' @return Data frame
+#' @export 
+#' @references
+#' See citation("sorvi") 
+#' @author Leo Lahti \email{louhos@@googlegroups.com}
+#' @examples # 
+#' @keywords utilities
+
+ReadElectionData <- function(which.data, district.id, cache=NA) {
+  
+  # Body of the filename is always the same
+  if (which.data == "parties") { 
+    file.name.body <- "puo_"
+  } else if (which.data == "candidates") { 
+    file.name.body <- "ehd_"
+  }
+
+  # Coerce the disrict id into a character for building file paths / urls
+  district.id.char <- as.character(district.id)
+
+  # Padding with leading zeros if needed
+  if (nchar(district.id.char) == 1) {
+    district.id.char <- paste("0", district.id.char, sep="")
+  }
+  
+  # Construct the file name
+  file.name <- paste(file.name.body, district.id.char, ".csv", sep="")
+  
+  # Either use the cached files or fetch over network
+  if (is.na(cache)) {
+                          
+    data.source <- paste("http://192.49.229.35/K2012/s/ehd_listat/",
+                          file.name, sep="")
+
+    message(paste("Reading data from URL", data.source))
+    
+  } else {
+    
+    if (file.exists(cache)) {
+      data.source <- file.path(cache, file.name)
+      
+      # Check if the actual file exists
+      if (!file.exists(data.source)) {
+        stop(paste("File", data.source, "does not exist."))
+      } else {
+        message(paste("Using cached version", data.source))
+      }
+      
+    } else {
+      stop("Cache requested, but not found")
+    }
+    
+    # Read the table over network, use the encodign provided by MoJ
+  }
+  # Read the data from selected data source
+  raw.data <- read.table(data.source, sep=";", as.is=TRUE, strip.white=TRUE,
+                         fileEncoding="iso-8859-1")
+  
+  # In the original csv file, there is also a trailing ";" -> there really is
+  # only 29 / 35 columns (as of 27.9.2012); more columns will appear 
+  # on the election day
+  if (which.data == "parties") {
+    raw.data <- raw.data[1:35]
+    header.id <- "OMpuolueet"
+    header <- .readCommonData2()
+  } else if (which.data == "candidates") {
+    raw.data <- raw.data[1:29]
+    header.id <- "OMehdokkaat"
+    header <- .readCommonData()
+  }
+
+  # Get the suitable header from common_data.json
+  header <- header[[header.id]]$header
+  colnames(raw.data)  <- header[1:length(raw.data)]
+  
+  # TODO: make a separate preprocessing function
+  # 	  and possibly get all conversions from a JSON database
+  # 	  created for this purpose
+  #
+  # Column pre-processing
+  if (which.data == "candidates") {
+    raw.data$Sukupuoli <- factor(raw.data$Sukupuoli, labels=c("Mies", "Nainen"))
+  }
+
+  return(raw.data)
+  
+}
