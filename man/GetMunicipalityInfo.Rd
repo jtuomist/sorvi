@@ -23,7 +23,7 @@ help(GetShapeMML).}
   details of MML data, see help(GetShapeMML).
 }
 \examples{
-# LoadData("MML"); tmp <- GetMunicipalityInfo(MML = MML)
+# LoadData("MML"); municipality.info <- GetMunicipalityInfo(MML = MML)
 }
 \author{
   Leo Lahti \email{louhos@googlegroups.com}

@@ -137,6 +137,71 @@ ReadAllParties <- function(cache=NA) {
   return(fromJSON(paste(readLines(data.file), collapse = "")))
 } 
 
+.datavaalit.idconversions <- function (ids, type = "election.id") {
+
+  ids <- as.character(ids)
+
+  if (type == "election.id") {
+
+    conversion.table <- rbind(c("pv", "presidentin vaali"),
+	                      c("e", "eduskuntavaalit"),
+                  		  c("k", "kunnallisvaalit"),
+                  		  c("epv", "europarlamenttivaalit"),
+                  		  c("mkv", "aluevaali"),
+                  		  c("vka", "kansanäänestys"))
+    colnames(conversion.table) <- c("id", "name")
+    conversion.table <- as.data.frame(conversion.table)
+  } else if (type == "stage.id") {
+
+    conversion.table <- rbind(c("a", "alustava"),
+	                   c("t", "tarkastus"))
+    colnames(conversion.table) <- c("id", "name")
+    conversion.table <- as.data.frame(conversion.table)
+  } else if (type == "data.id") {
+
+    conversion.table <- rbind(c("a", "alue"),
+             	      c("e", "ehdokas"),
+             	      c("p", "puolue"),
+             	      c("k", "kansanäänestys"))
+    colnames(conversion.table) <- c("id", "name")
+    conversion.table <- as.data.frame(conversion.table)	      
+  } else if (type == "info.id") {
+
+    conversion.table <- rbind(c("a", "äänestysaluetaso"),
+        	          c("t", "tilastotiedot"),
+        	          c("y", "ei.äänestysaluetasoa"),
+        	          c("", ""))
+    colnames(conversion.table) <- c("id", "name")
+    conversion.table <- as.data.frame(conversion.table)	      
+  } else if (type == "election.district.id") {
+
+    conversion.table <- rbind(c(1, "Helsingin vaalipiiri"),
+    		     c("2", "Uudenmaan vaalipiiri"),
+		     c("3", "Varsinais-Suomen vaalipiiri"),
+		     c("4", "Satakunnan vaalipiiri"),
+		     # 5 is intentionally missing here
+		     c("6", "Hämeen vaalipiiri"),
+		     c("7", "Pirkanmaan vaalipiiri"),
+		     c("8", "Kymen vaalipiiri"),
+		     c("9", "Etelä-Savon vaalipiiri"),
+		     c("10", "Pohjois-Savon vaalipiiri"),
+		     c("11", "Pohjois-Karjalan vaalipiiri"),
+		     c("12", "Vaasan vaalipiiri"),
+		     c("13", "Keski-Suomen vaalipiiri"),
+		     c("14", "Oulun vaalipiiri"),
+		     c("15", "Lapin vaalipiiri"),
+		     c("16", "Koko maa"),
+		     c("maa", "Koko maa"))
+
+    colnames(conversion.table) <- c("id", "name")
+    conversion.table <- as.data.frame(conversion.table)	      
+
+  }
+
+  as.character(conversion.table$name[match(ids, conversion.table$id)])
+
+}
+
 # ---------------------------------------------------------------
 
 
@@ -252,15 +317,47 @@ ReadElectionData <- function(which.data, district.id, cache=NA) {
   # Set the header
   colnames(raw.data)  <- header[1:length(raw.data)]
   
-  # TODO: make a separate preprocessing function
-  # 	  and possibly get all conversions from a JSON database
-  # 	  created for this purpose
-  #
   # Column pre-processing
+  dat <- raw.data
   if (which.data == "candidates") {
-    raw.data$Sukupuoli <- factor(raw.data$Sukupuoli, labels=c("Mies", "Nainen"))
+    dat$Sukupuoli <- factor(dat$Sukupuoli, labels=c("Mies", "Nainen"))
+  } else if (which.data == "parties") {
+    dat <- .preprocessElectionData(dat)
   }
 
-  return(raw.data)
+  return(dat)
   
 }
+
+
+
+
+#' Description:
+#' Internal function for election data preprocessing
+#'  
+#' @param dat election data frame
+#'
+#' @return Data frame
+#' @references
+#' See citation("sorvi") 
+#' @author Leo Lahti \email{louhos@@googlegroups.com}
+#' @examples # 
+#' @keywords utilities
+
+.preprocessElectionData <- function (dat) {
+
+  dat$Vaalilaji_nimi_fi <- .datavaalit.idconversions(tolower(dat$Vaalilaji), type = "election.id") 
+
+  dat$Vaalipiiri_fi <- .datavaalit.idconversions(as.character(dat$Vaalipiirinumero), type = "election.district.id") 
+
+  # Get conversions between municipality IDs and names from MML data
+  # (C) MML 2011-2012
+  if (!exists("MML")) { LoadData("MML") }
+  dat$Kunta_fi <- ConvertMunicipalityCodes(ids = dat$Kuntanumero, MML = MML)
+
+  dat
+
+}
+
+
+

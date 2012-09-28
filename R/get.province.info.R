@@ -87,7 +87,7 @@ ConvertMunicipalityNames <- function (municipality.names) {
 #' @references
 #' See citation("sorvi") 
 #' @author Leo Lahti \email{louhos@@googlegroups.com}
-#' @examples # LoadData("MML"); tmp <- GetMunicipalityInfo(MML = MML)
+#' @examples # LoadData("MML"); municipality.info <- GetMunicipalityInfo(MML = MML)
 #' @keywords utilities
 
 GetMunicipalityInfo <- function (url =
@@ -241,3 +241,39 @@ FindProvince <- function (municipalities = NULL, municipality.info = NULL) {
 
 }
 
+
+#' Convert between municipality codes and names
+#'
+#' @param ids NULL 
+#' @param names NULL 
+#' @param MML MML data, as obtained with LoadData("MML")
+#'
+#' @return Depending on the input. Converted id or name vector, or full conversion table.
+#' @export 
+#' @references
+#' See citation("sorvi") 
+#' @author Leo Lahti \email{louhos@@googlegroups.com}
+#' @examples  # LoadData("MML"); conversion.table <- ConvertMunicipalityCodes(MML = MML)
+#' @keywords utilities
+
+ConvertMunicipalityCodes <- function (ids = NULL, names = NULL, MML) {
+
+  df <- as.data.frame(MML[["1_milj_Shape_etrs_shape"]]$kunta1_p)
+ 
+  conversion.table <- df[, c("Kunta", "Kunta.FI")]
+  names(conversion.table) <- c("id", "name")
+
+  conversion.table$id <- as.character(conversion.table$id)
+  conversion.table$name <- as.character(conversion.table$name)
+
+  res <- conversion.table
+
+  if (!is.null(ids)) {
+    res <- conversion.table$name[match(as.character(ids), conversion.table$id)]
+  } else if (!is.null(names)) {
+    res <- conversion.table$id[match(as.character(names), conversion.table$name)]
+  } 
+
+  res
+
+}

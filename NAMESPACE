@@ -1,5 +1,6 @@
 export(CenterData)
 export(ConvertGADMPosition2Region)
+export(ConvertMunicipalityCodes)
 export(ConvertMunicipalityNames)
 export(FindProvince)
 export(GenerateMapColours)
