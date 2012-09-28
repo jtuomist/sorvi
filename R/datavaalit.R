@@ -137,12 +137,6 @@ ReadAllParties <- function(cache=NA) {
   return(fromJSON(paste(readLines(data.file), collapse = "")))
 } 
 
-.readCommonData2 <- function() {
-  require(rjson)
-  data.file <- system.file("extdata/common_data2.json", package = "sorvi")
-  return(fromJSON(paste(readLines(data.file), collapse = "")))
-} 
-
 # ---------------------------------------------------------------
 
 
