@@ -241,21 +241,21 @@ ReadElectionData <- function(which.data, district.id, cache=NA) {
   raw.data <- read.table(data.source, sep=";", as.is=TRUE, strip.white=TRUE,
                          fileEncoding="iso-8859-1")
   
+  # The the suitable header names from common_data.json
+  header <- .readCommonData()
+  
   # In the original csv file, there is also a trailing ";" -> there really is
   # only 29 / 35 columns (as of 27.9.2012); more columns will appear 
   # on the election day
   if (which.data == "parties") {
     raw.data <- raw.data[1:35]
-    header.id <- "OMpuolueet"
-    header <- .readCommonData2()
+    header <- header$OMpuolueet$header
   } else if (which.data == "candidates") {
     raw.data <- raw.data[1:29]
-    header.id <- "OMehdokkaat"
-    header <- .readCommonData()
+    header <- header$OMehdokkaat$header
   }
 
-  # Get the suitable header from common_data.json
-  header <- header[[header.id]]$header
+  # Set the header
   colnames(raw.data)  <- header[1:length(raw.data)]
   
   # TODO: make a separate preprocessing function
