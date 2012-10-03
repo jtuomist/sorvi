@@ -112,10 +112,9 @@ ReadAllCandidates <- function(cache=NA) {
 #' @keywords utilities
 
 ReadAllParties <- function(cache=NA) {
-  
-  election.district.ids  <- 1:15
-  # Remember, there is no id 5!
-  election.district.ids  <- election.district.ids[-c(5)]
+ 
+  # District 5 does not exist!
+  election.district.ids  <- setdiff(1:15, 5)
 
   # Determine the cache dir if needed
   # cache = "."  
@@ -137,9 +136,7 @@ ReadAllParties <- function(cache=NA) {
   return(fromJSON(paste(readLines(data.file), collapse = "")))
 } 
 
-.datavaalit.idconversions <- function (ids, type = "election.id") {
-
-  ids <- as.character(ids)
+.datavaalit.idconversions <- function (ids = NULL, type = "election.id") {
 
   if (type == "election.id") {
 
@@ -198,7 +195,17 @@ ReadAllParties <- function(cache=NA) {
 
   }
 
-  as.character(conversion.table$name[match(ids, conversion.table$id)])
+  if (is.null(ids)) {
+    return(conversion.table)
+  }
+
+  ids <- as.character(ids)
+
+  if (any(ids %in% conversion.table$id)) {
+    as.character(conversion.table$name[match(ids, conversion.table$id)])
+  } else if (any(ids %in% conversion.table$name)) {
+    as.character(conversion.table$id[match(ids, conversion.table$name)])
+  }
 
 }
 
@@ -257,6 +264,12 @@ ReadElectionData <- function(which.data, district.id, cache=NA) {
     file.name.body <- "puo_"
   } else if (which.data == "candidates") { 
     file.name.body <- "ehd_"
+  }
+
+  # Convert plain names into numerical IDs if needed
+  convtab <- .datavaalit.idconversions(type = "election.district.id")
+  if (district.id %in% convtab$name) {
+    district.id <- .datavaalit.idconversions(district.id, type = "election.district.id")
   }
 
   # Coerce the disrict id into a character for building file paths / urls
@@ -324,6 +337,10 @@ ReadElectionData <- function(which.data, district.id, cache=NA) {
   } else if (which.data == "parties") {
     dat <- .preprocessElectionData(dat)
   }
+
+  dat <- cbind(as.character(1:nrow(dat)), dat)  
+  colnames(dat) <- c("RowIndex", colnames(dat)[-1])
+  rownames(dat) <- NULL
 
   return(dat)
   
