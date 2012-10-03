@@ -93,6 +93,8 @@ ReadAllCandidates <- function(cache=NA) {
   
   # Bind everything into a single data frame
   candidates <- do.call("rbind", all.districts)
+
+  candidates$RowIndex <- 1:nrow(candidates)
   
   return(candidates)
 }
@@ -123,6 +125,8 @@ ReadAllParties <- function(cache=NA) {
   
   # Bind everything into a single data frame
   parties <- do.call("rbind", all.districts)
+
+  parties$RowIndex <- 1:nrow(parties)
   
   return(parties)
 }
@@ -310,8 +314,7 @@ ReadElectionData <- function(which.data, district.id, cache=NA) {
     # Read the table over network, use the encodign provided by MoJ
   }
   # Read the data from selected data source
-  raw.data <- read.table(data.source, sep=";", as.is=TRUE, strip.white=TRUE,
-                         fileEncoding="iso-8859-1")
+  raw.data <- read.csv(data.source, sep=";", as.is=TRUE, strip.white=TRUE, fileEncoding="iso-8859-1")
   
   # The the suitable header names from common_data.json
   header <- .readCommonData()
@@ -369,6 +372,7 @@ ReadElectionData <- function(which.data, district.id, cache=NA) {
 
   # Get conversions between municipality IDs and names from MML data
   # (C) MML 2011-2012
+  # FIXME: replace with GetVaalipiiri data from another server.
   if (!exists("MML")) { LoadData("MML") }
   dat$Kunta_fi <- ConvertMunicipalityCodes(ids = dat$Kuntanumero, MML = MML)
 
