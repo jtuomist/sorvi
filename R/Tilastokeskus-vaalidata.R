@@ -580,12 +580,83 @@ GetMunicipalElectionData2004 <- function (which = "election.statistics") {
     tab <- cbind(tab1[regs,], tab2[regs,], tab3[regs,],
     	         tab4[regs,], tab6[regs,])
 
-  }
-
+  } 
   tab
 
 }
 
+
+#' GetElectedCandidates
+#'
+#' Get data on elected candidates 
+#' 
+#' @param year election year
+#' @param election eletion type (municipal / parliament / president / ...)
+#'
+#' @return data.frame
+#' @export 
+#' @references
+#' See citation("sorvi") 
+#' @author Leo Lahti \email{louhos@@googlegroups.com}
+#' @examples # 
+#' @keywords utilities
+GetElectedCandidates <- function (year, election, election.district) {
+
+  if (as.numeric(year) == 2008 && election == "municipal") {
+
+    # Convert IDs to names if needed
+    convtab <- .datavaalit.idconversions(type = "election.district.id") 
+    if (as.character(election.district) %in% convtab$id) {
+      election.district <- .datavaalit.idconversions(election.district, type = "election.district.id")
+    }
+
+    # List URLs for Statfi election candidate tables 2008
+    # Source (C) Tilastokeskus:
+    # http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2008_04/2008_04_fi.asp
+    urls <- list()
+    urls[["Helsingin vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2008_04/410_kvaa_2008_2009-11-02_tau_123_fi.px"
+    urls[["Uudenmaan vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2008_04/420_kvaa_2008_2009-11-02_tau_124_fi.px"
+    urls[["Varsinais-Suomen vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2008_04/430_kvaa_2008_2009-11-02_tau_125_fi.px"
+    urls[["Satakunnan vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2008_04/440_kvaa_2008_2009-11-02_tau_126_fi.px"
+    urls[["Hämeen vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2008_04/460_kvaa_2008_2009-11-02_tau_127_fi.px"
+    urls[["Pirkanmaan vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2008_04/470_kvaa_2008_2009-11-02_tau_128_fi.px"
+    urls[["Kymen vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2008_04/480_kvaa_2008_2009-11-02_tau_129_fi.px"
+    urls[["Etelä-Savon vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2008_04/490_kvaa_2008_2009-11-02_tau_130_fi.px"
+    urls[["Pohjois-Savon vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2008_04/500_kvaa_2008_2009-11-02_tau_131_fi.px"
+    urls[["Pohjois-Karjalan vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2008_04/510_kvaa_2008_2009-11-02_tau_132_fi.px"
+    urls[["Vaasan vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2008_04/520_kvaa_2008_2009-11-02_tau_133_fi.px"
+    urls[["Keski-Suomen vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2008_04/530_kvaa_2008_2009-11-02_tau_134_fi.px"
+    urls[["Oulun vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2008_04/540_kvaa_2008_2009-11-02_tau_135_fi.px"
+    urls[["Lapin vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2008_04/550_kvaa_2008_2009-11-02_tau_136_fi.px"
+
+    url <- urls[[election.district]]
+
+  } else {
+    warning(paste("Option", election, year, "not implemented"))
+  }
+
+  px <- read.px(url)
+  df <- as.data.frame(px)
+
+  # Convert into more compact table format
+  df <- melt(df, c("Ehdokas", "Äänestysalue", "Äänestystiedot"), "dat")
+  df <- cast(df, Ehdokas + Äänestysalue ~ Äänestystiedot)
+
+  # Preprocess candidate field
+  ehd <- do.call(rbind, strsplit(as.character(df$Ehdokas), " / "))
+  df[["Ehdokkaan nimi"]] <- ehd[, 1]
+  df[["Puolue"]] <- ehd[, 2]
+  # df[["Kunta"]] <- ehd[, 3]
+  rm(ehd)
+
+  df$Sukunimi <- sapply(strsplit(df[["Ehdokkaan nimi"]], " "), function (x) {x[[1]]})
+
+  df$Etunimet <- sapply(strsplit(df[["Ehdokkaan nimi"]], " "), function (x) {paste(x[-1], collapse = " ")})
+
+  df$Ehdokas <- NULL
+
+
+}
 
   
 #' GetMunicipalElectionData2008

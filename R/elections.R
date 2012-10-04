@@ -11,7 +11,6 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 
-
 # Function for reading the Presidentti2012 data
 # For documentation, see
 # http://www2.hs.fi/extrat/hsnext/Vaalikone_API_20111207.pdf
