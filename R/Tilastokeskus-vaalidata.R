@@ -657,6 +657,8 @@ GetElectedCandidates <- function (year, election, election.district, verbose = F
     urls[["Oulun vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2004_04/040_KVAA_2004_2008-07-17_TAU_114_FI.px"
     urls[["Lapin vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2004_04/040_KVAA_2004_2008-07-17_TAU_115_FI.px"
 
+    url <- urls[[election.district]]
+
   } else {
     warning(paste("Option", election, year, "not implemented"))
   }
