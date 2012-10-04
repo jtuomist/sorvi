@@ -591,8 +591,9 @@ GetMunicipalElectionData2004 <- function (which = "election.statistics") {
 #' Get data on elected candidates 
 #' 
 #' @param year election year
-#' @param election eletion type (municipal / parliament / president / ...)
-#'
+#' @param election election type (municipal / parliament / president / ...)
+#' @param election.district election.district in numeric or character format (for instance: 2 or "Uudenmaan vaalipiiri")
+#' @param verbose verbose
 #' @return data.frame
 #' @export 
 #' @references
@@ -600,15 +601,19 @@ GetMunicipalElectionData2004 <- function (which = "election.statistics") {
 #' @author Leo Lahti \email{louhos@@googlegroups.com}
 #' @examples # 
 #' @keywords utilities
-GetElectedCandidates <- function (year, election, election.district) {
+GetElectedCandidates <- function (year, election, election.district, verbose = FALSE) {
 
-  if (as.numeric(year) == 2008 && election == "municipal") {
+  require(reshape)
+
+  if (verbose) {message(paste(election.district))}		     
 
     # Convert IDs to names if needed
     convtab <- .datavaalit.idconversions(type = "election.district.id") 
     if (as.character(election.district) %in% convtab$id) {
       election.district <- .datavaalit.idconversions(election.district, type = "election.district.id")
     }
+
+  if (as.numeric(year) == 2008 && election == "municipal") {
 
     # List URLs for Statfi election candidate tables 2008
     # Source (C) Tilastokeskus:
@@ -631,30 +636,65 @@ GetElectedCandidates <- function (year, election, election.district) {
 
     url <- urls[[election.district]]
 
+  } else if (as.numeric(year) == 2004 && election == "municipal") {
+    # List URLs for Statfi election candidate tables 2004
+    # Source (C) Tilastokeskus:
+    # http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2004_04/2004_04_fi.asp
+
+    urls <- list()
+    urls[["Helsingin vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2004_04/040_KVAA_2004_2008-07-17_TAU_101_FI.px"
+    urls[["Uudenmaan vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2004_04/040_KVAA_2004_2008-07-17_TAU_102_FI.px"
+    urls[["Varsinais-Suomen vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2004_04/040_KVAA_2004_2008-07-17_TAU_103_FI.px"
+    urls[["Satakunnan vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2004_04/040_KVAA_2004_2008-07-17_TAU_104_FI.px"
+    urls[["Hämeen vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2004_04/040_KVAA_2004_2008-07-17_TAU_106_FI.px"
+    urls[["Pirkanmaan vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2004_04/040_KVAA_2004_2008-07-17_TAU_107_FI.px"
+    urls[["Kymen vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2004_04/040_KVAA_2004_2008-07-17_TAU_108_FI.px"
+    urls[["Etelä-Savon vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2004_04/040_KVAA_2004_2008-07-17_TAU_109_FI.px"
+    urls[["Pohjois-Savon vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2004_04/040_KVAA_2004_2008-07-17_TAU_110_FI.px"
+    urls[["Pohjois-Karjalan vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2004_04/040_KVAA_2004_2008-07-17_TAU_111_FI.px"
+    urls[["Vaasan vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2004_04/040_KVAA_2004_2008-07-17_TAU_112_FI.px"
+    urls[["Keski-Suomen vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2004_04/040_KVAA_2004_2008-07-17_TAU_113_FI.px"
+    urls[["Oulun vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2004_04/040_KVAA_2004_2008-07-17_TAU_114_FI.px"
+    urls[["Lapin vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2004_04/040_KVAA_2004_2008-07-17_TAU_115_FI.px"
+
   } else {
     warning(paste("Option", election, year, "not implemented"))
   }
 
+
+  if (verbose) { message("Reading PC Axis file") }
   px <- read.px(url)
+
+  if (verbose) { message("Converting to data frame") }
   df <- as.data.frame(px)
 
-  # Convert into more compact table format
-  df <- melt(df, c("Ehdokas", "Äänestysalue", "Äänestystiedot"), "dat")
-  df <- cast(df, Ehdokas + Äänestysalue ~ Äänestystiedot)
+  if (verbose) { message("Splitting by candidate") }
+  df <- split(df, df$Ehdokas)
 
-  # Preprocess candidate field
-  ehd <- do.call(rbind, strsplit(as.character(df$Ehdokas), " / "))
+  if (verbose) { message("Converting into more compact table format") }
+  df <- lapply(df, function(dff) {m <- melt(dff, c("Ehdokas", "Äänestysalue", "Äänestystiedot"), "dat"); mc <- cast(m, Ehdokas + Äänestysalue ~ Äänestystiedot); mc <- mc[!mc[["Ehdokkaan numero"]] == 0, ];  })
+  df <- do.call(rbind, df)
+
+  if (verbose) { message("Preprocessing fields") }
+  df$Ehdokas <- as.character(df$Ehdokas)
+  ehd <- do.call(rbind, strsplit(df$Ehdokas, " / "))
   df[["Ehdokkaan nimi"]] <- ehd[, 1]
   df[["Puolue"]] <- ehd[, 2]
-  # df[["Kunta"]] <- ehd[, 3]
   rm(ehd)
-
   df$Sukunimi <- sapply(strsplit(df[["Ehdokkaan nimi"]], " "), function (x) {x[[1]]})
-
   df$Etunimet <- sapply(strsplit(df[["Ehdokkaan nimi"]], " "), function (x) {paste(x[-1], collapse = " ")})
 
-  df$Ehdokas <- NULL
 
+  if (verbose) { message("Preprocessing region fields") }
+  alue <- do.call(rbind, strsplit(as.character(df[["Äänestysalue"]]), " / "))
+  df$Kunta <- alue[, 1]
+  df$Alue <- alue[, 2]
+  rownames(df) <- NULL
+
+  # Clean up memory
+  gc()
+
+  df
 
 }
 

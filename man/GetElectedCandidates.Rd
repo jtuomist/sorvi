@@ -2,13 +2,20 @@
 \alias{GetElectedCandidates}
 \title{GetElectedCandidates}
 \usage{
-  GetElectedCandidates(year, election, election.district)
+  GetElectedCandidates(year, election, election.district,
+    verbose = FALSE)
 }
 \arguments{
   \item{year}{election year}
 
-  \item{election}{eletion type (municipal / parliament /
+  \item{election}{election type (municipal / parliament /
   president / ...)}
+
+  \item{election.district}{election.district in numeric or
+  character format (for instance: 2 or "Uudenmaan
+  vaalipiiri")}
+
+  \item{verbose}{verbose}
 }
 \value{
   data.frame
