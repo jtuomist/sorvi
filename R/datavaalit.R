@@ -276,7 +276,7 @@ ReadElectionData <- function(which.data, district.id, cache=NA) {
     district.id <- .datavaalit.idconversions(district.id, type = "election.district.id")
   }
 
-  # Coerce the disrict id into a character for building file paths / urls
+  # Coerce the district id into a character for building file paths / urls
   district.id.char <- as.character(district.id)
 
   # Padding with leading zeros if needed
@@ -331,15 +331,11 @@ ReadElectionData <- function(which.data, district.id, cache=NA) {
   }
 
   # Set the header
-  colnames(raw.data)  <- header[1:length(raw.data)]
+  colnames(raw.data) <- header[1:length(raw.data)]
   
   # Column pre-processing
-  dat <- raw.data
-  if (which.data == "candidates") {
-    dat$Sukupuoli <- factor(dat$Sukupuoli, labels=c("Mies", "Nainen"))
-  } else if (which.data == "parties") {
-    dat <- .preprocessElectionData(dat)
-  }
+
+  dat <- .preprocessElectionData(raw.data, which.data)
 
   dat <- cbind(as.character(1:nrow(dat)), dat)  
   colnames(dat) <- c("RowIndex", colnames(dat)[-1])
@@ -356,7 +352,7 @@ ReadElectionData <- function(which.data, district.id, cache=NA) {
 #' Internal function for election data preprocessing
 #'  
 #' @param dat election data frame
-#'
+#' @param which.data "elections" or "candidates"
 #' @return Data frame
 #' @references
 #' See citation("sorvi") 
@@ -364,17 +360,35 @@ ReadElectionData <- function(which.data, district.id, cache=NA) {
 #' @examples # 
 #' @keywords utilities
 
-.preprocessElectionData <- function (dat) {
+.preprocessElectionData <- function (dat, which.data) {
 
-  dat$Vaalilaji_nimi_fi <- .datavaalit.idconversions(tolower(dat$Vaalilaji), type = "election.id") 
-
-  dat$Vaalipiiri_fi <- .datavaalit.idconversions(as.character(dat$Vaalipiirinumero), type = "election.district.id") 
+  dat <- as.data.frame(dat)
 
   # Get conversions between municipality IDs and names from MML data
   # (C) MML 2011-2012
-  # FIXME: replace with GetVaalipiiri data from another server.
-  if (!exists("MML")) { LoadData("MML") }
-  dat$Kunta_fi <- ConvertMunicipalityCodes(ids = dat$Kuntanumero, MML = MML)
+  # FIXME: replace with GetVaalipiiri data and Kuntanumero from another server.
+
+  dat$Vaalilaji_nimi_fi <- .datavaalit.idconversions(tolower(dat$Vaalilaji), type = "election.id") 
+  dat$Vaalipiiri_fi <- .datavaalit.idconversions(as.character(dat$Vaalipiirinumero), type = "election.district.id") 
+
+  if (!exists("MML")) { LoadData("MML") }  
+  dat$Kuntanumero[nchar(dat$Kuntanumero) == 1] <- paste("00", dat$Kuntanumero[nchar(dat$Kuntanumero) == 1], sep = "")
+  dat$Kuntanumero[nchar(dat$Kuntanumero) == 2] <- paste("0", dat$Kuntanumero[nchar(dat$Kuntanumero) == 2], sep = "")
+  dat$Kunta <- ConvertMunicipalityCodes(ids = dat$Kuntanumero, MML = MML)
+  dat$Kommun <- as.character(dat$Alueen_nimi_sv)
+
+  dat$Puolue_lyhenne_fi <- dat$Nimilyhenne_fi
+  dat$Puolue_lyhenne_sv <- dat$Nimilyhenne_sv
+  
+  dat$Nimilyhenne_fi <- NULL
+  dat$Nimilyhenne_sv <- NULL
+
+  if (which.data == "candidates") {
+    
+    dat$Sukupuoli <- factor(dat$Sukupuoli, labels=c("Mies", "Nainen"))
+    dat$Ehdokas <- paste(dat$Sukunimi, " ", dat$Etunimi, " / ",  dat$Puolue_lyhenne_fi, " / ", dat$Kunta, sep = "")
+
+  } 
 
   dat
 

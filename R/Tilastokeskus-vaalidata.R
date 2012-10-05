@@ -607,11 +607,15 @@ GetElectedCandidates <- function (year, election, election.district, verbose = F
 
   if (verbose) {message(paste(election.district))}		     
 
-    # Convert IDs to names if needed
-    convtab <- .datavaalit.idconversions(type = "election.district.id") 
-    if (as.character(election.district) %in% convtab$id) {
-      election.district <- .datavaalit.idconversions(election.district, type = "election.district.id")
-    }
+  # Convert IDs to names if needed
+  convtab <- .datavaalit.idconversions(type = "election.district.id") 
+  if (as.character(election.district) %in% convtab$id) {
+    election.district.id <- election.district
+    election.district.name <- .datavaalit.idconversions(election.district, type = "election.district.id")
+  } else{
+    election.district.name <- election.district
+    election.district.id <- .datavaalit.idconversions(election.district, type = "election.district.id")
+  }
 
   if (as.numeric(year) == 2008 && election == "municipal") {
 
@@ -634,7 +638,7 @@ GetElectedCandidates <- function (year, election, election.district, verbose = F
     urls[["Oulun vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2008_04/540_kvaa_2008_2009-11-02_tau_135_fi.px"
     urls[["Lapin vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2008_04/550_kvaa_2008_2009-11-02_tau_136_fi.px"
 
-    url <- urls[[election.district]]
+    url <- urls[[election.district.name]]
 
   } else if (as.numeric(year) == 2004 && election == "municipal") {
     # List URLs for Statfi election candidate tables 2004
@@ -657,7 +661,7 @@ GetElectedCandidates <- function (year, election, election.district, verbose = F
     urls[["Oulun vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2004_04/040_KVAA_2004_2008-07-17_TAU_114_FI.px"
     urls[["Lapin vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2004_04/040_KVAA_2004_2008-07-17_TAU_115_FI.px"
 
-    url <- urls[[election.district]]
+    url <- urls[[election.district.name]]
 
   } else {
     warning(paste("Option", election, year, "not implemented"))
@@ -681,17 +685,26 @@ GetElectedCandidates <- function (year, election, election.district, verbose = F
   df$Ehdokas <- as.character(df$Ehdokas)
   ehd <- do.call(rbind, strsplit(df$Ehdokas, " / "))
   df[["Ehdokkaan nimi"]] <- ehd[, 1]
-  df[["Puolue"]] <- ehd[, 2]
+  df[["Puolue_lyhenne_fi"]] <- ehd[, 2]
   rm(ehd)
   df$Sukunimi <- sapply(strsplit(df[["Ehdokkaan nimi"]], " "), function (x) {x[[1]]})
-  df$Etunimet <- sapply(strsplit(df[["Ehdokkaan nimi"]], " "), function (x) {paste(x[-1], collapse = " ")})
-
+  df$Etunimi <- sapply(strsplit(df[["Ehdokkaan nimi"]], " "), function (x) {paste(x[-1], collapse = " ")})
+  df[["Ehdokkaan nimi"]] <- NULL
 
   if (verbose) { message("Preprocessing region fields") }
   alue <- do.call(rbind, strsplit(as.character(df[["Äänestysalue"]]), " / "))
   df$Kunta <- alue[, 1]
   df$Alue <- alue[, 2]
   rownames(df) <- NULL
+
+  # Add fields for compatibility
+  df$Vaalipiirinumero <- election.district.id
+  df$Vaalipiiri_fi <- election.district.name
+  df$Vaalilaji <- "K"
+  df[["Ehdokasnumero"]] <- df[["Ehdokkaan numero"]]
+  df[["Ehdokkaan numero"]] <- NULL
+  
+  df$Vaalilaji_nimi_fi <- .datavaalit.idconversions(tolower(df$Vaalilaji), type = "election.id") 
 
   # Clean up memory
   gc()
