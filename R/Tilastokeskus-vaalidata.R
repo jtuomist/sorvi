@@ -682,8 +682,8 @@ GetElectedCandidates <- function (year, election, election.district, verbose = F
   df <- do.call(rbind, df)
 
   if (verbose) { message("Preprocessing fields") }
-  df$Ehdokas <- as.character(df$Ehdokas)
-  ehd <- do.call(rbind, strsplit(df$Ehdokas, " / "))
+  df$Ehdokas <- gsub(" / ", "/", as.character(df$Ehdokas))
+  ehd <- do.call(rbind, strsplit(df$Ehdokas, "/"))
   df[["Ehdokkaan nimi"]] <- ehd[, 1]
   df[["Puolue_lyhenne_fi"]] <- ehd[, 2]
   rm(ehd)
@@ -692,7 +692,8 @@ GetElectedCandidates <- function (year, election, election.district, verbose = F
   df[["Ehdokkaan nimi"]] <- NULL
 
   if (verbose) { message("Preprocessing region fields") }
-  alue <- do.call(rbind, strsplit(as.character(df[["Äänestysalue"]]), " / "))
+  df[["Äänestysalue"]] <- gsub(" / ", "/", as.character(df[["Äänestysalue"]]))
+  alue <- do.call(rbind, strsplit(df[["Äänestysalue"]], "/"))
   df$Kunta <- alue[, 1]
   df$Alue <- alue[, 2]
   rownames(df) <- NULL

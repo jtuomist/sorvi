@@ -31,6 +31,8 @@
 
 GetPXTilastokeskus <- function (px) {
 
+  # TODO: lisää tarkemmat ja kattavammat esikasittelyt
+
   # If URL is given, read the data into PX object
   if (is.url(px)) {
     message(paste("Reading Tilastokeskus data from ", px))
