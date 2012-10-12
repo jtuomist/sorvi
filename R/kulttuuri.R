@@ -40,7 +40,7 @@ GetApurahat <- function() {
   
   apurahat$Maakunta[apurahat$Maakunta=="PIRKANMAAN MAAKUNTA"] <- "PIRKANMAA"
   apurahat$Maakunta[apurahat$Maakunta=="H\xC4ME"] <- "KANTA-H\xC4ME"
-  apurahat$Maakunta[apurahat$Maakunta=="Åland"] <- "AHVENANMAA"
+  apurahat$Maakunta[apurahat$Maakunta=="\U3e34633cland"] <- "AHVENANMAA"
   apurahat$Maakunta[apurahat$Maakunta %in% c("", " ")] <- "ULK"
   levels(apurahat$Maakunta)[24] <- "ULKOMAA"
   apurahat$Maakunta <- droplevels(apurahat$Maakunta)

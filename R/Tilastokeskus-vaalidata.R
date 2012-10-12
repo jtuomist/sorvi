@@ -680,7 +680,10 @@ GetElectedCandidates <- function (year, election, election.district, verbose = F
   df <- split(df, df$Ehdokas)
 
   if (verbose) { message("Converting into more compact table format") }
-  df <- lapply(df, function(dff) {m <- reshape2::melt(dff, c("Ehdokas", "\xC4\xe4nestysalue", "\xC4\xe4nestystiedot"), "dat"); mc <- reshape2::cast(m, Ehdokas + \xC4\xe4nestysalue ~ \xC4\xe4nestystiedot); mc <- mc[!mc[["Ehdokkaan numero"]] == 0, ];  })
+  
+  
+  #df <- lapply(df, function(dff) {m <- reshape2::melt(dff, c("Ehdokas", "\\xC4\\xe4nestysalue", "\\xC4\\xe4nestystiedot"), "dat"); mc <- reshape2::cast(m, Ehdokas + \\xC4\\xe4nestysalue ~ \\xC4\\xe4nestystiedot); mc <- mc[!mc[["Ehdokkaan numero"]] == 0, ]})
+  df <- lapply(df, function(dff) {m <- reshape2::melt(dff, c("Ehdokas", "Äänestysalue", "Äänestystiedot"), "dat"); mc <- reshape2::cast(m, Ehdokas + Äänestysalue ~ Äänestystiedot); mc <- mc[!mc[["Ehdokkaan numero"]] == 0, ]})
   df <- do.call(rbind, df)
 
   if (verbose) { message("Preprocessing fields") }

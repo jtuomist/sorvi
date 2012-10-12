@@ -10,7 +10,7 @@ citEntry(entry="misc",
 	 journal = "",
 	 year = "2011",
          textVersion =
-         paste("(C) Louhos. Leo Lahti, Juuso Parkkinen ja Joona Lehtomäki (2011).",
-               "Avoimen datan tyokalupakki R-kielelle.",
+         paste("(C) Louhos 2011-2012.",
+               "sorvi: avoimen datan tyokalupakki R-kielelle.",
                sep=" ")
          )

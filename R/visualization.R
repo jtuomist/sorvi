@@ -10,10 +10,8 @@
 # but WITHOUT ANY WARRANTY; without even the implied warranty of 
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-
-
 #' Description: Draw regression curve with smoothed error bars 
-#' based on the Visually-Weighted Regression by Solomon M. Hsiang; see
+#' based on the Visuprintally-Weighted Regression by Solomon M. Hsiang; see
 #' http://www.fight-entropy.com/2012/07/visually-weighted-regression.html
 #' The R implementation is based on Felix Schonbrodt's code from 
 #' http://www.nicebread.de/visually-weighted-watercolor-plots-new-variants-please-vote/
@@ -48,72 +46,95 @@
 #' @keywords utilities
 
 vwReg <- function(formula, data, title="", B=1000, shade=TRUE, shade.alpha=.1, spag=FALSE, mweight=TRUE, show.lm=FALSE, show.median = TRUE, median.col = "white", show.CI=FALSE, method=loess, bw=FALSE, slices=200, palette=colorRampPalette(c("#FFEDA0", "#DD0000"), bias=2)(20), ylim=NULL, quantize = "continuous",  ...) {
-IV <- all.vars(formula)[2]
-DV <- all.vars(formula)[1]
-data <- na.omit(data[order(data[, IV]), c(IV, DV)])
-if (bw == TRUE) palette <- colorRampPalette(c("#EEEEEE", "#999999", "#333333"), bias=2)(20)
-print("Computing boostrapped smoothers ...")
-newx <- data.frame(seq(min(data[, IV]), max(data[, IV]), length=slices))
-colnames(newx) <- IV
-l0.boot <- matrix(NA, nrow=nrow(newx), ncol=B)
-l0 <- method(formula, data)
-for (i in 1:B) {
-data2 <- data[sample(nrow(data), replace=TRUE), ]
-data2 <- data2[order(data2[, IV]), ]
-if (class(l0)=="loess") {
-m1 <- method(formula, data2, control = loess.control(surface = "i", statistics="a", trace.hat="a"), ...)
-} else {
-m1 <- method(formula, data2, ...)
-}
-l0.boot[, i] <- predict(m1, newdata=newx)
-}
-# compute median and CI limits of bootstrap
-  .InstallMarginal("plyr")
-  .InstallMarginal("reshape")
-  .InstallMarginal("reshape2")
 
-CI.boot <- adply(l0.boot, 1, function(x) quantile(x, prob=c(.025, .5, .975, pnorm(c(-3, -2, -1, 0, 1, 2, 3))), na.rm=TRUE))[, -1]
-colnames(CI.boot)[1:10] <- c("LL", "M", "UL", paste0("SD", 1:7))
-CI.boot$x <- newx[, 1]
-CI.boot$width <- CI.boot$UL - CI.boot$LL
-# scale the CI width to the range 0 to 1 and flip it (bigger numbers = narrower CI)
-CI.boot$w2 <- (CI.boot$width - min(CI.boot$width))
-CI.boot$w3 <- 1-(CI.boot$w2/max(CI.boot$w2))
-# convert bootstrapped spaghettis to long format
-b2 <- reshape2::melt(l0.boot)
-b2$x <- newx[,1]
-colnames(b2) <- c("index", "B", "value", "x")
+  # ------------------
 
-  .InstallMarginal("ggplot2")
-  .InstallMarginal("RColorBrewer")
+  # Circumvent global variable binding warnings
+  x <- NA
+  y <- NA
+  dens.scaled <- NA
+  alpha.factor <- NA
+  value <- NA
+  group <- NA
+  M <- NA
+  w3 <- NA
+  UL <- NA
+  LL <- NA
 
-p1 <- ggplot(data, aes_string(x=IV, y=DV)) + theme_bw()
-if (shade) {
-  quantize <- match.arg(quantize, c("continuous", "SD"))
+  # ------------------
 
-  if (quantize == "continuous") {
-    message("Computing density estimates for each vertical cut ...")
-    flush.console()
-    if (is.null(ylim)) {
-      min_value <- min(min(l0.boot, na.rm=TRUE), min(data[, DV], na.rm=TRUE))
-      max_value <- max(max(l0.boot, na.rm=TRUE), max(data[, DV], na.rm=TRUE))
-      ylim <- c(min_value, max_value)
+  IV <- all.vars(formula)[2]
+  DV <- all.vars(formula)[1]
+  data <- na.omit(data[order(data[, IV]), c(IV, DV)])
+
+  if (bw) palette <- colorRampPalette(c("#EEEEEE", "#999999", "#333333"), bias=2)(20)
+
+  message("Computing boostrapped smoothers ...")
+  newx <- data.frame(seq(min(data[, IV]), max(data[, IV]), length=slices))
+  colnames(newx) <- IV
+  l0.boot <- matrix(NA, nrow=nrow(newx), ncol=B)
+  l0 <- method(formula, data)
+  for (i in 1:B) {
+    data2 <- data[sample(nrow(data), replace=TRUE), ]
+    data2 <- data2[order(data2[, IV]), ]
+
+    if (class(l0)=="loess") {
+      m1 <- method(formula, data2, control = loess.control(surface = "i", statistics="a", trace.hat="a"), ...)
+    } else {
+      m1 <- method(formula, data2, ...)
     }
-    # vertical cross-sectional density estimate
-    d2 <- ddply(b2[, c("x", "value")], .(x), function(df) {
-    res <- data.frame(density(df$value, na.rm=TRUE, n=slices, from=ylim[1], to=ylim[2])[c("x", "y")])
+      l0.boot[, i] <- predict(m1, newdata=newx)
+    }
 
-    colnames(res) <- c("y", "dens")
-    return(res)
-    }, .progress="text")
+    # compute median and CI limits of bootstrap
+    .InstallMarginal("plyr")
+    .InstallMarginal("reshape")
+    .InstallMarginal("reshape2")
+    .InstallMarginal("ggplot2")
+    .InstallMarginal("RColorBrewer")
 
-    maxdens <- max(d2$dens)
-    mindens <- min(d2$dens)
-    d2$dens.scaled <- (d2$dens - mindens)/maxdens
+    CI.boot <- plyr::adply(l0.boot, 1, function(x) quantile(x, prob=c(.025, .5, .975, pnorm(c(-3, -2, -1, 0, 1, 2, 3))), na.rm=TRUE))[, -1]
+    colnames(CI.boot)[1:10] <- c("LL", "M", "UL", paste0("SD", 1:7))
+    CI.boot$x <- newx[, 1]
+    CI.boot$width <- CI.boot$UL - CI.boot$LL
 
-    ## Tile approach
-    d2$alpha.factor <- d2$dens.scaled^shade.alpha
-    p1 <- p1 + geom_tile(data=d2, aes(x=x, y=y, fill=dens.scaled, alpha=alpha.factor)) + scale_fill_gradientn("dens.scaled", colours=palette) + scale_alpha_continuous(range=c(0.001, 1))
+    # scale the CI width to the range 0 to 1 and flip it (bigger numbers = narrower CI)
+    CI.boot$w2 <- (CI.boot$width - min(CI.boot$width))
+    CI.boot$w3 <- 1-(CI.boot$w2/max(CI.boot$w2))
+
+    # convert bootstrapped spaghettis to long format
+    b2 <- reshape2::melt(l0.boot)
+    b2$x <- newx[,1]
+    colnames(b2) <- c("index", "B", "value", "x")
+
+    p1 <- ggplot2::ggplot(data, ggplot2::aes_string(x=IV, y=DV)) + ggplot2::theme_bw()
+    if (shade) {
+       quantize <- match.arg(quantize, c("continuous", "SD"))
+
+       if (quantize == "continuous") {
+       	  message("Computing density estimates for each vertical cut ...")
+      	  flush.console()
+      	  if (is.null(ylim)) {
+          min_value <- min(min(l0.boot, na.rm=TRUE), min(data[, DV], na.rm=TRUE))
+          max_value <- max(max(l0.boot, na.rm=TRUE), max(data[, DV], na.rm=TRUE))
+          ylim <- c(min_value, max_value)
+      }
+
+      # vertical cross-sectional density estimate
+      d2 <- plyr::ddply(b2[, c("x", "value")], .(x), function(df) {
+        res <- data.frame(density(df$value, na.rm = TRUE, n = slices, from=ylim[1], to=ylim[2])[c("x", "y")])
+
+        colnames(res) <- c("y", "dens")
+        return(res)
+      }, .progress="text")
+
+      maxdens <- max(d2$dens)
+      mindens <- min(d2$dens)
+      d2$dens.scaled <- (d2$dens - mindens)/maxdens
+
+      ## Tile approach
+      d2$alpha.factor <- d2$dens.scaled^shade.alpha
+      p1 <- p1 + ggplot2::geom_tile(data=d2, aes(x=x, y=y, fill=dens.scaled, alpha=alpha.factor)) + ggplot2::scale_fill_gradientn("dens.scaled", colours=palette) + ggplot2::scale_alpha_continuous(range = c(0.001, 1))
     }   
 
     if (quantize == "SD") {
@@ -132,42 +153,42 @@ if (shade) {
 	d3 <- rbind(d3, seg)
      }
 
-     p1 <- p1 + geom_polygon(data=d3, aes(x=x, y=value, color=NULL, fill=col, group=group)) + scale_fill_gradientn("dens.scaled", colours=palette, values=seq(-1, 3, 1))
+     p1 <- p1 + ggplot2::geom_polygon(data=d3, aes(x=x, y=value, color=NULL, fill=col, group=group)) + ggplot2::scale_fill_gradientn("dens.scaled", colours=palette, values=seq(-1, 3, 1))
      }
   }
 
 print("Build ggplot figure ...")
 flush.console()
 if (spag==TRUE) {
-p1 <- p1 + geom_path(data=b2, aes(x=x, y=value, group=B), size=0.7, alpha=10/B, color="darkblue")
+p1 <- p1 + ggplot2::geom_path(data=b2, aes(x=x, y=value, group=B), size=0.7, alpha=10/B, color="darkblue")
 }
 
   if (show.median) {
     if (mweight) {
-      p1 <- p1 + geom_path(data=CI.boot, aes(x=x, y=M, alpha=w3^3), size=.6, linejoin="mitre", color=median.col)
+      p1 <- p1 + ggplot2::geom_path(data=CI.boot, aes(x=x, y=M, alpha=w3^3), size=.6, linejoin="mitre", color=median.col)
     } else {
-      p1 <- p1 + geom_path(data=CI.boot, aes(x=x, y=M), size = 0.6, linejoin="mitre", color=median.col)
+      p1 <- p1 + ggplot2::geom_path(data=CI.boot, aes(x=x, y=M), size = 0.6, linejoin="mitre", color=median.col)
     }
   }
 
   # Confidence limits
   if (show.CI) {
-    p1 <- p1 + geom_path(data=CI.boot, aes(x=x, y=UL, group=B), size=1, color="red")
-    p1 <- p1 + geom_path(data=CI.boot, aes(x=x, y=LL, group=B), size=1, color="red")
+    p1 <- p1 + ggplot2::geom_path(data=CI.boot, aes(x=x, y=UL, group=B), size=1, color="red")
+    p1 <- p1 + ggplot2::geom_path(data=CI.boot, aes(x=x, y=LL, group=B), size=1, color="red")
   }
 
   # plain linear regression line
   if (show.lm) {
-    p1 <- p1 + geom_smooth(method="lm", color="darkgreen", se=FALSE)
+    p1 <- p1 + ggplot2::geom_smooth(method="lm", color="darkgreen", se=FALSE)
   }
 
-  p1 <- p1 + geom_point(size=1, shape=21, fill="white", color="black")
+  p1 <- p1 + ggplot2::geom_point(size=1, shape=21, fill="white", color="black")
 
   if (title != "") {
-    p1 <- p1 + opts(title=title)
+    p1 <- p1 + ggplot2::opts(title=title)
   }
 
-  p <- p1 + opts(legend.position="none")
+  p <- p1 + ggplot2::opts(legend.position="none")
 
   p 
 
