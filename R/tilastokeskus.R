@@ -31,7 +31,7 @@
 
 GetPXTilastokeskus <- function (px) {
 
-  # TODO: lisää tarkemmat ja kattavammat esikasittelyt
+  # TODO: lisaa tarkemmat ja kattavammat esikasittelyt
 
   # If URL is given, read the data into PX object
   if (is.url(px)) {
