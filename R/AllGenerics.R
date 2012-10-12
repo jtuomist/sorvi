@@ -25,4 +25,3 @@ setGeneric("GetMember", function(x, name) standardGeneric("GetMember"))
 
 #' @export
 setGeneric("GetParties", function(x) standardGeneric("GetParties"))
-

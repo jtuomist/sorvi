@@ -89,6 +89,20 @@ setMethod("GetMember", "council", function(x, name) {
   }  
 })
 
+#' GetParties
+#' 
+#' Get Parties from Council class object
+#'
+#' @param x Council class object
+#'
+#' @return 
+#' @export
+#' @references
+#' See citation("sorvi") 
+#' @author Louhos \email{louhos@@googlegroups.com}
+#' @examples # 
+#' @seealso \code{\link{GetMembers}}
+#' @keywords utilities
 
 setMethod("GetParties", "council", function(x) {
   

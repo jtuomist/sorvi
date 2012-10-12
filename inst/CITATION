@@ -1,17 +1,16 @@
 citHeader("Voit viitata R-pakettiin seuraavin tiedoin:")
 
 citEntry(entry="misc",
-         title = "Avoimen datan sorvi-tyokalupakki R-kielelle",
+         title = "sorvi: avoimen datan tyokalupakki R-kielelle",
          author = personList(
-	 	person(given ="Leo", family="Lahti", email = "leo.lahti@iki.fi"),
-	 	person(given ="Juuso", family="Parkkinen"),
-		person(given ="Joona", family="Lehtomaki")
-	 	  ),
+	   person(given ="Leo", family="Lahti", email = "leo.lahti@iki.fi"),
+	   person(given ="Juuso", family="Parkkinen"),
+	   person(given ="Joona", family="Lehtomaki")
+         ),
 	 journal = "",
 	 year = "2011",
          textVersion =
-         paste("Leo Lahti, Juuso Parkkinen ja Joona Lehtomäki (2011).",
+         paste("(C) Louhos. Leo Lahti, Juuso Parkkinen ja Joona Lehtomäki (2011).",
                "Avoimen datan tyokalupakki R-kielelle.",
                sep=" ")
          )
-

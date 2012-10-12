@@ -371,7 +371,11 @@ ReadElectionData <- function(which.data, district.id, cache=NA) {
   dat$Vaalilaji_nimi_fi <- .datavaalit.idconversions(tolower(dat$Vaalilaji), type = "election.id") 
   dat$Vaalipiiri_fi <- .datavaalit.idconversions(as.character(dat$Vaalipiirinumero), type = "election.district.id") 
 
-  if (!exists("MML")) { LoadData("MML") }  
+  # FIXME: use here province info instead; it is lighter
+  # Insert initial NA value for MML to circumvent warnings in build/check
+  MML <- NA 
+  LoadData("MML")
+
   dat$Kuntanumero[nchar(dat$Kuntanumero) == 1] <- paste("00", dat$Kuntanumero[nchar(dat$Kuntanumero) == 1], sep = "")
   dat$Kuntanumero[nchar(dat$Kuntanumero) == 2] <- paste("0", dat$Kuntanumero[nchar(dat$Kuntanumero) == 2], sep = "")
   dat$Kunta <- ConvertMunicipalityCodes(ids = dat$Kuntanumero, MML = MML)
