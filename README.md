@@ -1,24 +1,28 @@
-* Main description of the project  
+### Overview
 
-  soRvi is an algorithmic toolkit for Open Data in Finland,
-  implemented in R open source statistical environment. The package
-  provides convenient access to Finnish open data resources. The tools
-  include functions for fetching, preprocessing, localization,
+  [sorvi](http://louhos.github.com/sorvi) is an algorithmic toolkit for 
+  Open Data in Finland,
+  implemented in the [R](http://www.r-project.org) open source statistical 
+  environment. The package
+  provides convenient access to open data resources, including 
+  functions for fetching, preprocessing, localization,
   analysis, integration and visualization of central governmental and
   other data resources. 
 
   For further details (in Finnish), see the project homepage:
-  http://louhos.github.com/sorvi
+  [http://louhos.github.com/sorvi](http://louhos.github.com/sorvi)
 
 
-* Developers
+### Developers
 
-  Main developers: Leo Lahti, Juuso Parkkinen and Joona Lehtomäki
+  Admins: Leo Lahti, Juuso Parkkinen and Joona Lehtomäki
   
-  In addition, a number of people have contributed to the project in
-  open data meetups, Apps4Finland competition, workshops, and through
-  the project blog (http://louhos.wordpress.com). Thanks for all
-  contributors!
+  A number of people have contributed to the project in
+  open data meetups, Apps4Finland competition, datavaalit.fi, 
+  workshops, and through
+  the project blog (http://louhos.wordpress.com). The full list of
+  contributors is at [http://louhos.github.com/contact.html](). 
+  Thanks for all contributors!
 
 
 * Contact info
@@ -26,7 +30,7 @@
   See: http://louhos.github.com/contact.html
     
 
-* License
+* License: FreeBSD
   
   This program is open source software; you can redistribute it and/or
   modify it under the terms of the FreeBSD License
@@ -63,5 +67,3 @@
   documentation are those of the authors and should not be interpreted
   as representing official policies, either expressed or implied, of
   the copyright holder.
-
-
