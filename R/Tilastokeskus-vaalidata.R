@@ -669,7 +669,6 @@ GetElectedCandidates <- function (year, election, election.district, verbose = F
     warning(paste("Option", election, year, "not implemented"))
   }
 
-
   if (verbose) { message("Reading PC Axis file") }
   px <- read.px(url)
 
@@ -683,7 +682,9 @@ GetElectedCandidates <- function (year, election, election.district, verbose = F
   
   
   #df <- lapply(df, function(dff) {m <- reshape2::melt(dff, c("Ehdokas", "\\xC4\\xe4nestysalue", "\\xC4\\xe4nestystiedot"), "dat"); mc <- reshape2::cast(m, Ehdokas + \\xC4\\xe4nestysalue ~ \\xC4\\xe4nestystiedot); mc <- mc[!mc[["Ehdokkaan numero"]] == 0, ]})
-  df <- lapply(df, function(dff) {m <- reshape2::melt(dff, c("Ehdokas", "Äänestysalue", "Äänestystiedot"), "dat"); mc <- reshape2::cast(m, Ehdokas + Äänestysalue ~ Äänestystiedot); mc <- mc[!mc[["Ehdokkaan numero"]] == 0, ]})
+
+  df <- lapply(df, function(dff) {names(dff) <- c("Aanestystiedot", "Aanestysalue", "Ehdokas", "dat"); m <- reshape2::melt(dff, c("Ehdokas", "Aanestysalue", "Aanestystiedot"), "dat"); mc <- reshape2::cast(m, Ehdokas + Aanestysalue ~ Aanestystiedot); mc <- mc[!mc[["Ehdokkaan numero"]] == 0, ]})
+
   df <- do.call(rbind, df)
 
   if (verbose) { message("Preprocessing fields") }
@@ -697,8 +698,8 @@ GetElectedCandidates <- function (year, election, election.district, verbose = F
   df[["Ehdokkaan nimi"]] <- NULL
 
   if (verbose) { message("Preprocessing region fields") }
-  df[["\xC4\xe4nestysalue"]] <- gsub(" / ", "/", as.character(df[["\xC4\xe4nestysalue"]]))
-  alue <- do.call(rbind, strsplit(df[["\xC4\xe4nestysalue"]], "/"))
+  df[["Aanestysalue"]] <- gsub(" / ", "/", as.character(df[["Aanestysalue"]]))
+  alue <- do.call(rbind, strsplit(df[["Aanestysalue"]], "/"))
   df$Kunta <- alue[, 1]
   df$Alue <- alue[, 2]
   rownames(df) <- NULL
