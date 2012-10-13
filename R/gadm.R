@@ -104,6 +104,7 @@ GetGADM <- function (map = "FIN_adm",
 #' Returns:
 #'   @return integer or string
 #'
+#' @export
 #' @references
 #' See citation("sorvi") 
 #' @author Leo Lahti \email{louhos@@googlegroups.com}
