@@ -32,15 +32,15 @@ GetApurahat <- function() {
 
   # There are several things to fix in the data, here some of them are taken care of
   apurahat$Myontosumma.EUR <- as.numeric(gsub("\\,", "\\.", gsub(" ", "", apurahat[[10]])))
-  apurahat$Hakemusluokka[apurahat$Hakemusluokka %in% c("s\xe4veltajat", "esitt\xe4v\xe4 s\xe4velt")] <- "s\xe4veltaide"
+  apurahat$Hakemusluokka[apurahat$Hakemusluokka %in% c("säveltajat", "esittävä sävelt")] <- "säveltaide"
   apurahat$Hakemusluokka[apurahat$Hakemusluokka == ""] <- c(rep("kuvataide", 5), "kirjallisuus")
   apurahat$Hakemusluokka <- droplevels(apurahat$Hakemusluokka)
   levels(apurahat$Hakemusluokka) <- toupper(levels(apurahat$Hakemusluokka))
   apurahat$Hakemusluokka <- reorder(apurahat$Hakemusluokka, apurahat$Myontosumma.EUR, sum)
   
   apurahat$Maakunta[apurahat$Maakunta=="PIRKANMAAN MAAKUNTA"] <- "PIRKANMAA"
-  apurahat$Maakunta[apurahat$Maakunta=="H\xC4ME"] <- "KANTA-H\xC4ME"
-  apurahat$Maakunta[apurahat$Maakunta=="\U3e34633cland"] <- "AHVENANMAA"
+  apurahat$Maakunta[apurahat$Maakunta=="HÄME"] <- "KANTA-HÄME"
+  apurahat$Maakunta[apurahat$Maakunta=="Åland"] <- "AHVENANMAA"
   apurahat$Maakunta[apurahat$Maakunta %in% c("", " ")] <- "ULK"
   levels(apurahat$Maakunta)[24] <- "ULKOMAA"
   apurahat$Maakunta <- droplevels(apurahat$Maakunta)

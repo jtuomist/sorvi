@@ -525,28 +525,28 @@ GetParliamentaryElectionData <- function (level) {
 
     #http://pxweb2.stat.fi/database/StatFin/vaa/evaa/evaa_fi.asp
 
-    # 2.2 \xC4\xe4nioikeutetut ja \xe4\xe4nest\xe4neet sek\xe4 ennakolta \xe4\xe4nest\xe4neet sukupuolen mukaan kunnittain eduskuntavaaleissa 2011 ja 2007
+    # 2.2 Aanioikeutetut ja aanestaneet seka ennakolta aanestaneet sukupuolen mukaan kunnittain eduskuntavaaleissa 2011 ja 2007
     url <- "http://pxweb2.stat.fi/database/StatFin/vaa/evaa/120_evaa_tau_104_fi.px"
     px <- sorvi::read.px(url, na.strings='"-"')
     df <- try(as.data.frame(px))
-    kaava <- as.formula("Vaalipiiri.ja.kunta~\xC4\xe4nestystiedot~Lukum\xe4\xe4r\xe4tiedot")
+    kaava <- as.formula("Vaalipiiri.ja.kunta~Aanestystiedot~Lukumaaratiedot")
     tmp <- reshape::cast(df, kaava, value="dat")
 
     # Separate tables and preprocess
-    tab1 <- tmp[,,"Lukum\xe4\xe4r\xe4 2007"]
-    tab2 <- tmp[,,"Lukum\xe4\xe4r\xe4 2011"]
-    tab3 <- tmp[,,"-Osuus \xe4\xe4nist\xe4"]
-    tab4 <- tmp[,,"- Osuus \xe4\xe4nist\xe4"]
+    tab1 <- tmp[,,"Lukumaara 2007"]
+    tab2 <- tmp[,,"Lukumaara 2011"]
+    tab3 <- tmp[,,"-Osuus aanista"]
+    tab4 <- tmp[,,"- Osuus aanista"]
 
-    colnames(tab1) <- paste(colnames(tmp[,,"Lukum\xe4\xe4r\xe4 2007"]), "(Lukum\xe4\xe4r\xe4 2007)")
-    colnames(tab2) <- paste(colnames(tmp[,,"Lukum\xe4\xe4r\xe4 2011"]), "(Lukum\xe4\xe4r\xe4 2011)")
-    colnames(tab3) <- paste(colnames(tmp[,,"-Osuus \xe4\xe4nist\xe4"]), "(Osuus 2011)")
-    colnames(tab4) <- paste(colnames(tmp[,,"- Osuus \xe4\xe4nist\xe4"]), "(Osuus 2007)")
+    colnames(tab1) <- paste(colnames(tmp[,,"Lukumaara 2007"]), "(Lukumaara 2007)")
+    colnames(tab2) <- paste(colnames(tmp[,,"Lukumaara 2011"]), "(Lukumaara 2011)")
+    colnames(tab3) <- paste(colnames(tmp[,,"-Osuus aanista"]), "(Osuus 2011)")
+    colnames(tab4) <- paste(colnames(tmp[,,"- Osuus aanista"]), "(Osuus 2007)")
     tab <- cbind(tab1, tab2, tab3, tab4)
 
     # Keep only municipality-level information, filter out others
-    rnams <- setdiff(rownames(tab), c("Koko maa", "- Niist\xe4 Ruotsissa", "S Kaupunkimaiset kunnat", "S Maaseutumaiset kunnat", "S Taajaan asutut kunnat", "Suomessa asuvat Suomen kansalaiset", "Ulkomailla asuvat Suomen kansalaiset"))
-    rnams <- rnams[-grep("Niist\xe4 Ruotsissa", rnams)]
+    rnams <- setdiff(rownames(tab), c("Koko maa", "- Niista Ruotsissa", "S Kaupunkimaiset kunnat", "S Maaseutumaiset kunnat", "S Taajaan asutut kunnat", "Suomessa asuvat Suomen kansalaiset", "Ulkomailla asuvat Suomen kansalaiset"))
+    rnams <- rnams[-grep("Niista Ruotsissa", rnams)]
     rnams <- rnams[-grep("Suomessa asuvat Suomen kansalaiset", rnams)]
     rnams <- rnams[-grep("Ulkomailla asuvat Suomen kansalaiset", rnams)]
     rnams <- rnams[-grep("Kaupunkimaiset kunnat", rnams)]
@@ -562,38 +562,38 @@ GetParliamentaryElectionData <- function (level) {
     tab$Kunta <- v[,2]
 
     # TODO
-    #8.2 Pienin \xe4\xe4nim\xe4\xe4r\xe4 ja vertausluku, jolla ehdokas on tullut valituksi 
-    # puolueittain ja vaalipiireitt\xe4in eduskuntavaaleissa 2011
+    #8.2 Pienin aanimaara ja vertausluku, jolla ehdokas on tullut valituksi 
+    # puolueittain ja vaalipiireittain eduskuntavaaleissa 2011
     #url <- "http://pxweb2.stat.fi/database/StatFin/vaa/evaa/186_evaa_tau_102_fi.px"
-    #Alue~Puolue~Pienimm\xe4t.luvut
+    #Alue~Puolue~Pienimmat.luvut
 
   } else if (level == "election.region") {
 
     #http://pxweb2.stat.fi/database/StatFin/vaa/evaa/evaa_fi.asp
 
-    #2.3 Hyl\xe4tyt \xe4\xe4nestysliput hylk\xe4ysperusteen ja vaalipiirin mukaan 
+    #2.3 Hylatyt aanestysliput hylkaysperusteen ja vaalipiirin mukaan 
     # eduskuntavaaleissa 2011
     #http://pxweb2.stat.fi/database/StatFin/vaa/evaa/120_evaa_tau_105_fi.px
 
-    # 8.1 Vaaliliitot ja niiden \xe4\xe4nim\xe4\xe4r\xe4t vaalipiireitt\xe4in eduskuntavaaleissa 2011
+    # 8.1 Vaaliliitot ja niiden aanimaarat vaalipiireittain eduskuntavaaleissa 2011
     #url <- "http://pxweb2.stat.fi/database/StatFin/vaa/evaa/185_evaa_tau_101_fi.csv.gz"  
-    #Vaaliliitto.Puolue.Vaalipiiri~Lukum\xe4\xe4r\xe4
+    #Vaaliliitto.Puolue.Vaalipiiri~Lukumaara
   
-    #2.1 \xC4\xe4nioikeutetut ja \xe4\xe4nest\xe4neet sek\xe4 ennakolta \xe4\xe4nest\xe4neet sukupuolen 
-    # mukaan vaalipiireitt\xe4in eduskuntavaaleissa 2011
+    #2.1 Aanioikeutetut ja aanestaneet seka ennakolta aanestaneet sukupuolen 
+    # mukaan vaalipiireittain eduskuntavaaleissa 2011
     url <- "http://pxweb2.stat.fi/database/StatFin/vaa/evaa/120_evaa_tau_103_fi.px"
 
     # Read election data from Statistics Finland			 
     px <- sorvi::read.px(url, na.strings='"-"') 
     df <- try(as.data.frame(px))
-    kaava <- as.formula("Vaalipiiri~\xC4\xe4nestystiedot~Lukum\xe4\xe4r\xe4tiedot")
+    kaava <- as.formula("Vaalipiiri~Aanestystiedot~Lukumaaratiedot")
     tmp <- reshape::cast(df, kaava, value="dat")
 
     # Separate the tables
     tab1 <- tmp[,,1]
     tab2 <- tmp[,,2]
-    colnames(tab1) <- paste(colnames(tmp[,,"Lukum\xe4\xe4r\xe4"]), "(Lukum\xe4\xe4r\xe4)")
-    colnames(tab2) <- paste(colnames(tmp[,,"Osuus \xe4\xe4nist\xe4"]), "(Osuus \xe4\xe4nist\xe4)")
+    colnames(tab1) <- paste(colnames(tmp[,,"Lukumaara"]), "(Lukumaara)")
+    colnames(tab2) <- paste(colnames(tmp[,,"Osuus aanista"]), "(Osuus aanista)")
     tab <- cbind(tab1, tab2)
 
     # Keep only election.region level data
@@ -609,7 +609,7 @@ GetParliamentaryElectionData <- function (level) {
     # Read more election data from Statistics Finland			 
     px <- sorvi::read.px("http://pxweb2.stat.fi/database/StatFin/vaa/evaa/120_evaa_tau_105_fi.px", na.strings='"-"') 
     df <- try(as.data.frame(px))
-    kaava <- as.formula("Vaalipiiri~Hylk\xe4ysperuste")
+    kaava <- as.formula("Vaalipiiri~Hylkaysperuste")
     tab2 <- reshape::cast(df, kaava, value="dat")
 
     # Keep only election.region level data

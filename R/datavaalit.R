@@ -151,7 +151,7 @@ ReadAllParties <- function(cache=NA) {
                   		  c("k", "kunnallisvaalit"),
                   		  c("epv", "europarlamenttivaalit"),
                   		  c("mkv", "aluevaali"),
-                  		  c("vka", "kansan\xe4\xe4nestys"))
+                  		  c("vka", "kansanäänestys"))
     colnames(conversion.table) <- c("id", "name")
     conversion.table <- as.data.frame(conversion.table)
   } else if (type == "stage.id") {
@@ -165,14 +165,14 @@ ReadAllParties <- function(cache=NA) {
     conversion.table <- rbind(c("a", "alue"),
              	      c("e", "ehdokas"),
              	      c("p", "puolue"),
-             	      c("k", "kansan\xe4\xe4nestys"))
+             	      c("k", "kansanäänestys"))
     colnames(conversion.table) <- c("id", "name")
     conversion.table <- as.data.frame(conversion.table)	      
   } else if (type == "info.id") {
 
-    conversion.table <- rbind(c("a", "\xe4\xe4nestysaluetaso"),
+    conversion.table <- rbind(c("a", "äänestysaluetaso"),
         	          c("t", "tilastotiedot"),
-        	          c("y", "ei.\xe4\xe4nestysaluetasoa"),
+        	          c("y", "ei.äänestysaluetasoa"),
         	          c("", ""))
     colnames(conversion.table) <- c("id", "name")
     conversion.table <- as.data.frame(conversion.table)	      
@@ -183,10 +183,10 @@ ReadAllParties <- function(cache=NA) {
 		     c("3", "Varsinais-Suomen vaalipiiri"),
 		     c("4", "Satakunnan vaalipiiri"),
 		     # 5 is intentionally missing here
-		     c("6", "H\xe4meen vaalipiiri"),
+		     c("6", "Hämeen vaalipiiri"),
 		     c("7", "Pirkanmaan vaalipiiri"),
 		     c("8", "Kymen vaalipiiri"),
-		     c("9", "Etel\xe4-Savon vaalipiiri"),
+		     c("9", "Etelä-Savon vaalipiiri"),
 		     c("10", "Pohjois-Savon vaalipiiri"),
 		     c("11", "Pohjois-Karjalan vaalipiiri"),
 		     c("12", "Vaasan vaalipiiri"),

@@ -104,8 +104,8 @@ PreprocessShapeMML <- function (sp) {
     dat$Kunta.FI <- iconv(kunta, from = "latin1", to = "UTF-8")
     
     # Update municipality names
-    dat$Kunta.FI[which(dat$Kunta.FI == "L\xe4nsi-Turunmaa")] <- "Parainen"
-    dat$Kunta.FI[which(dat$Kunta.FI == "Peders\xf6re")] <- "Peders\xf6ren kunta"
+    dat$Kunta.FI[which(dat$Kunta.FI == "Länsi-Turunmaa")] <- "Parainen"
+    dat$Kunta.FI[which(dat$Kunta.FI == "Pedersöre")] <- "Pedersören kunta"
 
     dat$Kunta.FI <- factor(dat$Kunta.FI)
 
