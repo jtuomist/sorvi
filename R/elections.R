@@ -527,7 +527,7 @@ GetParliamentaryElectionData <- function (level) {
 
     # 2.2 \xC4\xe4nioikeutetut ja \xe4\xe4nest\xe4neet sek\xe4 ennakolta \xe4\xe4nest\xe4neet sukupuolen mukaan kunnittain eduskuntavaaleissa 2011 ja 2007
     url <- "http://pxweb2.stat.fi/database/StatFin/vaa/evaa/120_evaa_tau_104_fi.px"
-    px <- pxR::read.px(url, na.strings='"-"')
+    px <- sorvi::read.px(url, na.strings='"-"')
     df <- try(as.data.frame(px))
     kaava <- as.formula("Vaalipiiri.ja.kunta~\xC4\xe4nestystiedot~Lukum\xe4\xe4r\xe4tiedot")
     tmp <- reshape::cast(df, kaava, value="dat")
@@ -584,7 +584,7 @@ GetParliamentaryElectionData <- function (level) {
     url <- "http://pxweb2.stat.fi/database/StatFin/vaa/evaa/120_evaa_tau_103_fi.px"
 
     # Read election data from Statistics Finland			 
-    px <- pxR::read.px(url, na.strings='"-"') 
+    px <- sorvi::read.px(url, na.strings='"-"') 
     df <- try(as.data.frame(px))
     kaava <- as.formula("Vaalipiiri~\xC4\xe4nestystiedot~Lukum\xe4\xe4r\xe4tiedot")
     tmp <- reshape::cast(df, kaava, value="dat")
@@ -607,7 +607,7 @@ GetParliamentaryElectionData <- function (level) {
     tab$Vaalipiiri.Koodi <- sapply(rnams, function (s) {strsplit(s, " ")[[1]][[1]]})
 
     # Read more election data from Statistics Finland			 
-    px <- pxR::read.px("http://pxweb2.stat.fi/database/StatFin/vaa/evaa/120_evaa_tau_105_fi.px", na.strings='"-"') 
+    px <- sorvi::read.px("http://pxweb2.stat.fi/database/StatFin/vaa/evaa/120_evaa_tau_105_fi.px", na.strings='"-"') 
     df <- try(as.data.frame(px))
     kaava <- as.formula("Vaalipiiri~Hylk\xe4ysperuste")
     tab2 <- reshape::cast(df, kaava, value="dat")
