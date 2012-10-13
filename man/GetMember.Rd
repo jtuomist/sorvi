@@ -1,6 +1,7 @@
 \name{GetMember}
 \alias{GetMember}
-\title{Get members of a particular council}
+\title{GetMember
+Get members of a particular council}
 \arguments{
   \item{x}{object}
 
@@ -10,7 +11,7 @@
   candidate object
 }
 \description{
-  Get members of a particular council
+  GetMember Get members of a particular council
 }
 \author{
   Joona Lehtomaki \email{louhos@googlegroups.com}

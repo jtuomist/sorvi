@@ -10,8 +10,7 @@
 # but WITHOUT ANY WARRANTY; without even the implied warranty of 
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-
-#setGeneric("get.subnets", function( model, get.names = TRUE, min.size = 2, max.size = Inf, min.responses = 2){ standardGeneric ("get.subnets") })
+#' GetMember
 #' Get members of a particular council
 #'
 #' @param x object
@@ -23,6 +22,18 @@
 #' @export
 setGeneric("GetMember", function(x, name) standardGeneric("GetMember"))
 
+#' GetParties
+#' Get Parties from Council class object
+#'
+#' Arguments:
+#' @param x Council class object
+#'
+#' Returns:
+#' @return parties object
 #' @export
+#' @references
+#' See citation("sorvi") 
+#' @author Joona Lehtomaki \email{louhos@@googlegroups.com}
+#' @examples # 
+#' @keywords utilities
 setGeneric("GetParties", function(x) standardGeneric("GetParties"))
-
