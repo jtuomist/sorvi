@@ -1,4 +1,4 @@
- # This file is a part of the soRvi program (http://louhos.github.com/sorvi/)
+# This file is a part of the soRvi program (http://louhos.github.com/sorvi/)
 
 # Copyright (C) 2010-2012 Louhos <louhos.github.com>. All rights reserved.
 
@@ -94,8 +94,9 @@ GetMunicipalityInfo <- function (url =
 "http://pxweb2.stat.fi/Database/Kuntien%20perustiedot/Kuntien%20perustiedot/Kuntaportaali.px",
 MML = NULL) {
 
-  if (is.null(MML)) {stop("Use LoadData('MML') to retrieve MML data;
-this is required as an argument for GetMunicipalityInfo function.")}
+  if (is.null(MML)) {stop("Use LoadData('MML') to retrieve MML data; this is required as an argument for GetMunicipalityInfo function.")}
+
+  #if (!exists("MML")) {LoadData("MML")}
 
   mml <- sorvi::GetMunicipalityInfoMML(MML)    # (C) MML 2012
   statfi <- sorvi::GetMunicipalityInfoStatFi() # (C) Tilastokeskus 2012
