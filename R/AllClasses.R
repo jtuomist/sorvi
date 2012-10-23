@@ -89,7 +89,6 @@ setMethod("GetMember", "council", function(x, name) {
   }  
 })
 
-
 setMethod("GetParties", "council", function(x) {
   
   if (class(x) != "council") {

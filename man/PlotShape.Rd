@@ -1,6 +1,7 @@
 \name{PlotShape}
 \alias{PlotShape}
-\title{Visualize the specified fields of a shape object on using 1- or 2-way color scale.}
+\title{Visualize the specified fields of a shape object on using
+1- or 2-way color scale.}
 \usage{
   PlotShape(sp, varname, type = "oneway", ncol = 10,
     at = NULL, palette = NULL, main = NULL,

@@ -56,17 +56,17 @@ GetProvinceInfo <- function (url = "http://fi.wikipedia.org/wiki/V%C3%A4est%C3%B
 #' @keywords utilities
 ConvertMunicipalityNames <- function (municipality.names) {
 			 
-  municipality.names <- gsub("Hämeenkyrö-Tavastkyro", "Hämeenkyrö", municipality.names)
-  municipality.names <- gsub("Mänttä", "Mänttä-Vilppula", municipality.names)
-  municipality.names <- gsub("Mänttä-Vilppula-Vilppula", "Mänttä-Vilppula", municipality.names)
-  municipality.names <- gsub("Pedersören kunta", "Pedersöre", municipality.names)
+  municipality.names <- gsub("H\xe4meenkyr\xf6-Tavastkyro", "H\xe4meenkyr\xf6", municipality.names)
+  municipality.names <- gsub("M\xe4ntt\xe4", "M\xe4ntt\xe4-Vilppula", municipality.names)
+  municipality.names <- gsub("M\xe4ntt\xe4-Vilppula-Vilppula", "M\xe4ntt\xe4-Vilppula", municipality.names)
+  municipality.names <- gsub("Peders\xf6ren kunta", "Peders\xf6re", municipality.names)
   municipality.names <- gsub("Maarianhamina - Mariehamn", "Maarianhamina", municipality.names)
-  municipality.names <- gsub("Länsi-Turunmaa", "Parainen", municipality.names)
+  municipality.names <- gsub("L\xe4nsi-Turunmaa", "Parainen", municipality.names)
   municipality.names <- gsub("Koski Tl", "Koski.Tl", municipality.names)
 
   municipality.names <- gsub("Loimaan kunta", "Loimaan.kunta", municipality.names)
-  municipality.names <- gsub("Pieksämäen mlk", "Pieksämäen.mlk", municipality.names)
-  municipality.names <- gsub("Jyväskylän mlk", "Jyväskylän.mlk", municipality.names)
+  municipality.names <- gsub("Pieks\xe4m\xe4en mlk", "Pieks\xe4m\xe4en.mlk", municipality.names)
+  municipality.names <- gsub("Jyv\xe4skyl\xe4n mlk", "Jyv\xe4skyl\xe4n.mlk", municipality.names)
   municipality.names <- gsub("Rovaniemen mlk", "Rovaniemen.mlk", municipality.names)
   # municipality.names <- gsub("", "", municipality.names)
 
@@ -192,7 +192,7 @@ GetMunicipalityInfoMML <- function (MML) {
   # Use MML municipality names except Parainen:
   # Lansi-Turunmaa changed its name to Parainen since 2012
   kuntanimi <- as.character(mml.table$Kunta)
-  kuntanimi[kuntanimi == "Länsi-Turunmaa"] <- "Parainen"
+  kuntanimi[kuntanimi == "L\xe4nsi-Turunmaa"] <- "Parainen"
   rownames(mml.table) <- kuntanimi
   # Drop off Kunta field as redundant
   mml.table <- mml.table[, -which(colnames(mml.table) == "Kunta")]

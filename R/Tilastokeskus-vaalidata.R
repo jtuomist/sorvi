@@ -28,22 +28,22 @@ GetMunicipalElectionData2000 <- function (which = "election.statistics") {
 
 
   .InstallMarginal("plyr")
-  .InstallMarginal("reshape2")
   .InstallMarginal("reshape")
+  .InstallMarginal("reshape2")
 
   
   if (which == "election.statistics") {
 
-    #Kunnallisvaalit 2000, äänestystiedot
+    #Kunnallisvaalit 2000, \xe4\xe4nestystiedot
     url <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa_2000/010_kvaa_2000_2008-10-17_tau_101_fi.px"
     px <- pxR::read.px(url, na.strings='"-"')
     df <- as.data.frame(px)
-    kaava <- as.formula("Alue ~ Äänestystiedot")
-    tab <- reshape::cast(df, kaava, value="dat")
+    kaava <- as.formula("Alue ~ \xC4\xe4nestystiedot")
+    tab <- reshape2::cast(df, kaava, value="dat")
     rownames(tab) <- as.character(tab$Alue)
 
     # Keep only municipality-level information, filter out others
-    rnams <- setdiff(as.character(tab$Alue), c("Koko maa", "- Niistä Ruotsissa", "S Kaupunkimaiset kunnat", "S Maaseutumaiset kunnat", "S Taajaan asutut kunnat", "Suomessa asuvat Suomen kansalaiset", "Ulkomailla asuvat Suomen kansalaiset"))
+    rnams <- setdiff(as.character(tab$Alue), c("Koko maa", "- Niist\xe4 Ruotsissa", "S Kaupunkimaiset kunnat", "S Maaseutumaiset kunnat", "S Taajaan asutut kunnat", "Suomessa asuvat Suomen kansalaiset", "Ulkomailla asuvat Suomen kansalaiset"))
     rnams <- rnams[-grep("Kaupunkimaiset kunnat", rnams)]
     rnams <- rnams[-grep("Taajaan asutut kunnat", rnams)]
     rnams <- rnams[-grep("Maaseutumaiset kunnat", rnams)]
@@ -65,7 +65,7 @@ GetMunicipalElectionData2000 <- function (which = "election.statistics") {
     url <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa_2000/020_kvaa_2000_2008-10-17_tau_102_fi.px"
     px <- pxR::read.px(url, na.strings='"-"')
     df <- as.data.frame(px)
-    tmp <- reshape::cast(df, Alue ~ Puolue ~ Ehdokastiedot, value="dat")
+    tmp <- reshape2::cast(df, Alue ~ Puolue ~ Ehdokastiedot, value="dat")
 
     tab1 <- tmp[,,"Ehdokkaiden lkm"]
     tab2 <- tmp[,,"Ehdokkaiden osuus (%)"]
@@ -79,7 +79,7 @@ GetMunicipalElectionData2000 <- function (which = "election.statistics") {
     tab <- cbind(tab1, tab2, tab3, tab4)
 
     # Keep only municipality-level information, filter out others
-    rnams <- setdiff(rownames(tab), c("Koko maa", "- Niistä Ruotsissa", "S Kaupunkimaiset kunnat", "S Maaseutumaiset kunnat", "S Taajaan asutut kunnat", "Suomessa asuvat Suomen kansalaiset", "Ulkomailla asuvat Suomen kansalaiset"))
+    rnams <- setdiff(rownames(tab), c("Koko maa", "- Niist\xe4 Ruotsissa", "S Kaupunkimaiset kunnat", "S Maaseutumaiset kunnat", "S Taajaan asutut kunnat", "Suomessa asuvat Suomen kansalaiset", "Ulkomailla asuvat Suomen kansalaiset"))
     rnams <- rnams[-grep("Kaupunkimaiset kunnat", rnams)]
     rnams <- rnams[-grep("Taajaan asutut kunnat", rnams)]
     rnams <- rnams[-grep("Maaseutumaiset kunnat", rnams)]
@@ -101,7 +101,7 @@ GetMunicipalElectionData2000 <- function (which = "election.statistics") {
 
     px <- pxR::read.px(url, na.strings='"-"')
     df <- as.data.frame(px)
-    tmp <- reshape::cast(df, Alue ~ Puolue ~ Valittujen.tiedot, value="dat")
+    tmp <- reshape2::cast(df, Alue ~ Puolue ~ Valittujen.tiedot, value="dat")
 
     tab1 <- tmp[,,"Valittujen lkm"]
     tab2 <- tmp[,,"Valittujen osuus (%)"]
@@ -115,7 +115,7 @@ GetMunicipalElectionData2000 <- function (which = "election.statistics") {
     tab <- cbind(tab1, tab2, tab3, tab4)
 
     # Keep only municipality-level information, filter out others
-    rnams <- setdiff(rownames(tab), c("Koko maa", "- Niistä Ruotsissa", "S Kaupunkimaiset kunnat", "S Maaseutumaiset kunnat", "S Taajaan asutut kunnat", "Suomessa asuvat Suomen kansalaiset", "Ulkomailla asuvat Suomen kansalaiset"))
+    rnams <- setdiff(rownames(tab), c("Koko maa", "- Niist\xe4 Ruotsissa", "S Kaupunkimaiset kunnat", "S Maaseutumaiset kunnat", "S Taajaan asutut kunnat", "Suomessa asuvat Suomen kansalaiset", "Ulkomailla asuvat Suomen kansalaiset"))
     rnams <- rnams[-grep("Kaupunkimaiset kunnat", rnams)]
     rnams <- rnams[-grep("Taajaan asutut kunnat", rnams)]
     rnams <- rnams[-grep("Maaseutumaiset kunnat", rnams)]
@@ -137,26 +137,26 @@ GetMunicipalElectionData2000 <- function (which = "election.statistics") {
     px <- pxR::read.px(url, na.strings='"-"')
     df <- as.data.frame(px)
 
-    tmp <- reshape::cast(df, Alue ~ Puolue ~ Kannatustiedot, value="dat")
+    tmp <- reshape2::cast(df, Alue ~ Puolue ~ Kannatustiedot, value="dat")
 
-    tab1 <- tmp[,,"Ääniä yhtensä"]
-    tab2 <- tmp[,,"Ennakkoäänet"]
-    tab3 <- tmp[,,"Naisehdokkaiden äänimäärä"]
-    tab4 <- tmp[,,"Naisehdokkaiden osuus äänistä (%)"]
-    tab5 <- tmp[,,"Osuus äänistä (%)"]
-    tab6 <- tmp[,,"Osuus ennakkoäänistä (%)"]
+    tab1 <- tmp[,,"\xC4\xe4ni\xe4 yhtens\xe4"]
+    tab2 <- tmp[,,"Ennakko\xe4\xe4net"]
+    tab3 <- tmp[,,"Naisehdokkaiden \xe4\xe4nim\xe4\xe4r\xe4"]
+    tab4 <- tmp[,,"Naisehdokkaiden osuus \xe4\xe4nist\xe4 (%)"]
+    tab5 <- tmp[,,"Osuus \xe4\xe4nist\xe4 (%)"]
+    tab6 <- tmp[,,"Osuus ennakko\xe4\xe4nist\xe4 (%)"]
 
-    colnames(tab1) <- paste(colnames(tmp[,,"Ääniä yhtensä"]), "(Ääniä yhtensä)")
-    colnames(tab2) <- paste(colnames(tmp[,,"Ennakkoäänet"]), "(Ennakkoäänet)")
-    colnames(tab3) <- paste(colnames(tmp[,,"Naisehdokkaiden äänimäärä"]), "(Naisehdokkaiden äänimäärä)")
-    colnames(tab4) <- paste(colnames(tmp[,,"Naisehdokkaiden osuus äänistä (%)"]), "(Naisehdokkaiden osuus äänistä (%))")
-    colnames(tab5) <- paste(colnames(tmp[,,"Osuus äänistä (%)"]), "(Osuus äänistä (%))")
-    colnames(tab6) <- paste(colnames(tmp[,,"Osuus ennakkoäänistä (%)"]), "(Osuus ennakkoäänistä (%))")
+    colnames(tab1) <- paste(colnames(tmp[,,"\xC4\xe4ni\xe4 yhtens\xe4"]), "(\xC4\xe4ni\xe4 yhtens\xe4)")
+    colnames(tab2) <- paste(colnames(tmp[,,"Ennakko\xe4\xe4net"]), "(Ennakko\xe4\xe4net)")
+    colnames(tab3) <- paste(colnames(tmp[,,"Naisehdokkaiden \xe4\xe4nim\xe4\xe4r\xe4"]), "(Naisehdokkaiden \xe4\xe4nim\xe4\xe4r\xe4)")
+    colnames(tab4) <- paste(colnames(tmp[,,"Naisehdokkaiden osuus \xe4\xe4nist\xe4 (%)"]), "(Naisehdokkaiden osuus \xe4\xe4nist\xe4 (%))")
+    colnames(tab5) <- paste(colnames(tmp[,,"Osuus \xe4\xe4nist\xe4 (%)"]), "(Osuus \xe4\xe4nist\xe4 (%))")
+    colnames(tab6) <- paste(colnames(tmp[,,"Osuus ennakko\xe4\xe4nist\xe4 (%)"]), "(Osuus ennakko\xe4\xe4nist\xe4 (%))")
 
     tab <- cbind(tab1, tab2, tab3, tab4, tab5, tab6)
 
     # Keep only municipality-level information, filter out others
-    rnams <- setdiff(rownames(tab), c("Koko maa", "- Niistä Ruotsissa", "S Kaupunkimaiset kunnat", "S Maaseutumaiset kunnat", "S Taajaan asutut kunnat", "Suomessa asuvat Suomen kansalaiset", "Ulkomailla asuvat Suomen kansalaiset"))
+    rnams <- setdiff(rownames(tab), c("Koko maa", "- Niist\xe4 Ruotsissa", "S Kaupunkimaiset kunnat", "S Maaseutumaiset kunnat", "S Taajaan asutut kunnat", "Suomessa asuvat Suomen kansalaiset", "Ulkomailla asuvat Suomen kansalaiset"))
     rnams <- rnams[-grep("Kaupunkimaiset kunnat", rnams)]
     rnams <- rnams[-grep("Taajaan asutut kunnat", rnams)]
     rnams <- rnams[-grep("Maaseutumaiset kunnat", rnams)]
@@ -178,7 +178,7 @@ GetMunicipalElectionData2000 <- function (which = "election.statistics") {
 
     px <- pxR::read.px(url, na.strings='"-"')
     df <- as.data.frame(px)
-    tab <- reshape::cast(df, Ehdokas ~ Ehdokastiedot, value="dat")
+    tab <- reshape2::cast(df, Ehdokas ~ Ehdokastiedot, value="dat")
 
   } else if (which == "all.municipality.level.data") {
 
@@ -217,30 +217,30 @@ GetMunicipalElectionData2000 <- function (which = "election.statistics") {
 GetMunicipalElectionData2004 <- function (which = "election.statistics") {
 
   .InstallMarginal("plyr")
-  .InstallMarginal("reshape2")
   .InstallMarginal("reshape")
+  .InstallMarginal("reshape2")
 
   if (which == "election.statistics") {
 
-    #Kunnallisvaalit 2004, äänestystiedot
+    #Kunnallisvaalit 2004, \xe4\xe4nestystiedot
     url <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2004_05/010_KVAA_2004_2008-07-23_TAU_101_FI.px"
     px <- pxR::read.px(url, na.strings='"-"')
     df <- as.data.frame(px)
-    kaava <- as.formula("Alue~Äänestystiedot~Sukupuoli")
-    tmp <- reshape::cast(df, kaava, value="dat")
+    kaava <- as.formula("Alue~\xC4\xe4nestystiedot~Sukupuoli")
+    tmp <- reshape2::cast(df, kaava, value="dat")
 
-    tab1 <- tmp[,,"Sukupuolet yhteensä"]
+    tab1 <- tmp[,,"Sukupuolet yhteens\xe4"]
     tab2 <- tmp[,,"Miehet"]
     tab3 <- tmp[,,"Naiset"]
 
-    colnames(tab1) <- paste(colnames(tmp[,,"Sukupuolet yhteensä"]), "(Sukupuolet yhteensä)")
+    colnames(tab1) <- paste(colnames(tmp[,,"Sukupuolet yhteens\xe4"]), "(Sukupuolet yhteens\xe4)")
     colnames(tab2) <- paste(colnames(tmp[,,"Miehet"]), "(Miehet)")
     colnames(tab3) <- paste(colnames(tmp[,,"Naiset"]), "(Naiset)")
 
     tab <- cbind(tab1, tab2, tab3)
 
     # Keep only municipality-level information, filter out others
-    rnams <- setdiff(rownames(tab), c("Koko maa", "- Niistä Ruotsissa", "S Kaupunkimaiset kunnat", "S Maaseutumaiset kunnat", "S Taajaan asutut kunnat", "Suomessa asuvat Suomen kansalaiset", "Ulkomailla asuvat Suomen kansalaiset"))
+    rnams <- setdiff(rownames(tab), c("Koko maa", "- Niist\xe4 Ruotsissa", "S Kaupunkimaiset kunnat", "S Maaseutumaiset kunnat", "S Taajaan asutut kunnat", "Suomessa asuvat Suomen kansalaiset", "Ulkomailla asuvat Suomen kansalaiset"))
     rnams <- rnams[-grep("vaalipiiri", rnams)]
     rnams <- rnams[-grep(" 00", rnams)]
     rnams <- rnams[-grep(" 01", rnams)]
@@ -272,24 +272,24 @@ GetMunicipalElectionData2004 <- function (which = "election.statistics") {
     tab$Kuntakoodi <- v[,1]
     tab$Kunta <- v[,2]
     rownames(tab) <- as.character(tab$Kunta)
-    colnames(tab) <- paste("Kunnallisvaalit 2004 äänestystiedot", colnames(tab))
+    colnames(tab) <- paste("Kunnallisvaalit 2004 \xe4\xe4nestystiedot", colnames(tab))
 
   } else if (which == "selected.candidates.by.election.region") {
 
     warning("Vaalipiiri level information; TODO")
 
-    #Valittujen lukumäärä ja prosenttiosuudet puolueittain ja vaalipiireittäin kunnallisvaaleissa 2004
+    #Valittujen lukum\xe4\xe4r\xe4 ja prosenttiosuudet puolueittain ja vaalipiireitt\xe4in kunnallisvaaleissa 2004
     url<-"http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2004_05/060_kvaa_2004_2008-08-28_tau_107_fi.px"
 
     px <- pxR::read.px(url, na.strings='"-"')
     df <- as.data.frame(px)
-    kaava <- as.formula("Puolue~Vaalipiiri~Lukumäärätiedot")
-    tmp <- reshape::cast(df, kaava, value="dat")
+    kaava <- as.formula("Puolue~Vaalipiiri~Lukum\xe4\xe4r\xe4tiedot")
+    tmp <- reshape2::cast(df, kaava, value="dat")
 
-    tab1 <- tmp[,,"Valtuutettujen lukumäärä"]
+    tab1 <- tmp[,,"Valtuutettujen lukum\xe4\xe4r\xe4"]
     tab2 <- tmp[,,"Puolueen osuus"]
 
-    colnames(tab1) <- paste(colnames(tmp[,,"Valtuutettujen lukumäärä"]), "(Valtuutettujen lukumäärä)")
+    colnames(tab1) <- paste(colnames(tmp[,,"Valtuutettujen lukum\xe4\xe4r\xe4"]), "(Valtuutettujen lukum\xe4\xe4r\xe4)")
     colnames(tab2) <- paste(colnames(tmp[,,"Puolueen osuus"]), "(Puolueen osuus)")
 
     tab <- cbind(tab1, tab2)
@@ -298,22 +298,22 @@ GetMunicipalElectionData2004 <- function (which = "election.statistics") {
 
   } else if (which == "selected.candidates.count") {
 
-    # Kunnallisvaalit 2004, valittujen lukumäärä
+    # Kunnallisvaalit 2004, valittujen lukum\xe4\xe4r\xe4
     url <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2004_05/010_kvaa_2004_2008-08-28_tau_103_fi.px"
 
     px <- pxR::read.px(url, na.strings='"-"')
     df <- as.data.frame(px)
-    kaava <- as.formula("Alue~Puolue~Sukupuoli~Valittujen.lukumäärä")
-    tmp <- reshape::cast(df, kaava, value="dat")
+    kaava <- as.formula("Alue~Puolue~Sukupuoli~Valittujen.lukum\xe4\xe4r\xe4")
+    tmp <- reshape2::cast(df, kaava, value="dat")
 
-    tab1 <- tmp[,,"Kaikki ehdokkaat", "Valittujen lukumäärä"]
-    colnames(tab1) <- paste("Kaikki ehdokkaat", "Valittujen lukumäärä", colnames(tab1))
+    tab1 <- tmp[,,"Kaikki ehdokkaat", "Valittujen lukum\xe4\xe4r\xe4"]
+    colnames(tab1) <- paste("Kaikki ehdokkaat", "Valittujen lukum\xe4\xe4r\xe4", colnames(tab1))
 
-    tab2 <- tmp[,,"Miesehdokkaat", "Valittujen lukumäärä"]
-    colnames(tab2) <- paste("Miesehdokkaat", "Valittujen lukumäärä", colnames(tab2))
+    tab2 <- tmp[,,"Miesehdokkaat", "Valittujen lukum\xe4\xe4r\xe4"]
+    colnames(tab2) <- paste("Miesehdokkaat", "Valittujen lukum\xe4\xe4r\xe4", colnames(tab2))
 
-    tab3 <- tmp[,,"Naisehdokkaat", "Valittujen lukumäärä"]
-    colnames(tab3) <- paste("Naisehdokkaat", "Valittujen lukumäärä", colnames(tab3))
+    tab3 <- tmp[,,"Naisehdokkaat", "Valittujen lukum\xe4\xe4r\xe4"]
+    colnames(tab3) <- paste("Naisehdokkaat", "Valittujen lukum\xe4\xe4r\xe4", colnames(tab3))
 
     tab4 <- tmp[,,"Kaikki ehdokkaat", "Osuus valituista %"]
     colnames(tab4) <- paste("Kaikki ehdokkaat", "Osuus valituista %", colnames(tab4))
@@ -330,7 +330,7 @@ GetMunicipalElectionData2004 <- function (which = "election.statistics") {
     	         tab4[regs,], tab5[regs,], tab6[regs,])
 
     # Keep only municipality-level information, filter out others
-    rnams <- setdiff(rownames(tab), c("Koko maa", "- Niistä Ruotsissa", "S Kaupunkimaiset kunnat", "S Maaseutumaiset kunnat", "S Taajaan asutut kunnat", "Suomessa asuvat Suomen kansalaiset", "Ulkomailla asuvat Suomen kansalaiset"))
+    rnams <- setdiff(rownames(tab), c("Koko maa", "- Niist\xe4 Ruotsissa", "S Kaupunkimaiset kunnat", "S Maaseutumaiset kunnat", "S Taajaan asutut kunnat", "Suomessa asuvat Suomen kansalaiset", "Ulkomailla asuvat Suomen kansalaiset"))
     rnams <- rnams[-grep("vaalipiiri", rnams)]
     rnams <- rnams[-grep("Manner-Suomi", rnams)]
     tab <- as.data.frame(tab[rnams, ])
@@ -340,12 +340,12 @@ GetMunicipalElectionData2004 <- function (which = "election.statistics") {
     tab$Kuntakoodi <- v[,1]
     tab$Kunta <- v[,2]
     rownames(tab) <- as.character(tab$Kunta)
-    colnames(tab) <- paste("Kunnallisvaalit 2004 valittujen lukumäärä", colnames(tab))
+    colnames(tab) <- paste("Kunnallisvaalit 2004 valittujen lukum\xe4\xe4r\xe4", colnames(tab))
     
   } else if (which == "selected.candidates.by.party") {  
 
-    # Valittujen lukumäärä ja prosenttiosuudet puolueittain ja 
-    # vaalipiireittäin kunnallisvaaleissa 2004
+    # Valittujen lukum\xe4\xe4r\xe4 ja prosenttiosuudet puolueittain ja 
+    # vaalipiireitt\xe4in kunnallisvaaleissa 2004
     url<-"http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2004_05/650_kvaa_2004_2009-11-02_tau_141_fi.px"
 
     warning("Vaalipiiritason tietoa. TODO.")
@@ -353,19 +353,19 @@ GetMunicipalElectionData2004 <- function (which = "election.statistics") {
 
     #px <- pxR::read.px(url, na.strings='"-"')
     #df <- as.data.frame(px)
-    #tmp <- reshape::cast(df, Alue~Puolue~Sukupuoli~Valittujen.lukumäärä)
+    #tmp <- reshape2::cast(df, Alue~Puolue~Sukupuoli~Valittujen.lukum\xe4\xe4r\xe4)
 
   } else if (which == "selected.candidates.count") {
 
     warning("Puoluetason tietoa, ei kuntia. TODO.")
     tab <- NULL
 
-    #Valitut ikäryhmittäin sukupuolen ja puolueen mukaan kunnallisvaaleissa 2004
+    #Valitut ik\xe4ryhmitt\xe4in sukupuolen ja puolueen mukaan kunnallisvaaleissa 2004
     url<-"http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2004_05/060_kvaa_2004_2008-07-15_tau_110_fi.px"
 
   } else if (which == "selected.candidates.count") {
 
-    #Valitut ikäryhmittäin sukupuolen mukaan vaalipiireittäin kunnallisvaaleissa 2004
+    #Valitut ik\xe4ryhmitt\xe4in sukupuolen mukaan vaalipiireitt\xe4in kunnallisvaaleissa 2004
     url<-"http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2004_05/670_kvaa_2004_2009-11-02_tau_143_fi.px"
 
     warning("Vaalipiiritason tietoa. TODO.")
@@ -373,7 +373,7 @@ GetMunicipalElectionData2004 <- function (which = "election.statistics") {
 
     #px <- pxR::read.px(url, na.strings='"-"')
     #df <- as.data.frame(px)
-    #tmp <- reshape::cast(df, Alue~Puolue~Sukupuoli~Valittujen.lukumäärä)
+    #tmp <- reshape2::cast(df, Alue~Puolue~Sukupuoli~Valittujen.lukum\xe4\xe4r\xe4)
 
   } else if (which == "parties") {
 
@@ -386,38 +386,38 @@ GetMunicipalElectionData2004 <- function (which = "election.statistics") {
 
   } else if (which == "parties.per.region") {
 
-    # Puolueiden äänimäärät ja prosenttiosuudet sekä äänestysprosentit 
-    # vaalipiireittäin kunnallisvaaleissa 2004
+    # Puolueiden \xe4\xe4nim\xe4\xe4r\xe4t ja prosenttiosuudet sek\xe4 \xe4\xe4nestysprosentit 
+    # vaalipiireitt\xe4in kunnallisvaaleissa 2004
     url<-"http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2004_05/060_kvaa_2004_2008-08-27_tau_114_fi.px"
     warning("Vaalipiiri level, TODO")
     tab <- NULL
 
   } else if (which == "parties.change") {
 
-    # Puolueiden äänimäärät ja äänestysprosentti sekä valittujen lukumäärä 
+    # Puolueiden \xe4\xe4nim\xe4\xe4r\xe4t ja \xe4\xe4nestysprosentti sek\xe4 valittujen lukum\xe4\xe4r\xe4 
     # kunnittain kunnallisvaaleissa 2004 ja muutos edellisiin vaaleihin 
     # verrattuna
     url<-"http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2004_05/060_kvaa_2004_2008-08-27_tau_111_fi.px"
 
     px <- pxR::read.px(url, na.strings='"-"')
     df <- as.data.frame(px)
-    kaava <- as.formula("Vaalipiiri.ja.kunta~Puolue~Lukumäärätiedot")
-    tmp <- reshape::cast(df, kaava, value="dat")
+    kaava <- as.formula("Vaalipiiri.ja.kunta~Puolue~Lukum\xe4\xe4r\xe4tiedot")
+    tmp <- reshape2::cast(df, kaava, value="dat")
 
-    tab1 <- tmp[,,"Äänimäärä"]
+    tab1 <- tmp[,,"\xC4\xe4nim\xe4\xe4r\xe4"]
     tab2 <- tmp[,,"Osuus %"]
     tab3 <- tmp[,,"Muutos edelliseen vaaliin verrattuna"]
-    tab4 <- tmp[,,"Valittujen lukumäärä"]
+    tab4 <- tmp[,,"Valittujen lukum\xe4\xe4r\xe4"]
 
-    colnames(tab1) <- paste(colnames(tmp[,,"Äänimäärä"]), "(Äänimäärä)")
+    colnames(tab1) <- paste(colnames(tmp[,,"\xC4\xe4nim\xe4\xe4r\xe4"]), "(\xC4\xe4nim\xe4\xe4r\xe4)")
     colnames(tab2) <- paste(colnames(tmp[,,"Osuus %"]), "(Osuus %)")
     colnames(tab3) <- paste(colnames(tmp[,,"Muutos edelliseen vaaliin verrattuna"]), "(Muutos edelliseen vaaliin verrattuna)")
-    colnames(tab4) <- paste(colnames(tmp[,,"Valittujen lukumäärä"]), "(Valittujen lukumäärä)")
+    colnames(tab4) <- paste(colnames(tmp[,,"Valittujen lukum\xe4\xe4r\xe4"]), "(Valittujen lukum\xe4\xe4r\xe4)")
 
     tab <- cbind(tab1, tab2, tab3, tab4)
 
     # Keep only municipality-level information, filter out others
-    rnams <- setdiff(rownames(tab), c("Koko maa", "- Niistä Ruotsissa", "S Kaupunkimaiset kunnat", "S Maaseutumaiset kunnat", "S Taajaan asutut kunnat", "Suomessa asuvat Suomen kansalaiset", "Ulkomailla asuvat Suomen kansalaiset"))
+    rnams <- setdiff(rownames(tab), c("Koko maa", "- Niist\xe4 Ruotsissa", "S Kaupunkimaiset kunnat", "S Maaseutumaiset kunnat", "S Taajaan asutut kunnat", "Suomessa asuvat Suomen kansalaiset", "Ulkomailla asuvat Suomen kansalaiset"))
     rnams <- rnams[-grep("Kaupunkimaiset kunnat", rnams)]
     rnams <- rnams[-grep("Taajaan asutut kunnat", rnams)]
     rnams <- rnams[-grep("Maaseutumaiset kunnat", rnams)]
@@ -431,30 +431,30 @@ GetMunicipalElectionData2004 <- function (which = "election.statistics") {
     tab$Kuntakoodi <- v[,1]
     tab$Kunta <- v[,2]
     rownames(tab) <- as.character(tab$Kunta)
-    colnames(tab) <- paste("Kunnallisvaalit 2004 puolueiden äänimäärät: ", colnames(tab))
+    colnames(tab) <- paste("Kunnallisvaalit 2004 puolueiden \xe4\xe4nim\xe4\xe4r\xe4t: ", colnames(tab))
 
   } else if (which == "party.votes") {
 
-    #Puolueiden äänimäärät ja valittujen lukumäärä kunnittain (pienet puolueet), hylätyt liput sekä ennakkoäänestäneet kunnallisvaaleissa 2004
+    #Puolueiden \xe4\xe4nim\xe4\xe4r\xe4t ja valittujen lukum\xe4\xe4r\xe4 kunnittain (pienet puolueet), hyl\xe4tyt liput sek\xe4 ennakko\xe4\xe4nest\xe4neet kunnallisvaaleissa 2004
     url <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2004_05/060_kvaa_2004_2008-08-27_tau_114_fi.px"
 
     px <- pxR::read.px(url, na.strings='"-"')
     df <- as.data.frame(px)
-    kaava <- as.formula("Vaalipiiri.ja.kunta~Äänestystiedot.ja.puolueiden.kannatus~Lukumäärätiedot")
-    tmp <- reshape::cast(df, kaava, value="dat")
+    kaava <- as.formula("Vaalipiiri.ja.kunta~\xC4\xe4nestystiedot.ja.puolueiden.kannatus~Lukum\xe4\xe4r\xe4tiedot")
+    tmp <- reshape2::cast(df, kaava, value="dat")
 
-    tab1 <- tmp[,,"Äänimäärä"]
+    tab1 <- tmp[,,"\xC4\xe4nim\xe4\xe4r\xe4"]
     tab2 <- tmp[,,"Osuus %"]
-    tab3 <- tmp[,,"Valittujen lukumäärä"]
+    tab3 <- tmp[,,"Valittujen lukum\xe4\xe4r\xe4"]
 
-    colnames(tab1) <- paste(colnames(tmp[,,"Äänimäärä"]), "(Äänimäärä)")
+    colnames(tab1) <- paste(colnames(tmp[,,"\xC4\xe4nim\xe4\xe4r\xe4"]), "(\xC4\xe4nim\xe4\xe4r\xe4)")
     colnames(tab2) <- paste(colnames(tmp[,,"Osuus %"]), "(Osuus %)")
-    colnames(tab3) <- paste(colnames(tmp[,,"Valittujen lukumäärä"]), "(Valittujen lukumäärä)")
+    colnames(tab3) <- paste(colnames(tmp[,,"Valittujen lukum\xe4\xe4r\xe4"]), "(Valittujen lukum\xe4\xe4r\xe4)")
 
     tab <- cbind(tab1, tab2, tab3)
 
     # Keep only municipality-level information, filter out others
-    rnams <- setdiff(rownames(tab), c("Koko maa", "- Niistä Ruotsissa", "S Kaupunkimaiset kunnat", "S Maaseutumaiset kunnat", "S Taajaan asutut kunnat", "Suomessa asuvat Suomen kansalaiset", "Ulkomailla asuvat Suomen kansalaiset"))
+    rnams <- setdiff(rownames(tab), c("Koko maa", "- Niist\xe4 Ruotsissa", "S Kaupunkimaiset kunnat", "S Maaseutumaiset kunnat", "S Taajaan asutut kunnat", "Suomessa asuvat Suomen kansalaiset", "Ulkomailla asuvat Suomen kansalaiset"))
     rnams <- rnams[-grep("Kaupunkimaiset kunnat", rnams)]
     rnams <- rnams[-grep("Taajaan asutut kunnat", rnams)]
     rnams <- rnams[-grep("Maaseutumaiset kunnat", rnams)]
@@ -472,33 +472,33 @@ GetMunicipalElectionData2004 <- function (which = "election.statistics") {
 
   } else if (which == "voting.stats") {
 
-    # Aanioikeutetut ja aanestaneet sukupuolen mukaan, hyvaksytyt aanestysliput, valtuutetuiksi valitut ja ennakkoaanet puolueittain sekä hylattyjen 
+    # Aanioikeutetut ja aanestaneet sukupuolen mukaan, hyvaksytyt aanestysliput, valtuutetuiksi valitut ja ennakkoaanet puolueittain sek\xe4 hylattyjen 
     # aanestyslippujen lukumaara kunnittain kunnallisvaaleissa 2004
     url <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2004_05/060_kvaa_2004_2008-08-28_tau_116_fi.px"
 
     px <- pxR::read.px(url, na.strings='"-"')
     df <- as.data.frame(px)
-    kaava <- as.formula("Vaalipiiri.ja.kunta~Äänestystiedot.ja.puolueiden.kannatus~Lukumäärätiedot")
-    tmp <- reshape::cast(df, kaava, value="dat")
+    kaava <- as.formula("Vaalipiiri.ja.kunta~\xC4\xe4nestystiedot.ja.puolueiden.kannatus~Lukum\xe4\xe4r\xe4tiedot")
+    tmp <- reshape2::cast(df, kaava, value="dat")
 
-    tab1 <- tmp[,,"Lukumäärä / Äänimäärä"]
-    tab2 <- tmp[,,"Osuus äänistä"]
+    tab1 <- tmp[,,"Lukum\xe4\xe4r\xe4 / \xC4\xe4nim\xe4\xe4r\xe4"]
+    tab2 <- tmp[,,"Osuus \xe4\xe4nist\xe4"]
     tab3 <- tmp[,,"Valitut"]
     tab4 <- tmp[,,"Osuus valituista"]
-    tab5 <- tmp[,,"Ennakkoäänet"]
-    tab6 <- tmp[,,"Ennakkoäänten osuus"]
+    tab5 <- tmp[,,"Ennakko\xe4\xe4net"]
+    tab6 <- tmp[,,"Ennakko\xe4\xe4nten osuus"]
 
-    colnames(tab1) <- paste(colnames(tmp[,,"Lukumäärä / Äänimäärä"]), "(Lukumäärä / Äänimäärä)")
-    colnames(tab2) <- paste(colnames(tmp[,,"Osuus äänistä"]), "(Osuus äänistä)")
+    colnames(tab1) <- paste(colnames(tmp[,,"Lukum\xe4\xe4r\xe4 / \xC4\xe4nim\xe4\xe4r\xe4"]), "(Lukum\xe4\xe4r\xe4 / \xC4\xe4nim\xe4\xe4r\xe4)")
+    colnames(tab2) <- paste(colnames(tmp[,,"Osuus \xe4\xe4nist\xe4"]), "(Osuus \xe4\xe4nist\xe4)")
     colnames(tab3) <- paste(colnames(tmp[,,"Valitut"]), "(Valitut)")
     colnames(tab4) <- paste(colnames(tmp[,,"Osuus valituista"]), "(Osuus valituista)")
-    colnames(tab5) <- paste(colnames(tmp[,,"Ennakkoäänet"]), "(Ennakkoäänet)")
-    colnames(tab6) <- paste(colnames(tmp[,,"Ennakkoäänten osuus"]), "(Ennakkoäänten osuus)")
+    colnames(tab5) <- paste(colnames(tmp[,,"Ennakko\xe4\xe4net"]), "(Ennakko\xe4\xe4net)")
+    colnames(tab6) <- paste(colnames(tmp[,,"Ennakko\xe4\xe4nten osuus"]), "(Ennakko\xe4\xe4nten osuus)")
 
     tab <- cbind(tab1, tab2, tab3, tab4, tab5, tab6)
 
     # Keep only municipality-level information, filter out others
-    rnams <- setdiff(rownames(tab), c("Koko maa", "- Niistä Ruotsissa", "S Kaupunkimaiset kunnat", "S Maaseutumaiset kunnat", "S Taajaan asutut kunnat", "Suomessa asuvat Suomen kansalaiset", "Ulkomailla asuvat Suomen kansalaiset"))
+    rnams <- setdiff(rownames(tab), c("Koko maa", "- Niist\xe4 Ruotsissa", "S Kaupunkimaiset kunnat", "S Maaseutumaiset kunnat", "S Taajaan asutut kunnat", "Suomessa asuvat Suomen kansalaiset", "Ulkomailla asuvat Suomen kansalaiset"))
     rnams <- rnams[-grep("Kaupunkimaiset kunnat", rnams)]
     rnams <- rnams[-grep("Taajaan asutut kunnat", rnams)]
     rnams <- rnams[-grep("Maaseutumaiset kunnat", rnams)]
@@ -525,7 +525,7 @@ GetMunicipalElectionData2004 <- function (which = "election.statistics") {
 
   } else if (which == "rejected") {
 
-    #Hylätyt äänestysliput hylkäysperusteen ja vaalipiirin mukaan kunnallisvaaleissa 2004
+    #Hyl\xe4tyt \xe4\xe4nestysliput hylk\xe4ysperusteen ja vaalipiirin mukaan kunnallisvaaleissa 2004
     url<-"http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2004_05/740_kvaa_2004_2009-12-30_tau_150_fi.px"
     px <- pxR::read.px(url, na.strings='"-"')
     df <- as.data.frame(px)
@@ -545,7 +545,7 @@ GetMunicipalElectionData2004 <- function (which = "election.statistics") {
 
   } else if (which == "pre") {
 
-    #Ennakkoon äänestäneet äänestyspaikan ja vaalipiirin mukaan kunnallisvaaleissa 2004
+    #Ennakkoon \xe4\xe4nest\xe4neet \xe4\xe4nestyspaikan ja vaalipiirin mukaan kunnallisvaaleissa 2004
     url<-"http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2004_05/750_kvaa_2004_2009-12-30_tau_151_fi.px"
     #kvaa <- as.data.frame(pxR::read.px(url, na.strings='"-"'))
     warning("No municipality level data available. TODO.")
@@ -561,7 +561,7 @@ GetMunicipalElectionData2004 <- function (which = "election.statistics") {
 
   } else if (which == "abroad2") {
 
-    #Äänioikeutetut ja äänestäneet ulkomaalaiset vaalipiirin mukaan kunnallisvaaleissa 2004
+    #\xC4\xe4nioikeutetut ja \xe4\xe4nest\xe4neet ulkomaalaiset vaalipiirin mukaan kunnallisvaaleissa 2004
     url<-"http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2004_05/770_kvaa_2004_2009-12-30_tau_153_fi.px"
     kvaa <- as.data.frame(pxR::read.px(url, na.strings='"-"'))
     warning("No municipality level data available. TODO.")
@@ -603,7 +603,9 @@ GetMunicipalElectionData2004 <- function (which = "election.statistics") {
 #' @keywords utilities
 GetElectedCandidates <- function (year, election, election.district, verbose = FALSE) {
 
-  require(reshape)
+  .InstallMarginal("plyr")
+  .InstallMarginal("reshape")
+  .InstallMarginal("reshape2")
 
   if (verbose) {message(paste(election.district))}		     
 
@@ -627,10 +629,10 @@ GetElectedCandidates <- function (year, election, election.district, verbose = F
     urls[["Uudenmaan vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2008_04/420_kvaa_2008_2009-11-02_tau_124_fi.px"
     urls[["Varsinais-Suomen vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2008_04/430_kvaa_2008_2009-11-02_tau_125_fi.px"
     urls[["Satakunnan vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2008_04/440_kvaa_2008_2009-11-02_tau_126_fi.px"
-    urls[["Hämeen vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2008_04/460_kvaa_2008_2009-11-02_tau_127_fi.px"
+    urls[["H\xe4meen vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2008_04/460_kvaa_2008_2009-11-02_tau_127_fi.px"
     urls[["Pirkanmaan vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2008_04/470_kvaa_2008_2009-11-02_tau_128_fi.px"
     urls[["Kymen vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2008_04/480_kvaa_2008_2009-11-02_tau_129_fi.px"
-    urls[["Etelä-Savon vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2008_04/490_kvaa_2008_2009-11-02_tau_130_fi.px"
+    urls[["Etel\xe4-Savon vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2008_04/490_kvaa_2008_2009-11-02_tau_130_fi.px"
     urls[["Pohjois-Savon vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2008_04/500_kvaa_2008_2009-11-02_tau_131_fi.px"
     urls[["Pohjois-Karjalan vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2008_04/510_kvaa_2008_2009-11-02_tau_132_fi.px"
     urls[["Vaasan vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2008_04/520_kvaa_2008_2009-11-02_tau_133_fi.px"
@@ -650,10 +652,10 @@ GetElectedCandidates <- function (year, election, election.district, verbose = F
     urls[["Uudenmaan vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2004_04/040_KVAA_2004_2008-07-17_TAU_102_FI.px"
     urls[["Varsinais-Suomen vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2004_04/040_KVAA_2004_2008-07-17_TAU_103_FI.px"
     urls[["Satakunnan vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2004_04/040_KVAA_2004_2008-07-17_TAU_104_FI.px"
-    urls[["Hämeen vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2004_04/040_KVAA_2004_2008-07-17_TAU_106_FI.px"
+    urls[["H\xe4meen vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2004_04/040_KVAA_2004_2008-07-17_TAU_106_FI.px"
     urls[["Pirkanmaan vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2004_04/040_KVAA_2004_2008-07-17_TAU_107_FI.px"
     urls[["Kymen vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2004_04/040_KVAA_2004_2008-07-17_TAU_108_FI.px"
-    urls[["Etelä-Savon vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2004_04/040_KVAA_2004_2008-07-17_TAU_109_FI.px"
+    urls[["Etel\xe4-Savon vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2004_04/040_KVAA_2004_2008-07-17_TAU_109_FI.px"
     urls[["Pohjois-Savon vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2004_04/040_KVAA_2004_2008-07-17_TAU_110_FI.px"
     urls[["Pohjois-Karjalan vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2004_04/040_KVAA_2004_2008-07-17_TAU_111_FI.px"
     urls[["Vaasan vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2004_04/040_KVAA_2004_2008-07-17_TAU_112_FI.px"
@@ -667,7 +669,6 @@ GetElectedCandidates <- function (year, election, election.district, verbose = F
     warning(paste("Option", election, year, "not implemented"))
   }
 
-
   if (verbose) { message("Reading PC Axis file") }
   px <- read.px(url)
 
@@ -678,12 +679,17 @@ GetElectedCandidates <- function (year, election, election.district, verbose = F
   df <- split(df, df$Ehdokas)
 
   if (verbose) { message("Converting into more compact table format") }
-  df <- lapply(df, function(dff) {m <- melt(dff, c("Ehdokas", "Äänestysalue", "Äänestystiedot"), "dat"); mc <- cast(m, Ehdokas + Äänestysalue ~ Äänestystiedot); mc <- mc[!mc[["Ehdokkaan numero"]] == 0, ];  })
+  
+  
+  #df <- lapply(df, function(dff) {m <- reshape2::melt(dff, c("Ehdokas", "\\xC4\\xe4nestysalue", "\\xC4\\xe4nestystiedot"), "dat"); mc <- reshape2::cast(m, Ehdokas + \\xC4\\xe4nestysalue ~ \\xC4\\xe4nestystiedot); mc <- mc[!mc[["Ehdokkaan numero"]] == 0, ]})
+
+  df <- lapply(df, function(dff) {names(dff) <- c("Aanestystiedot", "Aanestysalue", "Ehdokas", "dat"); m <- reshape2::melt(dff, c("Ehdokas", "Aanestysalue", "Aanestystiedot"), "dat"); mc <- reshape2::cast(m, Ehdokas + Aanestysalue ~ Aanestystiedot); mc <- mc[!mc[["Ehdokkaan numero"]] == 0, ]})
+
   df <- do.call(rbind, df)
 
   if (verbose) { message("Preprocessing fields") }
-  df$Ehdokas <- as.character(df$Ehdokas)
-  ehd <- do.call(rbind, strsplit(df$Ehdokas, " / "))
+  df$Ehdokas <- gsub(" / ", "/", as.character(df$Ehdokas))
+  ehd <- do.call(rbind, strsplit(df$Ehdokas, "/"))
   df[["Ehdokkaan nimi"]] <- ehd[, 1]
   df[["Puolue_lyhenne_fi"]] <- ehd[, 2]
   rm(ehd)
@@ -692,7 +698,8 @@ GetElectedCandidates <- function (year, election, election.district, verbose = F
   df[["Ehdokkaan nimi"]] <- NULL
 
   if (verbose) { message("Preprocessing region fields") }
-  alue <- do.call(rbind, strsplit(as.character(df[["Äänestysalue"]]), " / "))
+  df[["Aanestysalue"]] <- gsub(" / ", "/", as.character(df[["Aanestysalue"]]))
+  alue <- do.call(rbind, strsplit(df[["Aanestysalue"]], "/"))
   df$Kunta <- alue[, 1]
   df$Alue <- alue[, 2]
   rownames(df) <- NULL
@@ -729,8 +736,8 @@ GetElectedCandidates <- function (year, election, election.district, verbose = F
 GetMunicipalElectionData2008 <- function (which = "election.statistics") {
 
   .InstallMarginal("plyr")
-  .InstallMarginal("reshape2")
   .InstallMarginal("reshape")
+  .InstallMarginal("reshape2")
 
   # Taulukot tilastossa: 5. Kunnallisvaalit 2008 - vaalitulos, aanestaminen
   # http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2008_05/2008_05_fi.asp
@@ -741,21 +748,21 @@ GetMunicipalElectionData2008 <- function (which = "election.statistics") {
     url <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2008_05/610_kvaa_2008_2009-10-30_tau_137_fi.px"
     px <- pxR::read.px(url, na.strings='"-"')
     df <- as.data.frame(px)
-    kaava <- as.formula("Alue~Äänestystiedot~Sukupuoli")
-    tmp <- reshape::cast(df, kaava, value="dat")
+    kaava <- as.formula("Alue~\xC4\xe4nestystiedot~Sukupuoli")
+    tmp <- reshape2::cast(df, kaava, value="dat")
 
-    tab1 <- tmp[,,"Sukupuolet yhteensä"]
+    tab1 <- tmp[,,"Sukupuolet yhteens\xe4"]
     tab2 <- tmp[,,"Miehet"]
     tab3 <- tmp[,,"Naiset"]
 
-    colnames(tab1) <- paste(colnames(tmp[,,"Sukupuolet yhteensä"]), "(Sukupuolet yhteensä)")
+    colnames(tab1) <- paste(colnames(tmp[,,"Sukupuolet yhteens\xe4"]), "(Sukupuolet yhteens\xe4)")
     colnames(tab2) <- paste(colnames(tmp[,,"Miehet"]), "(Miehet)")
     colnames(tab3) <- paste(colnames(tmp[,,"Naiset"]), "(Naiset)")
 
     tab <- cbind(tab1, tab2, tab3)
 
     # Keep only municipality-level information, filter out others
-    rnams <- setdiff(rownames(tab), c("Koko maa", "- Niistä Ruotsissa", "S Kaupunkimaiset kunnat", "S Maaseutumaiset kunnat", "S Taajaan asutut kunnat", "Suomessa asuvat Suomen kansalaiset", "Ulkomailla asuvat Suomen kansalaiset"))
+    rnams <- setdiff(rownames(tab), c("Koko maa", "- Niist\xe4 Ruotsissa", "S Kaupunkimaiset kunnat", "S Maaseutumaiset kunnat", "S Taajaan asutut kunnat", "Suomessa asuvat Suomen kansalaiset", "Ulkomailla asuvat Suomen kansalaiset"))
     rnams <- rnams[-grep("vaalipiiri", rnams)]
     rnams <- rnams[-grep(" 00", rnams)]
     rnams <- rnams[-grep(" 01", rnams)]
@@ -787,7 +794,7 @@ GetMunicipalElectionData2008 <- function (which = "election.statistics") {
     tab$Kuntakoodi <- v[,1]
     tab$Kunta <- v[,2]
     rownames(tab) <- as.character(tab$Kunta)
-    colnames(tab) <- paste("Kunnallisvaalit 2008 äänestystiedot", colnames(tab))
+    colnames(tab) <- paste("Kunnallisvaalit 2008 \xe4\xe4nestystiedot", colnames(tab))
 
   } else if (which == "woman.candidates") {
 
@@ -796,17 +803,17 @@ GetMunicipalElectionData2008 <- function (which = "election.statistics") {
 
     px <- pxR::read.px(url, na.strings='"-"')
     df <- as.data.frame(px)
-    tmp <- reshape::cast(df, Kunta~Puolue~Naisehdokastiedot)
+    tmp <- reshape2::cast(df, Kunta~Puolue~Naisehdokastiedot)
 
-    tab1 <- tmp[,,"Äänimäärä"]
-    tab2 <- tmp[,,"Osuus äänistä (%)"]
+    tab1 <- tmp[,,"\xC4\xe4nim\xe4\xe4r\xe4"]
+    tab2 <- tmp[,,"Osuus \xe4\xe4nist\xe4 (%)"]
     tab3 <- tmp[,,"Ehdokkaat"]
     tab4 <- tmp[,,"Osuus ehdokkaista (%)"]
     tab5 <- tmp[,,"Valitut"]
     tab6 <- tmp[,,"Osuus valituista (%)"]
 
-    colnames(tab1) <- paste(colnames(tmp[,,"Äänimäärä"]), "(Äänimäärä)")
-    colnames(tab2) <- paste(colnames(tmp[,,"Osuus äänistä (%)"]), "(Osuus äänistä (%))")
+    colnames(tab1) <- paste(colnames(tmp[,,"\xC4\xe4nim\xe4\xe4r\xe4"]), "(\xC4\xe4nim\xe4\xe4r\xe4)")
+    colnames(tab2) <- paste(colnames(tmp[,,"Osuus \xe4\xe4nist\xe4 (%)"]), "(Osuus \xe4\xe4nist\xe4 (%))")
     colnames(tab3) <- paste(colnames(tmp[,,"Ehdokkaat"]), "(Ehdokkaat)")
     colnames(tab4) <- paste(colnames(tmp[,,"Osuus ehdokkaista (%)"]), "(Osuus ehdokkaista (%))")
     colnames(tab5) <- paste(colnames(tmp[,,"Valitut"]), "(Valitut)")
@@ -817,7 +824,7 @@ GetMunicipalElectionData2008 <- function (which = "election.statistics") {
     tab <- cbind(tab1[regs,], tab2[regs,], tab3[regs,], tab4[regs,], tab5[regs,], tab6[regs,])
 
     # Keep only municipality-level information, filter out others
-    rnams <- setdiff(rownames(tab), c("Koko maa", "- Niistä Ruotsissa", "S Kaupunkimaiset kunnat", "S Maaseutumaiset kunnat", "S Taajaan asutut kunnat", "Suomessa asuvat Suomen kansalaiset", "Ulkomailla asuvat Suomen kansalaiset"))
+    rnams <- setdiff(rownames(tab), c("Koko maa", "- Niist\xe4 Ruotsissa", "S Kaupunkimaiset kunnat", "S Maaseutumaiset kunnat", "S Taajaan asutut kunnat", "Suomessa asuvat Suomen kansalaiset", "Ulkomailla asuvat Suomen kansalaiset"))
     rnams <- rnams[-grep("Kaupunkimaiset kunnat", rnams)]
     rnams <- rnams[-grep("Taajaan asutut kunnat", rnams)]
     rnams <- rnams[-grep("Maaseutumaiset kunnat", rnams)]
@@ -837,18 +844,18 @@ GetMunicipalElectionData2008 <- function (which = "election.statistics") {
 
     warning("Vaalipiiri level information; TODO")
 
-    #Valittujen lukumäärä ja prosenttiosuudet puolueittain ja vaalipiireittäin kunnallisvaaleissa 2008
+    #Valittujen lukum\xe4\xe4r\xe4 ja prosenttiosuudet puolueittain ja vaalipiireitt\xe4in kunnallisvaaleissa 2008
     url<-"http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2008_05/690_kvaa_2008_2009-11-02_tau_145_fi.px"
 
     px <- pxR::read.px(url, na.strings='"-"')
     df <- as.data.frame(px)
-    kaava <- as.formula("Puolue~Vaalipiiri~Lukumäärätiedot")
-    tmp <- reshape::cast(df, kaava, value="dat")
+    kaava <- as.formula("Puolue~Vaalipiiri~Lukum\xe4\xe4r\xe4tiedot")
+    tmp <- reshape2::cast(df, kaava, value="dat")
 
-    tab1 <- tmp[,,"Valtuutettujen lukumäärä"]
+    tab1 <- tmp[,,"Valtuutettujen lukum\xe4\xe4r\xe4"]
     tab2 <- tmp[,,"Puolueen osuus"]
 
-    colnames(tab1) <- paste(colnames(tmp[,,"Valtuutettujen lukumäärä"]), "(Valtuutettujen lukumäärä)")
+    colnames(tab1) <- paste(colnames(tmp[,,"Valtuutettujen lukum\xe4\xe4r\xe4"]), "(Valtuutettujen lukum\xe4\xe4r\xe4)")
     colnames(tab2) <- paste(colnames(tmp[,,"Puolueen osuus"]), "(Puolueen osuus)")
 
     tab <- cbind(tab1, tab2)
@@ -862,17 +869,17 @@ GetMunicipalElectionData2008 <- function (which = "election.statistics") {
 
     px <- pxR::read.px(url, na.strings='"-"')
     df <- as.data.frame(px)
-    kaava <- as.formula("Alue~Puolue~Sukupuoli~Valittujen.lukumäärä")
-    tmp <- reshape::cast(df, kaava, value="dat")
+    kaava <- as.formula("Alue~Puolue~Sukupuoli~Valittujen.lukum\xe4\xe4r\xe4")
+    tmp <- reshape2::cast(df, kaava, value="dat")
 
-    tab1 <- tmp[,,"Kaikki ehdokkaat", "Valittujen lukumäärä"]
-    colnames(tab1) <- paste("Kaikki ehdokkaat", "Valittujen lukumäärä", colnames(tab1))
+    tab1 <- tmp[,,"Kaikki ehdokkaat", "Valittujen lukum\xe4\xe4r\xe4"]
+    colnames(tab1) <- paste("Kaikki ehdokkaat", "Valittujen lukum\xe4\xe4r\xe4", colnames(tab1))
 
-    tab2 <- tmp[,,"Miesehdokkaat", "Valittujen lukumäärä"]
-    colnames(tab2) <- paste("Miesehdokkaat", "Valittujen lukumäärä", colnames(tab2))
+    tab2 <- tmp[,,"Miesehdokkaat", "Valittujen lukum\xe4\xe4r\xe4"]
+    colnames(tab2) <- paste("Miesehdokkaat", "Valittujen lukum\xe4\xe4r\xe4", colnames(tab2))
 
-    tab3 <- tmp[,,"Naisehdokkaat", "Valittujen lukumäärä"]
-    colnames(tab3) <- paste("Naisehdokkaat", "Valittujen lukumäärä", colnames(tab3))
+    tab3 <- tmp[,,"Naisehdokkaat", "Valittujen lukum\xe4\xe4r\xe4"]
+    colnames(tab3) <- paste("Naisehdokkaat", "Valittujen lukum\xe4\xe4r\xe4", colnames(tab3))
 
     tab4 <- tmp[,,"Kaikki ehdokkaat", "Osuus valituista %"]
     colnames(tab4) <- paste("Kaikki ehdokkaat", "Osuus valituista %", colnames(tab4))
@@ -889,7 +896,7 @@ GetMunicipalElectionData2008 <- function (which = "election.statistics") {
     	         tab4[regs,], tab5[regs,], tab6[regs,])
 
     # Keep only municipality-level information, filter out others
-    rnams <- setdiff(rownames(tab), c("Koko maa", "- Niistä Ruotsissa", "S Kaupunkimaiset kunnat", "S Maaseutumaiset kunnat", "S Taajaan asutut kunnat", "Suomessa asuvat Suomen kansalaiset", "Ulkomailla asuvat Suomen kansalaiset"))
+    rnams <- setdiff(rownames(tab), c("Koko maa", "- Niist\xe4 Ruotsissa", "S Kaupunkimaiset kunnat", "S Maaseutumaiset kunnat", "S Taajaan asutut kunnat", "Suomessa asuvat Suomen kansalaiset", "Ulkomailla asuvat Suomen kansalaiset"))
     rnams <- rnams[-grep("vaalipiiri", rnams)]
     rnams <- rnams[-grep("Manner-Suomi", rnams)]
     tab <- as.data.frame(tab[rnams, ])
@@ -899,11 +906,11 @@ GetMunicipalElectionData2008 <- function (which = "election.statistics") {
     tab$Kuntakoodi <- v[,1]
     tab$Kunta <- v[,2]
     rownames(tab) <- as.character(tab$Kunta)
-    colnames(tab) <- paste("Kunnallisvaalit 2008 valittujen lukumäärä", colnames(tab))
+    colnames(tab) <- paste("Kunnallisvaalit 2008 valittujen lukum\xe4\xe4r\xe4", colnames(tab))
     
   } else if (which == "selected.candidates.by.party") {  
 
-    # Valittujen lukumäärä ja prosenttiosuudet puolueittain ja 
+    # Valittujen lukum\xe4\xe4r\xe4 ja prosenttiosuudet puolueittain ja 
     # vaalipiireittain kunnallisvaaleissa 2008
     url<-"http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2008_05/650_kvaa_2008_2009-11-02_tau_141_fi.px"
 
@@ -912,7 +919,7 @@ GetMunicipalElectionData2008 <- function (which = "election.statistics") {
 
     #px <- pxR::read.px(url, na.strings='"-"')
     #df <- as.data.frame(px)
-    #tmp <- reshape::cast(df, Alue~Puolue~Sukupuoli~Valittujen.lukumäärä)
+    #tmp <- reshape2::cast(df, Alue~Puolue~Sukupuoli~Valittujen.lukum\xe4\xe4r\xe4)
 
   } else if (which == "selected.candidates.count") {
 
@@ -932,7 +939,7 @@ GetMunicipalElectionData2008 <- function (which = "election.statistics") {
 
     #px <- pxR::read.px(url, na.strings='"-"')
     #df <- as.data.frame(px)
-    #tmp <- reshape::cast(df, Alue~Puolue~Sukupuoli~Valittujen.lukumäärä)
+    #tmp <- reshape2::cast(df, Alue~Puolue~Sukupuoli~Valittujen.lukum\xe4\xe4r\xe4)
 
   } else if (which == "parties") {
 
@@ -945,7 +952,7 @@ GetMunicipalElectionData2008 <- function (which = "election.statistics") {
 
   } else if (which == "parties.per.region") {
 
-    # Puolueiden äänimäärät ja prosenttiosuudet sekä äänestysprosentit vaalipiireittäin kunnallisvaaleissa 2008
+    # Puolueiden \xe4\xe4nim\xe4\xe4r\xe4t ja prosenttiosuudet sek\xe4 \xe4\xe4nestysprosentit vaalipiireitt\xe4in kunnallisvaaleissa 2008
     url<-"http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2008_05/640_kvaa_2008_2009-11-02_tau_140_fi.px"
 
     warning("Vaalipiiri level, TODO")
@@ -953,30 +960,30 @@ GetMunicipalElectionData2008 <- function (which = "election.statistics") {
 
   } else if (which == "parties.change") {
 
-    # Puolueiden aanimäärät ja aanestysprosentti sekä valittujen lukumaara
+    # Puolueiden aanim\xe4\xe4r\xe4t ja aanestysprosentti sek\xe4 valittujen lukumaara
     # kunnittain kunnallisvaaleissa 2008 ja muutos edellisiin vaaleihin 
     # verrattuna
     url<-"http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2008_05/680_kvaa_2008_2009-11-02_tau_144_fi.px"
 
     px <- pxR::read.px(url, na.strings='"-"')
     df <- as.data.frame(px)
-    kaava <- as.formula("Vaalipiiri.ja.kunta~Puolue~Lukumäärätiedot")
-    tmp <- reshape::cast(df, kaava, value="dat")
+    kaava <- as.formula("Vaalipiiri.ja.kunta~Puolue~Lukum\xe4\xe4r\xe4tiedot")
+    tmp <- reshape2::cast(df, kaava, value="dat")
 
-    tab1 <- tmp[,,"Äänimäärä"]
+    tab1 <- tmp[,,"\xC4\xe4nim\xe4\xe4r\xe4"]
     tab2 <- tmp[,,"Osuus %"]
     tab3 <- tmp[,,"Muutos edelliseen vaaliin verrattuna"]
-    tab4 <- tmp[,,"Valittujen lukumäärä"]
+    tab4 <- tmp[,,"Valittujen lukum\xe4\xe4r\xe4"]
 
-    colnames(tab1) <- paste(colnames(tmp[,,"Äänimäärä"]), "(Äänimäärä)")
+    colnames(tab1) <- paste(colnames(tmp[,,"\xC4\xe4nim\xe4\xe4r\xe4"]), "(\xC4\xe4nim\xe4\xe4r\xe4)")
     colnames(tab2) <- paste(colnames(tmp[,,"Osuus %"]), "(Osuus %)")
     colnames(tab3) <- paste(colnames(tmp[,,"Muutos edelliseen vaaliin verrattuna"]), "(Muutos edelliseen vaaliin verrattuna)")
-    colnames(tab4) <- paste(colnames(tmp[,,"Valittujen lukumäärä"]), "(Valittujen lukumäärä)")
+    colnames(tab4) <- paste(colnames(tmp[,,"Valittujen lukum\xe4\xe4r\xe4"]), "(Valittujen lukum\xe4\xe4r\xe4)")
 
     tab <- cbind(tab1, tab2, tab3, tab4)
 
     # Keep only municipality-level information, filter out others
-    rnams <- setdiff(rownames(tab), c("Koko maa", "- Niistä Ruotsissa", "S Kaupunkimaiset kunnat", "S Maaseutumaiset kunnat", "S Taajaan asutut kunnat", "Suomessa asuvat Suomen kansalaiset", "Ulkomailla asuvat Suomen kansalaiset"))
+    rnams <- setdiff(rownames(tab), c("Koko maa", "- Niist\xe4 Ruotsissa", "S Kaupunkimaiset kunnat", "S Maaseutumaiset kunnat", "S Taajaan asutut kunnat", "Suomessa asuvat Suomen kansalaiset", "Ulkomailla asuvat Suomen kansalaiset"))
     rnams <- rnams[-grep("Kaupunkimaiset kunnat", rnams)]
     rnams <- rnams[-grep("Taajaan asutut kunnat", rnams)]
     rnams <- rnams[-grep("Maaseutumaiset kunnat", rnams)]
@@ -990,30 +997,30 @@ GetMunicipalElectionData2008 <- function (which = "election.statistics") {
     tab$Kuntakoodi <- v[,1]
     tab$Kunta <- v[,2]
     rownames(tab) <- as.character(tab$Kunta)
-    colnames(tab) <- paste("Kunnallisvaalit 2008 puolueiden äänimäärät: ", colnames(tab))
+    colnames(tab) <- paste("Kunnallisvaalit 2008 puolueiden \xe4\xe4nim\xe4\xe4r\xe4t: ", colnames(tab))
 
   } else if (which == "party.votes") {
 
-    #Puolueiden äänimäärät ja valittujen lukumäärä kunnittain (pienet puolueet), hylätyt liput sekä ennakkoäänestäneet kunnallisvaaleissa 2008
+    #Puolueiden \xe4\xe4nim\xe4\xe4r\xe4t ja valittujen lukum\xe4\xe4r\xe4 kunnittain (pienet puolueet), hyl\xe4tyt liput sek\xe4 ennakko\xe4\xe4nest\xe4neet kunnallisvaaleissa 2008
     url <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2008_05/700_kvaa_2008_2009-11-02_tau_146_fi.px"
 
     px <- pxR::read.px(url, na.strings='"-"')
     df <- as.data.frame(px)
-    kaava <- as.formula("Vaalipiiri.ja.kunta~Äänestystiedot.ja.puolueiden.kannatus~Lukumäärätiedot")
-    tmp <- reshape::cast(df, kaava, value="dat")
+    kaava <- as.formula("Vaalipiiri.ja.kunta~\xC4\xe4nestystiedot.ja.puolueiden.kannatus~Lukum\xe4\xe4r\xe4tiedot")
+    tmp <- reshape2::cast(df, kaava, value="dat")
 
-    tab1 <- tmp[,,"Äänimäärä"]
+    tab1 <- tmp[,,"\xC4\xe4nim\xe4\xe4r\xe4"]
     tab2 <- tmp[,,"Osuus %"]
-    tab3 <- tmp[,,"Valittujen lukumäärä"]
+    tab3 <- tmp[,,"Valittujen lukum\xe4\xe4r\xe4"]
 
-    colnames(tab1) <- paste(colnames(tmp[,,"Äänimäärä"]), "(Äänimäärä)")
+    colnames(tab1) <- paste(colnames(tmp[,,"\xC4\xe4nim\xe4\xe4r\xe4"]), "(\xC4\xe4nim\xe4\xe4r\xe4)")
     colnames(tab2) <- paste(colnames(tmp[,,"Osuus %"]), "(Osuus %)")
-    colnames(tab3) <- paste(colnames(tmp[,,"Valittujen lukumäärä"]), "(Valittujen lukumäärä)")
+    colnames(tab3) <- paste(colnames(tmp[,,"Valittujen lukum\xe4\xe4r\xe4"]), "(Valittujen lukum\xe4\xe4r\xe4)")
 
     tab <- cbind(tab1, tab2, tab3)
 
     # Keep only municipality-level information, filter out others
-    rnams <- setdiff(rownames(tab), c("Koko maa", "- Niistä Ruotsissa", "S Kaupunkimaiset kunnat", "S Maaseutumaiset kunnat", "S Taajaan asutut kunnat", "Suomessa asuvat Suomen kansalaiset", "Ulkomailla asuvat Suomen kansalaiset"))
+    rnams <- setdiff(rownames(tab), c("Koko maa", "- Niist\xe4 Ruotsissa", "S Kaupunkimaiset kunnat", "S Maaseutumaiset kunnat", "S Taajaan asutut kunnat", "Suomessa asuvat Suomen kansalaiset", "Ulkomailla asuvat Suomen kansalaiset"))
     rnams <- rnams[-grep("Kaupunkimaiset kunnat", rnams)]
     rnams <- rnams[-grep("Taajaan asutut kunnat", rnams)]
     rnams <- rnams[-grep("Maaseutumaiset kunnat", rnams)]
@@ -1031,33 +1038,33 @@ GetMunicipalElectionData2008 <- function (which = "election.statistics") {
 
   } else if (which == "voting.stats") {
 
-    # Aanioikeutetut ja aanestäneet sukupuolen mukaan, hyvaksytyt aanestysliput, valtuutetuiksi valitut ja ennakkoaanet puolueittain sekä 
+    # Aanioikeutetut ja aanest\xe4neet sukupuolen mukaan, hyvaksytyt aanestysliput, valtuutetuiksi valitut ja ennakkoaanet puolueittain sek\xe4 
     # hylattyjen aanestyslippujen lukumaara kunnittain kunnallisvaaleissa 2008
     url <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2008_05/710_kvaa_2008_2009-11-02_tau_147_fi.px"
 
     px <- pxR::read.px(url, na.strings='"-"')
     df <- as.data.frame(px)
-    kaava <- as.formula("Vaalipiiri.ja.kunta~Äänestystiedot.ja.puolueiden.kannatus~Lukumäärätiedot")
-    tmp <- reshape::cast(df, kaava, value="dat")
+    kaava <- as.formula("Vaalipiiri.ja.kunta~\xC4\xe4nestystiedot.ja.puolueiden.kannatus~Lukum\xe4\xe4r\xe4tiedot")
+    tmp <- reshape2::cast(df, kaava, value="dat")
 
-    tab1 <- tmp[,,"Lukumäärä / Äänimäärä"]
-    tab2 <- tmp[,,"Osuus äänistä"]
+    tab1 <- tmp[,,"Lukum\xe4\xe4r\xe4 / \xC4\xe4nim\xe4\xe4r\xe4"]
+    tab2 <- tmp[,,"Osuus \xe4\xe4nist\xe4"]
     tab3 <- tmp[,,"Valitut"]
     tab4 <- tmp[,,"Osuus valituista"]
-    tab5 <- tmp[,,"Ennakkoäänet"]
-    tab6 <- tmp[,,"Ennakkoäänten osuus"]
+    tab5 <- tmp[,,"Ennakko\xe4\xe4net"]
+    tab6 <- tmp[,,"Ennakko\xe4\xe4nten osuus"]
 
-    colnames(tab1) <- paste(colnames(tmp[,,"Lukumäärä / Äänimäärä"]), "(Lukumäärä / Äänimäärä)")
-    colnames(tab2) <- paste(colnames(tmp[,,"Osuus äänistä"]), "(Osuus äänistä)")
+    colnames(tab1) <- paste(colnames(tmp[,,"Lukum\xe4\xe4r\xe4 / \xC4\xe4nim\xe4\xe4r\xe4"]), "(Lukum\xe4\xe4r\xe4 / \xC4\xe4nim\xe4\xe4r\xe4)")
+    colnames(tab2) <- paste(colnames(tmp[,,"Osuus \xe4\xe4nist\xe4"]), "(Osuus \xe4\xe4nist\xe4)")
     colnames(tab3) <- paste(colnames(tmp[,,"Valitut"]), "(Valitut)")
     colnames(tab4) <- paste(colnames(tmp[,,"Osuus valituista"]), "(Osuus valituista)")
-    colnames(tab5) <- paste(colnames(tmp[,,"Ennakkoäänet"]), "(Ennakkoäänet)")
-    colnames(tab6) <- paste(colnames(tmp[,,"Ennakkoäänten osuus"]), "(Ennakkoäänten osuus)")
+    colnames(tab5) <- paste(colnames(tmp[,,"Ennakko\xe4\xe4net"]), "(Ennakko\xe4\xe4net)")
+    colnames(tab6) <- paste(colnames(tmp[,,"Ennakko\xe4\xe4nten osuus"]), "(Ennakko\xe4\xe4nten osuus)")
 
     tab <- cbind(tab1, tab2, tab3, tab4, tab5, tab6)
 
     # Keep only municipality-level information, filter out others
-    rnams <- setdiff(rownames(tab), c("Koko maa", "- Niistä Ruotsissa", "S Kaupunkimaiset kunnat", "S Maaseutumaiset kunnat", "S Taajaan asutut kunnat", "Suomessa asuvat Suomen kansalaiset", "Ulkomailla asuvat Suomen kansalaiset"))
+    rnams <- setdiff(rownames(tab), c("Koko maa", "- Niist\xe4 Ruotsissa", "S Kaupunkimaiset kunnat", "S Maaseutumaiset kunnat", "S Taajaan asutut kunnat", "Suomessa asuvat Suomen kansalaiset", "Ulkomailla asuvat Suomen kansalaiset"))
     rnams <- rnams[-grep("Kaupunkimaiset kunnat", rnams)]
     rnams <- rnams[-grep("Taajaan asutut kunnat", rnams)]
     rnams <- rnams[-grep("Maaseutumaiset kunnat", rnams)]

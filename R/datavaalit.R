@@ -135,7 +135,9 @@ ReadAllParties <- function(cache=NA) {
 # Private functions -------------------------------------------------------
 
 .readCommonData <- function() {
-  require(rjson)
+
+  .InstallMarginal("rjson")
+
   data.file <- system.file("extdata/common_data.json", package = "sorvi")
   return(fromJSON(paste(readLines(data.file), collapse = "")))
 } 
@@ -149,7 +151,7 @@ ReadAllParties <- function(cache=NA) {
                   		  c("k", "kunnallisvaalit"),
                   		  c("epv", "europarlamenttivaalit"),
                   		  c("mkv", "aluevaali"),
-                  		  c("vka", "kansanäänestys"))
+                  		  c("vka", "kansan\xe4\xe4nestys"))
     colnames(conversion.table) <- c("id", "name")
     conversion.table <- as.data.frame(conversion.table)
   } else if (type == "stage.id") {
@@ -163,14 +165,14 @@ ReadAllParties <- function(cache=NA) {
     conversion.table <- rbind(c("a", "alue"),
              	      c("e", "ehdokas"),
              	      c("p", "puolue"),
-             	      c("k", "kansanäänestys"))
+             	      c("k", "kansan\xe4\xe4nestys"))
     colnames(conversion.table) <- c("id", "name")
     conversion.table <- as.data.frame(conversion.table)	      
   } else if (type == "info.id") {
 
-    conversion.table <- rbind(c("a", "äänestysaluetaso"),
+    conversion.table <- rbind(c("a", "\xe4\xe4nestysaluetaso"),
         	          c("t", "tilastotiedot"),
-        	          c("y", "ei.äänestysaluetasoa"),
+        	          c("y", "ei.\xe4\xe4nestysaluetasoa"),
         	          c("", ""))
     colnames(conversion.table) <- c("id", "name")
     conversion.table <- as.data.frame(conversion.table)	      
@@ -181,10 +183,10 @@ ReadAllParties <- function(cache=NA) {
 		     c("3", "Varsinais-Suomen vaalipiiri"),
 		     c("4", "Satakunnan vaalipiiri"),
 		     # 5 is intentionally missing here
-		     c("6", "Hämeen vaalipiiri"),
+		     c("6", "H\xe4meen vaalipiiri"),
 		     c("7", "Pirkanmaan vaalipiiri"),
 		     c("8", "Kymen vaalipiiri"),
-		     c("9", "Etelä-Savon vaalipiiri"),
+		     c("9", "Etel\xe4-Savon vaalipiiri"),
 		     c("10", "Pohjois-Savon vaalipiiri"),
 		     c("11", "Pohjois-Karjalan vaalipiiri"),
 		     c("12", "Vaasan vaalipiiri"),
@@ -371,7 +373,11 @@ ReadElectionData <- function(which.data, district.id, cache=NA) {
   dat$Vaalilaji_nimi_fi <- .datavaalit.idconversions(tolower(dat$Vaalilaji), type = "election.id") 
   dat$Vaalipiiri_fi <- .datavaalit.idconversions(as.character(dat$Vaalipiirinumero), type = "election.district.id") 
 
-  if (!exists("MML")) { LoadData("MML") }  
+  # FIXME: use here province info instead; it is lighter
+  # Insert initial NA value for MML to circumvent warnings in build/check
+  MML <- NA 
+  LoadData("MML")
+
   dat$Kuntanumero[nchar(dat$Kuntanumero) == 1] <- paste("00", dat$Kuntanumero[nchar(dat$Kuntanumero) == 1], sep = "")
   dat$Kuntanumero[nchar(dat$Kuntanumero) == 2] <- paste("0", dat$Kuntanumero[nchar(dat$Kuntanumero) == 2], sep = "")
   dat$Kunta <- ConvertMunicipalityCodes(ids = dat$Kuntanumero, MML = MML)
