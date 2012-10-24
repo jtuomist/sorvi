@@ -163,14 +163,14 @@ GetThemeMap <- function() {
   .InstallMarginal("ggplot2")
   
   theme_map <- ggplot2::theme_bw()
-  theme_map$panel.background <- ggplot2::theme_blank()
-  theme_map$panel.grid.major <- ggplot2::theme_blank()
-  theme_map$panel.grid.minor <- ggplot2::theme_blank()
-  theme_map$axis.ticks <- ggplot2::theme_blank()
-  theme_map$axis.text.x <- ggplot2::theme_blank()
-  theme_map$axis.text.y <- ggplot2::theme_blank()
-  theme_map$axis.title.x <- ggplot2::theme_blank()
-  theme_map$axis.title.y <- ggplot2::theme_blank()
+  theme_map$panel.background <- ggplot2::element_blank()
+  theme_map$panel.grid.major <- ggplot2::element_blank()
+  theme_map$panel.grid.minor <- ggplot2::element_blank()
+  theme_map$axis.ticks <- ggplot2::element_blank()
+  theme_map$axis.text.x <- ggplot2::element_blank()
+  theme_map$axis.text.y <- ggplot2::element_blank()
+  theme_map$axis.title.x <- ggplot2::element_blank()
+  theme_map$axis.title.y <- ggplot2::element_blank()
 
   return(theme_map)  
 }
