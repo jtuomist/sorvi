@@ -43,10 +43,10 @@ GetStaticmapGoogleMaps <- function(center, zoom = 10, GRAYSCALE = FALSE, scale =
 
   # Get map with given scale
   if (scale==1) 
-    RgoogleMaps::GetMap(center = center[c('lat','lon')], GRAYSCALE=GRAYSCALE, size = c(n_pix, n_pix), 
+    RgoogleMaps::GetMap(center = center[c('lat','lon')], GRAYSCALE=FALSE, size = c(n_pix, n_pix), 
            zoom = zoom, format = format, maptype = maptype, destfile=destfile)
   else if (scale==2)
-    RgoogleMaps::GetMap(center = center[c('lat','lon')], GRAYSCALE=GRAYSCALE, size = c(n_pix, n_pix),
+    RgoogleMaps::GetMap(center = center[c('lat','lon')], GRAYSCALE=FALSE, size = c(n_pix, n_pix),
            zoom = zoom, format = format, maptype = paste(maptype, "&scale=2", sep=""), destfile=destfile)
   else
     stop("Invalid scale-value!")
