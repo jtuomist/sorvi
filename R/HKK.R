@@ -68,6 +68,10 @@ GetHKK <- function(which.data, data.dir) {
   # TODO: shold all the urls/paths be defined independently from the functions?
   data.url <- "http://kartta.hel.fi/avoindata/aineistot/"
   
+  # Create data.fir if does not exist
+  if (!file.exists(data.dir))
+    dir.create(data.dir)
+  
   if (which.data == "Aanestysaluejako") {
     
     # Remote zip that will be downloaded
@@ -92,6 +96,8 @@ GetHKK <- function(which.data, data.dir) {
                                           from="ISO-8859-1", to="UTF-8"))
     sp.cities@data$Nimi <- factor(iconv(sp.cities@data$Nimi, 
                                         from="ISO-8859-1", to="UTF-8"))
+    # Remove TEMP file
+    unlink("TEMP", recursive=T)
     
     return(sp.cities)
     
