@@ -25,7 +25,11 @@ GetOikotie <- function() {
   message("Loading Oikotie data...")
 #  library(gdata)
     # First download and unzip data from http://www2.hs.fi/extrat/hsnext/oikotie-data.zip
-  myynnit <- read.csv("data/myynnit.csv", sep=";", quote="", fileEncoding="ISO-8859-1")
+  temp <- tempfile()
+  download.file("http://www2.hs.fi/extrat/hsnext/oikotie-data.zip", temp)
+  myynnit <- read.csv(unz(temp, "myynnit.csv"), sep=";", quote=";", fileEncoding="ISO-8859-1")
+  unlink(temp)
+#  myynnit <- read.csv("data/myynnit.csv", sep=";", quote="", fileEncoding="ISO-8859-1")
   
   # Fix formats, and remove lines with errors (additional ';'s)
   myynnit$Size <- as.numeric(gsub(pattern=",", replacement=".", as.vector(myynnit$Size)))
