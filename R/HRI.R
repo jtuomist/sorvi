@@ -20,7 +20,7 @@
 #' @export
 GetHRIaluejakokartat <- function() {
   
-  stop("Function GetHRIaluejakokartat is currently broken, we are working on it...")
+#  stop("Function GetHRIaluejakokartat is currently broken, we are working on it...")
   message("Loading aluejakokartat from HRI...")
   # Need to install package rgdal
   # Mac users, see http://www.r-bloggers.com/installing-rgdal-on-mac-os-x-2/
@@ -33,7 +33,7 @@ GetHRIaluejakokartat <- function() {
   
   # Download KML files from http://www.hri.fi/fi/data/paakaupunkiseudun-aluejakokartat/
   # Substitute manually "xsd:sting" in <SimpleField type="xsd:string" name="KOKOTUN"> and other similar fields with "string" to read whole metadata
-  pks.pienalue <- rgdal::readOGR(dsn="data/PKS_Kartta_Rajat_KML2011/PKS_pienalue.kml2", layer="pks_pienalue")
+  pks.pienalue <- rgdal::readOGR(dsn="data/PKS_Kartta_Rajat_KML2011/PKS_pienalue2.kml", layer="pks_pienalue")
   
   pks.pienalue@data$id <- rownames(pks.pienalue@data) # Add IDs
   pks.points <- ggplot2::fortify(pks.pienalue, region="id") # Get point data
