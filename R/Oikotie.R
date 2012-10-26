@@ -14,18 +14,23 @@
 
 #' Preprocess Oikotie data
 #'
-#' Preprocess data about Finnish apartment prices from Oikotie in years 2010-2011
+#' Preprocess data about Finnish apartment prices from Oikotie in 
+#' years 2010-2011. First download and unzip data from http://www2.hs.fi/extrat/hsnext/oikotie-data.zip, and store the resulting CSV files.
 #' 
+#' Arguments:
+#' @param data.dir data directory for unzipped http://www2.hs.fi/extrat/hsnext/oikotie-data.zip
+#'
 #' @return list with Oikotie myynnit data
 #'
 #' @author Juuso Parkkinen \email{louhos@@googlegroups.com}
 #' @export
-GetOikotie <- function() {
+GetOikotie <- function(data.dir = ".") {
      
-  message("Loading Oikotie data...")
-#  library(gdata)
+  message("Loading Oikotie data...") 
+  #  library(gdata)
     # First download and unzip data from http://www2.hs.fi/extrat/hsnext/oikotie-data.zip
-  myynnit <- read.csv("data/myynnit.csv", sep=";", quote="", fileEncoding="ISO-8859-1")
+   
+  myynnit <- read.csv(paste(data.dir, "/myynnit.csv", sep = ""), sep=";", quote="", fileEncoding="ISO-8859-1")
   
   # Fix formats, and remove lines with errors (additional ';'s)
   myynnit$Size <- as.numeric(gsub(pattern=",", replacement=".", as.vector(myynnit$Size)))

@@ -30,6 +30,8 @@ GetPopulationRegister <- function (url = "http://vrk.fi/default.aspx?docid=5127&
 
   .InstallMarginal("XML")
 
+  message(paste("Downloading data from", url))
+
   # Read tables from the website
   tables <- XML::readHTMLTable(url)
 

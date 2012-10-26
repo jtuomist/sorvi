@@ -26,6 +26,8 @@ GetProvinceInfo <- function (url = "http://fi.wikipedia.org/wiki/V%C3%A4est%C3%B
 
   .InstallMarginal("XML")
 
+  message(paste("Downloading data from", url))
+
   # Read tables from the website
   tables <- XML::readHTMLTable(url)
 
