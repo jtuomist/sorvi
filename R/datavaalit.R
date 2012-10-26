@@ -264,7 +264,9 @@ ReadParties <- function(district.id, cache=NA) {
 #' @keywords utilities
 
 ReadElectionData <- function(which.data, district.id, cache=NA) {
-  
+ 
+  #  which.data <- "parties";  district.id <- 1;  cache <- NA
+
   # Body of the filename is always the same
   if (which.data == "parties") { 
     file.name.body <- "puo_"
@@ -373,14 +375,9 @@ ReadElectionData <- function(which.data, district.id, cache=NA) {
   dat$Vaalilaji_nimi_fi <- .datavaalit.idconversions(tolower(dat$Vaalilaji), type = "election.id") 
   dat$Vaalipiiri_fi <- .datavaalit.idconversions(as.character(dat$Vaalipiirinumero), type = "election.district.id") 
 
-  # FIXME: use here province info instead; it is lighter
-  # Insert initial NA value for MML to circumvent warnings in build/check
-  MML <- NA 
-  LoadData("MML")
-
   dat$Kuntanumero[nchar(dat$Kuntanumero) == 1] <- paste("00", dat$Kuntanumero[nchar(dat$Kuntanumero) == 1], sep = "")
   dat$Kuntanumero[nchar(dat$Kuntanumero) == 2] <- paste("0", dat$Kuntanumero[nchar(dat$Kuntanumero) == 2], sep = "")
-  dat$Kunta <- ConvertMunicipalityCodes(ids = dat$Kuntanumero, MML = MML)
+  dat$Kunta <- ConvertMunicipalityCodes(ids = dat$Kuntanumero)
   dat$Kommun <- as.character(dat$Alueen_nimi_sv)
 
   dat$Puolue_lyhenne_fi <- dat$Nimilyhenne_fi

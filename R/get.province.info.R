@@ -257,13 +257,20 @@ FindProvince <- function (municipalities = NULL, municipality.info = NULL) {
 #' @examples  # LoadData("MML"); conversion.table <- ConvertMunicipalityCodes(MML = MML)
 #' @keywords utilities
 
-ConvertMunicipalityCodes <- function (ids = NULL, names = NULL, MML) {
+ConvertMunicipalityCodes <- function (ids = NULL, names = NULL) {
 
-  df <- as.data.frame(MML[["1_milj_Shape_etrs_shape"]]$kunta1_p)
+  #statfi <- sorvi::GetMunicipalityInfoStatFi()
+
+  #df <- as.data.frame(MML[["1_milj_Shape_etrs_shape"]][["kunta1_p"]])
  
-  conversion.table <- df[, c("Kunta", "Kunta.FI")]
-  names(conversion.table) <- c("id", "name")
+  #conversion.table <- df[, c("Kunta", "Kunta.FI")]
+  #names(conversion.table) <- c("id", "name")
 
+  #conversion.table$id <- as.character(conversion.table$id)
+  #conversion.table$name <- as.character(conversion.table$name)
+  
+  # Created with ConversionTableForMunicipalities()
+  conversion.table <- read.csv(paste(system.file("extdata", package = "sorvi"), "/conversiontable.tab", sep = ""))
   conversion.table$id <- as.character(conversion.table$id)
   conversion.table$name <- as.character(conversion.table$name)
 

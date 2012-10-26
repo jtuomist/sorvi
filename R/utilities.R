@@ -14,6 +14,33 @@
 # but WITHOUT ANY WARRANTY; without even the implied warranty of 
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
+#' ConversionTableForMunicipalities
+# '
+#' Used to create conversion table between municipality names and codes
+#'
+#' @return conversion table
+#' @export
+#' @references
+#' See citation("sorvi") 
+#' @author Leo Lahti \email{louhos@@googlegroups.com}
+#' @examples # LoadData("MML")
+#' @keywords utilities
+
+ConversionTableForMunicipalities <- function () {
+
+  df <- as.data.frame(MML[["1_milj_Shape_etrs_shape"]][["kunta1_p"]])
+ 
+  conversion.table <- df[, c("Kunta", "Kunta.FI")]
+  names(conversion.table) <- c("id", "name")
+
+  conversion.table$id <- as.character(conversion.table$id)
+  conversion.table$name <- as.character(conversion.table$name)
+
+  #write.csv(conversion.table, file = "~/conversiontable.tab", quote = FALSE, row.names =FALSE)
+
+  conversion.table
+
+}
 
 #' LoadData
 # '
