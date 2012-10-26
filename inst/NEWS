@@ -1,3 +1,7 @@
+CHANGES IN VERSION 0.2.03 (2012-10-26)
+
+ o Fixed problems in GetLukiot(), GetOikotie(), and GetHRIaluejakokartat(), includes some temporary fixes
+
 CHANGES IN VERSION 0.2.00 (2012-10-24)
 
  o Minor fixed in maps.R and HKK.R

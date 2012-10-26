@@ -54,6 +54,8 @@ GetOikotie <- function() {
   myynnit <- myynnit[-which(myynnit$Price.per.square < 500),]
   
   # Extract street names
+  myynnit$Location <- factor(iconv(myynnit$Location, from="ISO-8859-1", to="UTF-8"))
+  
   streets <- strsplit(as.vector(myynnit$Location), split=" ")
   streets2 <- sapply(streets, function(x) paste(x[1:(length(x)-1)], collapse=" "))
   lengths <- sapply(streets, length)
@@ -69,7 +71,7 @@ GetOikotie <- function() {
   hr.myynnit <- myynnit[myynnit$Zip.code %in% zips.hr, ]
   
   # Fix encoding
-  myynnit$Location <- factor(iconv(myynnit$Location, from="ISO-8859-1", to="UTF-8"))
+#  myynnit$Location <- factor(iconv(myynnit$Location, from="ISO-8859-1", to="UTF-8"))
   myynnit$Street <- factor(iconv(myynnit$Street, from="ISO-8859-1", to="UTF-8"))
   myynnit$Room.configuration <- factor(iconv(myynnit$Room.configuration, from="ISO-8859-1", to="UTF-8"))
   hr.myynnit$Location <- factor(iconv(hr.myynnit$Location, from="ISO-8859-1", to="UTF-8"))
