@@ -2,7 +2,7 @@
 \alias{ConvertMunicipalityCodes}
 \title{Convert between municipality codes and names}
 \usage{
-  ConvertMunicipalityCodes(ids = NULL, names = NULL, MML)
+  ConvertMunicipalityCodes(ids = NULL, names = NULL)
 }
 \arguments{
   \item{ids}{NULL}
