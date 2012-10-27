@@ -55,7 +55,10 @@ ConversionTableForMunicipalities <- function () {
 #' @keywords utilities
 
 LoadData <- function(data.id, sorvi.data.url = "http://beta.datavaalit.fi/storage/louhos/") {
-  
+
+  # data.id <- "mml"
+  # paste(sorvi.data.url, data.id, "/", "rdata/1_milj_Shape_etrs_shape/", sep = "")
+
   load(url(paste(sorvi.data.url, data.id, ".rda", sep = "")), envir = .GlobalEnv)
 
 }

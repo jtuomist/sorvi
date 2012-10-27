@@ -122,15 +122,7 @@ PreprocessShapeMML <- function (sp) {
 #' Shows how the MML Shape files have been converted into 
 #' the Rdata files included in soRvi package (load using LoadData("MML")).
 #'
-#' The various Finland shape data files obtained from http://www.maanmittauslaitos.fi/aineistot-palvelut/digitaaliset-tuotteet/ilmaiset-aineistot/hankinta have been preprocessed using this script, and the preprocessed versions are made available in soRvi package. Load the readily preprocessed data for use by typing in R: 'LoadData("MML")'. 
-
-#' Procedure for obtaining the LoadData("MML") in soRvi package:
-#' 1) Download the MML shape files zip archives 1_milj_Shape_etrs_shape.zip and 4_5_milj_shape_etrs-tm35fin.zip from http://www.maanmittauslaitos.fi/aineistot-palvelut/digitaaliset-tuotteet/ilmaiset-aineistot/hankinta and place them in temporary data directory (input.data.dir)
-#' 2) Run: GetShapeMML(input.data.dir)
-#' 3) Store the preprocessed data in the specified output file:
-#'    save(MML, file = "MML.rda")
-#' 4) Store the data in Louhos data server
-
+#' The various Finland shape data files obtained from http://www.maanmittauslaitos.fi/aineistot-palvelut/digitaaliset-tuotteet/ilmaiset-aineistot/hankinta have been preprocessed using this script, and the preprocessed versions are made available in sorvi. 
 #'
 #' Arguments:
 #'   @param input.data.dir Directory path where the original data can be accessed. 
@@ -156,6 +148,8 @@ GetShapeMML <- function (input.data.dir = "./", verbose = TRUE) {
 
   MML <- list()
   for (resolutions in c("1_milj_Shape_etrs_shape", "4_5_milj_shape_etrs-tm35fin")) {
+
+    #"http://www.datavaalit.fi/storage/louhos/MML/4_5_milj_shape_etrs-tm35fin/etrs-tm35fin/AVI4_p.shp"
 
     # Create temp directory for this data set and unzip 
     system(paste("mkdir ", input.data.dir, "/", resolutions, sep = ""))
@@ -212,3 +206,39 @@ GetShapeMML <- function (input.data.dir = "./", verbose = TRUE) {
 }
 
 
+
+
+
+#' Convert MML shape objects into RData format
+#'
+#' Arguments:
+#'   @param MML output from GetShapeMML(input.data.dir = ".")
+#'
+#' Returns:
+#'   @return output data directory name
+#'
+#' @export
+#' @references
+#' See citation("sorvi") 
+#' @author Leo Lahti \email{louhos@@googlegroups.com}
+#' @examples # 
+#' @keywords utilities
+
+ConvertMMLToRData <- function (MML, output.data.dir = "RData/") {
+
+  system(paste("mkdir", output.data.dir))
+  for (nam in names(MML)) {
+    for (item in names(MML[[nam]])) {
+      message(paste(nam, item))
+
+      sp <- MML[[nam]][[item]]    
+      system(paste("mkdir ", output.data.dir, nam, sep = ""))
+      fnam <- paste(output.data.dir, nam, "/", item, ".RData", sep = "")
+      save(sp, file = fnam)
+
+    }
+  }
+
+  output.data.dir
+
+}

@@ -21,18 +21,7 @@ the Rdata files included in soRvi package (load using LoadData("MML")).}
   The various Finland shape data files obtained from
   http://www.maanmittauslaitos.fi/aineistot-palvelut/digitaaliset-tuotteet/ilmaiset-aineistot/hankinta
   have been preprocessed using this script, and the
-  preprocessed versions are made available in soRvi
-  package. Load the readily preprocessed data for use by
-  typing in R: 'LoadData("MML")'. Procedure for obtaining
-  the LoadData("MML") in soRvi package: 1) Download the MML
-  shape files zip archives 1_milj_Shape_etrs_shape.zip and
-  4_5_milj_shape_etrs-tm35fin.zip from
-  http://www.maanmittauslaitos.fi/aineistot-palvelut/digitaaliset-tuotteet/ilmaiset-aineistot/hankinta
-  and place them in temporary data directory
-  (input.data.dir) 2) Run: GetShapeMML(input.data.dir) 3)
-  Store the preprocessed data in the specified output file:
-  save(MML, file = "MML.rda") 4) Store the data in Louhos
-  data server
+  preprocessed versions are made available in sorvi.
 }
 \details{
   Arguments:
