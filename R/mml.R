@@ -119,10 +119,7 @@ PreprocessShapeMML <- function (sp) {
 
 
 
-#' Shows how the MML Shape files have been converted into 
-#' the Rdata files included in soRvi package (load using LoadData("MML")).
-#'
-#' The various Finland shape data files obtained from http://www.maanmittauslaitos.fi/aineistot-palvelut/digitaaliset-tuotteet/ilmaiset-aineistot/hankinta have been preprocessed using this script, and the preprocessed versions are made available in sorvi. 
+#' Shows how the MML Shape files have been converted into the Rdata files included in sorvi. For detailed example, see https://github.com/louhos/sorvi/wiki/Maanmittauslaitos The various Finland shape data files obtained from http://www.maanmittauslaitos.fi/aineistot-palvelut/digitaaliset-tuotteet/ilmaiset-aineistot/hankinta have been preprocessed using this script. 
 #'
 #' Arguments:
 #'   @param input.data.dir Directory path where the original data can be accessed. 
@@ -209,7 +206,7 @@ GetShapeMML <- function (input.data.dir = "./", verbose = TRUE) {
 
 
 
-#' Convert MML shape objects into RData format
+#' Convert MML shape objects into RData format. For detailed example, see https://github.com/louhos/sorvi/wiki/Maanmittauslaitos
 #'
 #' Arguments:
 #'   @param MML output from GetShapeMML(input.data.dir = ".")
@@ -242,3 +239,4 @@ ConvertMMLToRData <- function (MML, output.data.dir = "RData/") {
   output.data.dir
 
 }
+

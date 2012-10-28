@@ -3,21 +3,28 @@
 \title{LoadData}
 \usage{
   LoadData(data.id,
-    sorvi.data.url = "http://beta.datavaalit.fi/storage/louhos/")
+    url = "http://beta.datavaalit.fi/storage/louhos/",
+    verbose = TRUE)
 }
 \arguments{
-  \item{data.id}{data ID}
+  \item{data.id}{data ID to download (suffix before .rda).
+  Investigate the contents of the url path to check
+  data.ids}
 
-  \item{sorvi.data.url}{Data URL path}
+  \item{url}{data url}
+
+  \item{verbose}{verbose
+
+  Return:}
 }
 \value{
-  url connection
+  translations
 }
 \description{
-  LoadData
+  Arguments:
 }
 \examples{
-# LoadData("MML")
+# translations <- LoadData("translations")
 }
 \author{
   Leo Lahti \email{louhos@googlegroups.com}

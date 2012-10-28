@@ -4,10 +4,7 @@
 (C) Maanmittauslaitos MML 2012. For details of MML data, see
 help(GetShapeMML).}
 \usage{
-  GetMunicipalityInfoMML(MML)
-}
-\arguments{
-  \item{MML}{MML data, obtain with LoadData("MML")}
+  GetMunicipalityInfoMML()
 }
 \value{
   A data frame with municipality data
@@ -18,7 +15,7 @@ help(GetShapeMML).}
   details of MML data, see help(GetShapeMML).
 }
 \examples{
-# LoadData("MML"); tab <- GetMunicipalityInfoMML(MML)
+# tab <- GetMunicipalityInfoMML()
 }
 \author{
   Leo Lahti \email{louhos@googlegroups.com}

@@ -13,7 +13,7 @@ Used to create conversion table between municipality names and codes}
   conversion table between municipality names and codes
 }
 \examples{
-# LoadData("MML")
+#
 }
 \author{
   Leo Lahti \email{louhos@googlegroups.com}

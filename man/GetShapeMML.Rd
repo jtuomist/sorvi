@@ -1,7 +1,6 @@
 \name{GetShapeMML}
 \alias{GetShapeMML}
-\title{Shows how the MML Shape files have been converted into
-the Rdata files included in soRvi package (load using LoadData("MML")).}
+\title{Shows how the MML Shape files have been converted into the Rdata files included in sorvi. For detailed example, see https://github.com/louhos/sorvi/wiki/Maanmittauslaitos The various Finland shape data files obtained from http://www.maanmittauslaitos.fi/aineistot-palvelut/digitaaliset-tuotteet/ilmaiset-aineistot/hankinta have been preprocessed using this script.}
 \usage{
   GetShapeMML(input.data.dir = "./", verbose = TRUE)
 }
@@ -18,12 +17,6 @@ the Rdata files included in soRvi package (load using LoadData("MML")).}
   public MML data sets.
 }
 \description{
-  The various Finland shape data files obtained from
-  http://www.maanmittauslaitos.fi/aineistot-palvelut/digitaaliset-tuotteet/ilmaiset-aineistot/hankinta
-  have been preprocessed using this script, and the
-  preprocessed versions are made available in sorvi.
-}
-\details{
   Arguments:
 }
 \examples{

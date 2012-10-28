@@ -23,12 +23,13 @@
 #' @references
 #' See citation("sorvi") 
 #' @author Leo Lahti \email{louhos@@googlegroups.com}
-#' @examples # LoadData("MML")
+#' @examples # 
 #' @keywords utilities
 
 ConversionTableForMunicipalities <- function () {
 
-  df <- as.data.frame(MML[["1_milj_Shape_etrs_shape"]][["kunta1_p"]])
+  sp <- LoadMML(data.id = "kunta1_p", resolution = "1_milj_Shape_etrs_shape")				 
+  df <- as.data.frame(sp)
  
   conversion.table <- df[, c("Kunta", "Kunta.FI")]
   names(conversion.table) <- c("id", "name")
@@ -42,6 +43,8 @@ ConversionTableForMunicipalities <- function () {
 
 }
 
+
+
 #' LoadMML
 #'
 #' Arguments:
@@ -53,7 +56,7 @@ ConversionTableForMunicipalities <- function () {
 #' Return:
 #' @return url connection
 #'
-#' @details To browse for RData options, see http://beta.datavaalit.fi/storage/louhos/mml/rdata/ eg. resolution = "4_5_milj_shape_etrs-tm35fin"; data.id = "maaku4_p".
+#' @details See help(MML). To browse for RData options, see http://beta.datavaalit.fi/storage/louhos/mml/rdata/ eg. resolution = "4_5_milj_shape_etrs-tm35fin"; data.id = "maaku4_p". 
 #'
 #' @examples # sp <- LoadMML(data.id = "kunta4_p", resolution = "4_5_milj_shape_etrs-tm35fin") 
 #'
@@ -72,6 +75,38 @@ LoadMML <- function(data.id, resolution, url = "http://beta.datavaalit.fi/storag
 
 }
 
+
+#' LoadData
+#'
+#' Arguments:
+#' @param data.id data ID to download (suffix before .rda). Investigate the contents of the url path to check data.ids
+#' @param url data url
+#' @param verbose verbose 
+#'
+#' Return:
+#' @return translations 
+#'
+#' @examples # translations <- LoadData("translations")
+#'
+#' @export
+#' @references
+#' See citation("sorvi") 
+#' @author Leo Lahti \email{louhos@@googlegroups.com}
+#' @keywords utilities
+
+LoadData <- function(data.id, url = "http://beta.datavaalit.fi/storage/louhos/", verbose = TRUE) {
+
+  filepath <- paste(url, "/", data.id, ".rda", sep = "")
+  if (verbose) {message(paste("Loading ", filepath, sep = ""))}
+  load(url(filepath), envir = .GlobalEnv)  
+  
+  res <- NULL
+  if (data.id == "translations") {res <- fi.en.maakunnat}
+  if (data.id == "kuntarajat.maa.shp") {res <- kuntarajat.maa.shp}
+
+  res
+
+}
 
 #' Sort data frame
 #'

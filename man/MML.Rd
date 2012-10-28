@@ -22,10 +22,10 @@
   http://www.maanmittauslaitos.fi/node/6417}
 }
 \seealso{
-  Description of the data identifiers:
-  MML[["1_milj_Shape_etrs_shape"]]
+  Description of the data identifiers: resolution:
+  "1_milj_Shape_etrs_shape"
   http://www.maanmittauslaitos.fi/digituotteet/yleiskartta-11-000-000;
-  MML[["4_5_milj_shape_etrs-tm35fin"]]
+  resolution: "4_5_milj_shape_etrs-tm35fin"
   http://www.maanmittauslaitos.fi/digituotteet/yleiskartta-14-500-000
 }
 \keyword{data}

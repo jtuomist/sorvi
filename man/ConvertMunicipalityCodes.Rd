@@ -8,8 +8,6 @@
   \item{ids}{NULL}
 
   \item{names}{NULL}
-
-  \item{MML}{MML data, as obtained with LoadData("MML")}
 }
 \value{
   Depending on the input. Converted id or name vector, or
@@ -19,7 +17,7 @@
   Convert between municipality codes and names
 }
 \examples{
-# LoadData("MML"); conversion.table <- ConvertMunicipalityCodes(MML = MML)
+# conversion.table <- ConvertMunicipalityCodes()
 }
 \author{
   Leo Lahti \email{louhos@googlegroups.com}

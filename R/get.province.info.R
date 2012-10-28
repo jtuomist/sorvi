@@ -93,14 +93,9 @@ ConvertMunicipalityNames <- function (municipality.names) {
 #' @keywords utilities
 
 GetMunicipalityInfo <- function (url =
-"http://pxweb2.stat.fi/Database/Kuntien%20perustiedot/Kuntien%20perustiedot/Kuntaportaali.px",
-MML = NULL) {
+"http://pxweb2.stat.fi/Database/Kuntien%20perustiedot/Kuntien%20perustiedot/Kuntaportaali.px") {
 
-  if (is.null(MML)) {stop("Use LoadData('MML') to retrieve MML data; this is required as an argument for GetMunicipalityInfo function.")}
-
-  #if (!exists("MML")) {LoadData("MML")}
-
-  mml <- sorvi::GetMunicipalityInfoMML(MML)    # (C) MML 2012
+  mml <- sorvi::GetMunicipalityInfoMML()    # (C) MML 2012
   statfi <- sorvi::GetMunicipalityInfoStatFi() # (C) Tilastokeskus 2012
 
   # Combine municipality information from Tilastokeskus and Maanmittauslaitos
@@ -168,21 +163,21 @@ GetMunicipalityInfoStatFi <- function (url = "http://pxweb2.stat.fi/Database/Kun
 #' (C) Maanmittauslaitos MML 2012. For details of MML data, see 
 #' help(GetShapeMML).
 #' 
-#' @param MML MML data, obtain with LoadData("MML")
 #' @return A data frame with municipality data
 #' @export 
 #' @references
 #' See citation("sorvi") 
 #' @author Leo Lahti \email{louhos@@googlegroups.com}
-#' @examples # LoadData("MML"); tab <- GetMunicipalityInfoMML(MML)
+#' @examples # tab <- GetMunicipalityInfoMML()
 #' @keywords utilities
 
-GetMunicipalityInfoMML <- function (MML) {
+GetMunicipalityInfoMML <- function () {
 
   .InstallMarginal("reshape2")
 
   # Municipality information table from Maanmittauslaitos
-  mml.table <- MML[["1_milj_Shape_etrs_shape"]][["kunta1_p"]]
+  #mml.table <- MML[["1_milj_Shape_etrs_shape"]][["kunta1_p"]]
+  mml.table <- LoadMML(data.id = "kunta1_p", resolution = "1_milj_Shape_etrs_shape")
   mml.table$Kunta.MML <- mml.table$Kunta.FI
   mml.table <- mml.table[c("AVI.FI", "Kieli.FI", "Suuralue.FI", "Maakunta.FI", "Seutukunta", "Kunta.FI", "Kunta.MML")]
   names(mml.table) <- c("AVI", "Kieli", "Suuralue", "Maakunta", "Seutukunta", "Kunta", "Kunta.MML")
@@ -249,28 +244,17 @@ FindProvince <- function (municipalities = NULL, municipality.info = NULL) {
 #'
 #' @param ids NULL 
 #' @param names NULL 
-#' @param MML MML data, as obtained with LoadData("MML")
 #'
 #' @return Depending on the input. Converted id or name vector, or full conversion table.
 #' @export 
 #' @references
 #' See citation("sorvi") 
 #' @author Leo Lahti \email{louhos@@googlegroups.com}
-#' @examples  # LoadData("MML"); conversion.table <- ConvertMunicipalityCodes(MML = MML)
+#' @examples  # conversion.table <- ConvertMunicipalityCodes()
 #' @keywords utilities
 
 ConvertMunicipalityCodes <- function (ids = NULL, names = NULL) {
 
-  #statfi <- sorvi::GetMunicipalityInfoStatFi()
-
-  #df <- as.data.frame(MML[["1_milj_Shape_etrs_shape"]][["kunta1_p"]])
- 
-  #conversion.table <- df[, c("Kunta", "Kunta.FI")]
-  #names(conversion.table) <- c("id", "name")
-
-  #conversion.table$id <- as.character(conversion.table$id)
-  #conversion.table$name <- as.character(conversion.table$name)
-  
   # Created with ConversionTableForMunicipalities()
   conversion.table <- read.csv(paste(system.file("extdata", package = "sorvi"), "/conversiontable.tab", sep = ""))
   conversion.table$id <- as.character(conversion.table$id)

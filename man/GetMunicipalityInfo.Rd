@@ -5,8 +5,7 @@
 and Maanmittauslaitos (C) MML 2011. For details of MML data, see
 help(GetShapeMML).}
 \usage{
-  GetMunicipalityInfo(url = "http://pxweb2.stat.fi/Database/Kuntien\%20perustiedot/Kuntien\%20perustiedot/Kuntaportaali.px",
-    MML = NULL)
+  GetMunicipalityInfo(url = "http://pxweb2.stat.fi/Database/Kuntien\%20perustiedot/Kuntien\%20perustiedot/Kuntaportaali.px")
 }
 \arguments{
   \item{url}{URL for Tilastokeskus municipality
