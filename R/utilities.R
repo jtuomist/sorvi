@@ -42,24 +42,33 @@ ConversionTableForMunicipalities <- function () {
 
 }
 
-#' LoadData
-# '
-#' @param data.id data ID
-#' @param sorvi.data.url Data URL path
+#' LoadMML
+#'
+#' Arguments:
+#' @param data.id data ID. See details.
+#' @param resolution Map resolution. Options: "4_5_milj_shape_etrs-tm35fin"; "1_milj_Shape_etrs_shape"
+#' @param url Data URL path
+#' @param verbose verbose
+#'
+#' Return:
 #' @return url connection
+#'
+#' @details To browse for RData options, see http://beta.datavaalit.fi/storage/louhos/mml/rdata/ eg. resolution = "4_5_milj_shape_etrs-tm35fin"; data.id = "maaku4_p".
+#'
+#' @examples # sp <- LoadMML(data.id = "kunta4_p", resolution = "4_5_milj_shape_etrs-tm35fin") 
+#'
 #' @export
 #' @references
 #' See citation("sorvi") 
 #' @author Leo Lahti \email{louhos@@googlegroups.com}
-#' @examples # LoadData("MML")
 #' @keywords utilities
 
-LoadData <- function(data.id, sorvi.data.url = "http://beta.datavaalit.fi/storage/louhos/") {
+LoadMML <- function(data.id, resolution, url = "http://beta.datavaalit.fi/storage/louhos/mml/rdata", verbose = TRUE) {
 
-  # data.id <- "mml"
-  # paste(sorvi.data.url, data.id, "/", "rdata/1_milj_Shape_etrs_shape/", sep = "")
-
-  load(url(paste(sorvi.data.url, data.id, ".rda", sep = "")), envir = .GlobalEnv)
+  filepath <- paste(url, "/", resolution, "/", data.id, ".RData", sep = "")
+  if (verbose) {message(paste("Loading ", filepath, ". (C) MML 2011. Converted to RData shape object by Louhos. For more information, see http://www.datavaalit.fi/storage/louhos/mml/README", sep = ""))}
+  load(url(filepath), envir = .GlobalEnv) # Returns a shape file sp
+  sp
 
 }
 
