@@ -1,6 +1,6 @@
 \name{GetEdustajaData}
 \alias{GetEdustajaData}
-\title{Hakee tietyn äänestyksen tulokset edustajaittain}
+\title{Hakee tietyn aanestyksen tulokset edustajaittain}
 \usage{
   GetEdustajaData(aanestys)
 }
