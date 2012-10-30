@@ -5,13 +5,13 @@
   GetEdustajaData(aanestys)
 }
 \arguments{
-  \item{aanestys}{äänestyksen tunniste.}
+  \item{aanestys}{aanestyksen tunniste.}
 }
 \value{
   data.frame jossa valinta, puolue ja nimi
 }
 \description{
-  Hakee tietyn äänestyksen tulokset edustajaittain
+  Hakee tietyn anestyksen tulokset edustajaittain
 }
 \examples{
 # edustajat <- GetEdustajaData('a3_80-2011')
