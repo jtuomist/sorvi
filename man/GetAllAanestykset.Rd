@@ -1,14 +1,16 @@
 \name{GetAllAanestykset}
 \alias{GetAllAanestykset}
-\title{Hakee eduskunnan äänestysrajanpinnan kautta kaikki äänestykset}
+\title{Hakee eduskunnan äänestysrajanpinnan kautta kaikki aanestykset}
 \usage{
   aanestykset <- GetAllAanestykset()
 }
+\arguments{
+}
 \value{
-  lista kaikista äänestyksistä
+  lista kaikista aanestyksista
 }
 \description{
-  Hakee kaikki äänestykset
+  Hakee kaikki aanestykset
 }
 \author{
   Juuso Haapanen
