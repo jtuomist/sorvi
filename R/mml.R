@@ -25,7 +25,7 @@
 #' Returns:
 #'   @return Shape object (from SpatialPolygonsDataFrame class)
 #'
-#' @details The various Finland shape data files obtained from http://www.maanmittauslaitos.fi/aineistot-palvelut/digitaaliset-tuotteet/ilmaiset-aineistot/hankinta have been preprocessed with this function, and the preprocessed versions are included in soRvi package. Load the readily preprocessed data for use by typing in R: 'LoadData("MML")'. Alternatively, one can download the files from the above URL and apply this function.
+#' @details The various Finland shape data files obtained from http://www.maanmittauslaitos.fi/aineistot-palvelut/digitaaliset-tuotteet/ilmaiset-aineistot/hankinta have been preprocessed with this function, and the preprocessed versions are included in soRvi package. You can also download shape files and apply this function.
 #'
 #' @export
 #' @references
