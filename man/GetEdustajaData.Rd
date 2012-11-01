@@ -1,17 +1,17 @@
 \name{GetEdustajaData}
 \alias{GetEdustajaData}
-\title{Hakee tietyn aanestyksen tulokset edustajaittain}
+\title{Hakee tietyn äänestyksen tulokset edustajaittain}
 \usage{
   GetEdustajaData(aanestys)
 }
 \arguments{
-  \item{aanestys}{aanestyksen tunniste.}
+  \item{aanestys}{äänestyksen tunniste.}
 }
 \value{
   data.frame jossa valinta, puolue ja nimi
 }
 \description{
-  Hakee tietyn anestyksen tulokset edustajaittain
+  Hakee tietyn äänestyksen tulokset edustajaittain
 }
 \examples{
 # edustajat <- GetEdustajaData('a3_80-2011')

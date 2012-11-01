@@ -50,13 +50,12 @@ ConversionTableForMunicipalities <- function () {
 #' Arguments:
 #' @param data.id data ID. See details.
 #' @param resolution Map resolution. Options: "4_5_milj_shape_etrs-tm35fin"; "1_milj_Shape_etrs_shape"
-#' @param url Data URL path
 #' @param verbose verbose
 #'
 #' Return:
 #' @return url connection
 #'
-#' @details See help(MML). To browse for RData options, see http://beta.datavaalit.fi/storage/louhos/mml/rdata/ eg. resolution = "4_5_milj_shape_etrs-tm35fin"; data.id = "maaku4_p". 
+#' @details See help(MML). To browse for RData options, see LouhosStoragePath()/mml/ eg. resolution = "4_5_milj_shape_etrs-tm35fin"; data.id = "maaku4_p". 
 #'
 #' @examples # sp <- LoadMML(data.id = "kunta4_p", resolution = "4_5_milj_shape_etrs-tm35fin") 
 #'
@@ -66,21 +65,40 @@ ConversionTableForMunicipalities <- function () {
 #' @author Leo Lahti \email{louhos@@googlegroups.com}
 #' @keywords utilities
 
-LoadMML <- function(data.id, resolution, url = "http://beta.datavaalit.fi/storage/louhos/mml/rdata", verbose = TRUE) {
+LoadMML <- function(data.id, resolution, verbose = TRUE) {
 
+  url <- paste(LouhosStoragePath(), "mml/rdata/", sep = "")
   filepath <- paste(url, "/", resolution, "/", data.id, ".RData", sep = "")
-  if (verbose) {message(paste("Loading ", filepath, ". (C) MML 2011. Converted to RData shape object by Louhos. For more information, see http://www.datavaalit.fi/storage/louhos/mml/README", sep = ""))}
+  if (verbose) {message(paste("Loading ", filepath, ". (C) MML 2011. Converted to RData shape object by Louhos. For more information, see ", LouhosStoragePath(), "mml/README", sep = ""))}
   load(url(filepath), envir = .GlobalEnv) # Returns a shape file sp
   sp
 
 }
 
 
+#' LouhosStoragePath
+#'
+#' Arguments:
+#'   ... Arguments to pass
+#'
+#' Return:
+#' @return URL for Louhos data
+#'
+#' @examples # url <- LouhosStoragePath()
+#'
+#' @export
+#' @references
+#' See citation("sorvi") 
+#' @author Leo Lahti \email{louhos@@googlegroups.com}
+#' @keywords utilities
+LouhosStoragePath <- function () {
+  "http://www.datavaalit.fi/storage/avoindata/"
+}
+
 #' LoadData
 #'
 #' Arguments:
 #' @param data.id data ID to download (suffix before .rda). Investigate the contents of the url path to check data.ids
-#' @param url data url
 #' @param verbose verbose 
 #'
 #' Return:
@@ -94,8 +112,9 @@ LoadMML <- function(data.id, resolution, url = "http://beta.datavaalit.fi/storag
 #' @author Leo Lahti \email{louhos@@googlegroups.com}
 #' @keywords utilities
 
-LoadData <- function(data.id, url = "http://beta.datavaalit.fi/storage/louhos/", verbose = TRUE) {
+LoadData <- function(data.id, verbose = TRUE) {
 
+  url <- LouhosStoragePath()
   filepath <- paste(url, "/", data.id, ".rda", sep = "")
   if (verbose) {message(paste("Loading ", filepath, sep = ""))}
   load(url(filepath), envir = .GlobalEnv)  

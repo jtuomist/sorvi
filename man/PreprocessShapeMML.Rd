@@ -23,10 +23,8 @@
   The various Finland shape data files obtained from
   http://www.maanmittauslaitos.fi/aineistot-palvelut/digitaaliset-tuotteet/ilmaiset-aineistot/hankinta
   have been preprocessed with this function, and the
-  preprocessed versions are included in soRvi package. Load
-  the readily preprocessed data for use by typing in R:
-  'LoadData("MML")'. Alternatively, one can download the
-  files from the above URL and apply this function.
+  preprocessed versions are included in soRvi package. You
+  can also download shape files and apply this function.
 }
 \examples{
 # load(url(paste(sorvi.data.url, "MML.rda", sep = ""))); sp <- MML[[1]][[1]]; sp2 <- PreprocessShapeMML(sp)

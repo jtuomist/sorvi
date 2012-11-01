@@ -146,8 +146,6 @@ GetShapeMML <- function (input.data.dir = "./", verbose = TRUE) {
   MML <- list()
   for (resolutions in c("1_milj_Shape_etrs_shape", "4_5_milj_shape_etrs-tm35fin")) {
 
-    #"http://www.datavaalit.fi/storage/louhos/MML/4_5_milj_shape_etrs-tm35fin/etrs-tm35fin/AVI4_p.shp"
-
     # Create temp directory for this data set and unzip 
     system(paste("mkdir ", input.data.dir, "/", resolutions, sep = ""))
     system(paste("cp ", input.data.dir, "/", resolutions, ".zip ", input.data.dir, "/", resolutions, "/", sep = ""))

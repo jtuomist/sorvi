@@ -1,6 +1,6 @@
 \name{GetAllAanestykset}
 \alias{GetAllAanestykset}
-\title{Hakee kaikki aanestykset eduskuntarajapinnasta}
+\title{Hakee kaikki äänestykset eduskuntarajapinnasta}
 \usage{
   GetAllAanestykset()
 }
@@ -11,7 +11,7 @@
   list
 }
 \description{
-  Hakee kaikki aanestykset eduskuntarajapinnasta
+  Hakee kaikki äänestykset eduskuntarajapinnasta
 }
 \examples{
 # aanestykset <- GetAllAanestykset()
