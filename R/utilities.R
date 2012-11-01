@@ -115,7 +115,7 @@ LouhosStoragePath <- function () {
 LoadData <- function(data.id, verbose = TRUE) {
 
   url <- LouhosStoragePath()
-  filepath <- paste(url, "/", data.id, ".rda", sep = "")
+  filepath <- paste(url, "/louhos/", data.id, ".rda", sep = "")
   if (verbose) {message(paste("Loading ", filepath, sep = ""))}
   load(url(filepath), envir = .GlobalEnv)  
   

@@ -1,8 +1,8 @@
 Package: sorvi
 Type: Package
 Title: sorvi - avoimen datan tyokalupakki
-Version: 0.2.05
-Date: 2012-10-28
+Version: 0.2.06
+Date: 2012-11-01
 Author: Leo Lahti, Juuso Parkkinen and Joona Lehtomaki
 Maintainer: Louhos team <louhos@googlegroups.com>
 Description: Avoimen datan algoritmeja
