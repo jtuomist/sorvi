@@ -1,6 +1,6 @@
 \name{GetEdustajanAanestykset}
 \alias{GetEdustajanAanestykset}
-\title{Hakee tietyn kansanedustajan äänestykset}
+\title{Hakee tietyn kansanedustajan aanestykset}
 \usage{
   GetEdustajanAanestykset(edustaja)
 }
@@ -11,7 +11,7 @@
   data.frame
 }
 \description{
-  Hakee tietyn kansanedustajan äänestykset
+  Hakee tietyn kansanedustajan aanestykset
 }
 \examples{
 # paavo <- GetEdustajanAanestykset('Lipponen Paavo')
