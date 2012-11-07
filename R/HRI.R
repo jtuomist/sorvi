@@ -20,6 +20,9 @@
 #' @export
 GetHRIaluejakokartat <- function() {
   
+  # Circumwent warning by initializing here:
+  pks.pienalue <- NULL
+
 #  stop("Function GetHRIaluejakokartat is currently broken, we are working on it...")
   message("Loading aluejakokartat from HRI...")
   # Need to install package rgdal
