@@ -28,9 +28,9 @@ GetAllAanestykset <- function() {
     install.packages('XML')
   }
   url <- "http://www.biomi.org/eduskunta/"
-  kaikki.tree <- xmlParse(url)
-  tunnisteet <- getNodeSet(kaikki.tree, path='//luettelo/aanestys/tunniste')
-  out <- xmlToDataFrame(tunnisteet)
+  kaikki.tree <- XML::xmlParse(url)
+  tunnisteet <- XML::getNodeSet(kaikki.tree, path='//luettelo/aanestys/tunniste')
+  out <- XML::xmlToDataFrame(tunnisteet)
   out <- as.character(out$text)
   return(out)
   
@@ -57,12 +57,12 @@ GetEdustajaData <- function(aanestys)
   }
   else {
     search_url <- paste(baseurl,aanestys,sep="")
-    ekdat.tree <- xmlParse(search_url)
-    ekdat.edustajat <- getNodeSet(ekdat.tree, path="//edustajat/edustaja")
+    ekdat.tree <- XML::xmlParse(search_url)
+    ekdat.edustajat <- XML::getNodeSet(ekdat.tree, path="//edustajat/edustaja")
     if(length(ekdat.edustajat) == 0) {
       stop('Virheellinen Äänestys-id')
     }
-    df <- xmlToDataFrame(ekdat.edustajat)
+    df <- XML::xmlToDataFrame(ekdat.edustajat)
     df$valinta <- as.factor(df$valinta)
     df$puolue <- as.factor(df$puolue)
     df$nimi <- as.character(df$nimi)
@@ -91,9 +91,9 @@ GetEdustajanAanestykset <- function(edustaja) {
   edustaja <- URLencode(edustaja)
   url <- "http://www.biomi.org/eduskunta/?haku=edustaja&id"
   url.haku <- paste(url, edustaja, sep="=")
-  edustaja.puu <- xmlParse(url.haku)
-  aanestykset <- getNodeSet(edustaja.puu, path='//edustaja/aanestys/tiedot')
-  df <- xmlToDataFrame(aanestykset)
+  edustaja.puu <- XML::xmlParse(url.haku)
+  aanestykset <- XML::getNodeSet(edustaja.puu, path='//edustaja/aanestys/tiedot')
+  df <- XML::xmlToDataFrame(aanestykset)
   
   return(df)
 }
@@ -115,9 +115,9 @@ haeHakusanalla <- function(hakusana) {
   hakusana <- URLencode(hakusana)
   url <- "http://www.biomi.org/eduskunta/?haku=sanahaku&id"
   url.haku <- paste(url, hakusana, sep="=")
-  aanestykset.puu <- xmlParse(url.haku)
-  aanestykset <- getNodeSet(aanestykset.puu, path="//aanestykset/aanestys/tiedot")
-  df <- xmlToDataFrame(aanestykset)
+  aanestykset.puu <- XML::xmlParse(url.haku)
+  aanestykset <- XML::getNodeSet(aanestykset.puu, path="//aanestykset/aanestys/tiedot")
+  df <- XML::xmlToDataFrame(aanestykset)
   return(df)
 }
 
