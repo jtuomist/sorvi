@@ -3,7 +3,7 @@
 \title{GetElectedCandidates}
 \usage{
   GetElectedCandidates(year, election, election.district,
-    verbose = FALSE)
+    verbose = TRUE)
 }
 \arguments{
   \item{year}{election year}
