@@ -1,6 +1,6 @@
 \name{haeHakusanalla}
 \alias{haeHakusanalla}
-\title{Hakee hakusanalla aanestyksiä eduskuntarajapinnasta}
+\title{Hakee hakusanalla aanestyksia eduskuntarajapinnasta}
 \usage{
   haeHakusanalla(hakusana)
 }
@@ -11,14 +11,13 @@
   data.frame
 }
 \description{
-  Hakee hakusanalla aanestyksiä eduskuntarajapinnasta
+  Hakee hakusanalla aanestyksia eduskuntarajapinnasta
 }
 \examples{
 # luonto <- haeHakusanalla('luonto')
 }
 \author{
-  Juuso Haapanen
-  \email{sorvi-commits@lists.r-forge.r-project.org}
+  Juuso Haapanen \email{louhos@googlegroups.com}
 }
 \references{
   See citation("sorvi")

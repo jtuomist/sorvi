@@ -47,6 +47,10 @@
 
 vwReg <- function(formula, data, title="", B=1000, shade=TRUE, shade.alpha=.1, spag=FALSE, mweight=TRUE, show.lm=FALSE, show.median = TRUE, median.col = "white", show.CI=FALSE, method=loess, bw=FALSE, slices=200, palette=colorRampPalette(c("#FFEDA0", "#DD0000"), bias=2)(20), ylim=NULL, quantize = "continuous",  ...) {
 
+  # Circumvent warnings
+  . <- NULL
+  aes <- NULL
+
   # ------------------
 
   # Circumvent global variable binding warnings

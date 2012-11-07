@@ -5,7 +5,7 @@
   GetEdustajanAanestykset(edustaja)
 }
 \arguments{
-  \item{edustajan}{nimi muodossa Sukunimi Etunimi}
+  \item{edustaja}{edustajan nimi muodossa Sukunimi Etunimi}
 }
 \value{
   data.frame
@@ -17,8 +17,7 @@
 # paavo <- GetEdustajanAanestykset('Lipponen Paavo')
 }
 \author{
-  Juuso Haapanen
-  \email{sorvi-commits@lists.r-forge.r-project.org}
+  Juuso Haapanen \email{louhos@googlegroups.com}
 }
 \references{
   See citation("sorvi")

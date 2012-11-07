@@ -5,7 +5,9 @@
   ConvertMMLToRData(MML, output.data.dir = "RData/")
 }
 \arguments{
-  \item{MML}{output from GetShapeMML(input.data.dir = ".")
+  \item{MML}{output from GetShapeMML(input.data.dir = ".")}
+
+  \item{output.data.dir}{output data directory
 
   Returns:}
 }

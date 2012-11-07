@@ -10,8 +10,6 @@ help(GetShapeMML).}
 \arguments{
   \item{url}{URL for Tilastokeskus municipality
   information}
-
-  \item{MML}{MML data, obtain with 'LoadData("MML")'}
 }
 \value{
   A data frame with municipality data
@@ -22,7 +20,7 @@ help(GetShapeMML).}
   details of MML data, see help(GetShapeMML).
 }
 \examples{
-# LoadData("MML"); municipality.info <- GetMunicipalityInfo(MML = MML)
+# municipality.info <- GetMunicipalityInfo()
 }
 \author{
   Leo Lahti \email{louhos@googlegroups.com}

@@ -9,21 +9,19 @@
 
 # This software has been published as part of louhos project (louhos.github.com) 
 
-
-
 # Versio 0.1
 
-
 #' Hakee kaikki aanestykset eduskuntarajapinnasta
-#' @param no params
+#' @param ... parameters to be passed
 #' @return list
-#' @author Juuso Haapanen \email{sorvi-commits@@lists.r-forge.r-project.org}
+#' @author Juuso Haapanen \email{louhos@@googlegroups.com}
 #' @examples
-#' # aanestykset <- GetAllAanestykset()
+#' # aanestykset <- GetAllAanestykset(...)
 #' @keywords eduskunta
 #' @references citation("sorvi") 
 #' @export
-GetAllAanestykset <- function() {
+
+GetAllAanestykset <- function(...) {
   if(!require(XML)) {
     install.packages('XML')
   }
@@ -38,9 +36,9 @@ GetAllAanestykset <- function() {
 
 #' Hakee tietyn aanestyksen tulokset edustajaittain
 #' 
-#' @param aanestys 
+#' @param aanestys aanestyksen ID
 #' @return data.frame jossa valinta, puolue ja nimi
-#' @author Juuso Haapanen \email{sorvi-commits@@lists.r-forge.r-project.org}
+#' @author Juuso Haapanen \email{louhos@@googlegroups.com}
 #' @examples 
 #' # edustajat <- GetEdustajaData('a3_80-2011')
 #' @references See citation("sorvi") 
@@ -71,11 +69,11 @@ GetEdustajaData <- function(aanestys)
 }
 
 #' Hakee tietyn kansanedustajan aanestykset
-#' @param edustajan nimi muodossa Sukunimi Etunimi
+#' @param edustaja edustajan nimi muodossa Sukunimi Etunimi
 #'
 #' @return data.frame
 #'
-#' @author Juuso Haapanen \email{sorvi-commits@@lists.r-forge.r-project.org}
+#' @author Juuso Haapanen \email{louhos@@googlegroups.com}
 #'
 #' @examples
 #' # paavo <- GetEdustajanAanestykset('Lipponen Paavo')
@@ -98,10 +96,10 @@ GetEdustajanAanestykset <- function(edustaja) {
   return(df)
 }
 
-#' Hakee hakusanalla aanestyksiä eduskuntarajapinnasta
+#' Hakee hakusanalla aanestyksia eduskuntarajapinnasta
 #' @param hakusana string
 #' @return data.frame
-#' @author Juuso Haapanen \email{sorvi-commits@@lists.r-forge.r-project.org}
+#' @author Juuso Haapanen \email{louhos@@googlegroups.com}
 #' @examples
 #' # luonto <- haeHakusanalla('luonto')
 #' @export

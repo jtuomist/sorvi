@@ -5,7 +5,7 @@
   GetEdustajaData(aanestys)
 }
 \arguments{
-  \item{aanestys}{}
+  \item{aanestys}{aanestyksen ID}
 }
 \value{
   data.frame jossa valinta, puolue ja nimi
@@ -17,8 +17,7 @@
 # edustajat <- GetEdustajaData('a3_80-2011')
 }
 \author{
-  Juuso Haapanen
-  \email{sorvi-commits@lists.r-forge.r-project.org}
+  Juuso Haapanen \email{louhos@googlegroups.com}
 }
 \references{
   See citation("sorvi")

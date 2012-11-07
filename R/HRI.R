@@ -21,7 +21,8 @@
 GetHRIaluejakokartat <- function() {
   
   # Circumwent warning by initializing here:
-  pks.pienalue <- NULL
+  pks.pienalue <- NULL  
+  pks.df <- NULL
 
 #  stop("Function GetHRIaluejakokartat is currently broken, we are working on it...")
   message("Loading aluejakokartat from HRI...")

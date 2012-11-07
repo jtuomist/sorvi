@@ -83,13 +83,12 @@ ConvertMunicipalityNames <- function (municipality.names) {
 #' 
 #' @aliases get.municipality.info
 #' @param url URL for Tilastokeskus municipality information 
-#' @param MML MML data, obtain with 'LoadData("MML")'
 #' @return A data frame with municipality data
 #' @export 
 #' @references
 #' See citation("sorvi") 
 #' @author Leo Lahti \email{louhos@@googlegroups.com}
-#' @examples # LoadData("MML"); municipality.info <- GetMunicipalityInfo(MML = MML)
+#' @examples # municipality.info <- GetMunicipalityInfo()
 #' @keywords utilities
 
 GetMunicipalityInfo <- function (url =

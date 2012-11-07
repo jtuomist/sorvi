@@ -67,6 +67,8 @@ ConversionTableForMunicipalities <- function () {
 
 LoadMML <- function(data.id, resolution, verbose = TRUE) {
 
+  sp <- NULL	
+
   url <- paste(LouhosStoragePath(), "mml/rdata/", sep = "")
   filepath <- paste(url, "/", resolution, "/", data.id, ".RData", sep = "")
   if (verbose) {message(paste("Loading ", filepath, ". (C) MML 2011. Converted to RData shape object by Louhos. For more information, see ", LouhosStoragePath(), "mml/README", sep = ""))}
@@ -113,6 +115,10 @@ LouhosStoragePath <- function () {
 #' @keywords utilities
 
 LoadData <- function(data.id, verbose = TRUE) {
+
+  # Circumvent warnings
+  fi.en.maakunnat <- NULL
+  kuntarajat.maa.shp <- NULL
 
   url <- LouhosStoragePath()
   filepath <- paste(url, "/louhos/", data.id, ".rda", sep = "")

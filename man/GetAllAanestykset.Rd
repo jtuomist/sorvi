@@ -2,10 +2,10 @@
 \alias{GetAllAanestykset}
 \title{Hakee kaikki aanestykset eduskuntarajapinnasta}
 \usage{
-  GetAllAanestykset()
+  GetAllAanestykset(...)
 }
 \arguments{
-  \item{no}{params}
+  \item{...}{parameters to be passed}
 }
 \value{
   list
@@ -14,11 +14,10 @@
   Hakee kaikki aanestykset eduskuntarajapinnasta
 }
 \examples{
-# aanestykset <- GetAllAanestykset()
+# aanestykset <- GetAllAanestykset(...)
 }
 \author{
-  Juuso Haapanen
-  \email{sorvi-commits@lists.r-forge.r-project.org}
+  Juuso Haapanen \email{louhos@googlegroups.com}
 }
 \references{
   citation("sorvi")

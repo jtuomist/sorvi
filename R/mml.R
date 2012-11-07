@@ -208,6 +208,7 @@ GetShapeMML <- function (input.data.dir = "./", verbose = TRUE) {
 #'
 #' Arguments:
 #'   @param MML output from GetShapeMML(input.data.dir = ".")
+#'   @param output.data.dir output data directory
 #'
 #' Returns:
 #'   @return output data directory name

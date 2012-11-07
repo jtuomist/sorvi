@@ -17,6 +17,11 @@
 read.px <- function(filename, encoding = "latin1", 
                     na.strings = c('"."', '".."', '"..."', '"...."')) {
 
+
+  label <- NULL
+  attribute <- NULL
+  value <- NULL
+
   # filename <- "http://pxweb2.stat.fi/database/StatFin/asu/ashi/003_ashi_tau_108.px"; encoding = "latin1"; na.strings = c('"."', '".."', '"..."', '"...."')
 
     ## auxiliary functions ##

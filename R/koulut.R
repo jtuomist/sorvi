@@ -25,7 +25,9 @@
 GetLukiot <- function() {
 
   message("Loading Lukiot data...")
-  
+
+  # Circumwent warnings
+  hr.lukiot <- NULL    		   
   
   # Script for processing Finnish school data
   # License: FreeBSD, http://en.wikipedia.org/wiki/BSD_licenses
