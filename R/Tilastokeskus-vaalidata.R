@@ -604,7 +604,7 @@ GetMunicipalElectionData2004 <- function (which = "election.statistics") {
 #' @author Leo Lahti \email{louhos@@googlegroups.com}
 #' @examples # 
 #' @keywords utilities
-GetElectedCandidates <- function (year, election, election.district, verbose = FALSE) {
+GetElectedCandidates <- function (year, election, election.district, verbose = TRUE) {
 
   .InstallMarginal("plyr")
   .InstallMarginal("reshape")
@@ -628,20 +628,20 @@ GetElectedCandidates <- function (year, election, election.district, verbose = F
     # Source (C) Tilastokeskus:
     # http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2012_04/2012_04_fi.asp
     urls <- list()
-    urls[["Helsingin vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2012_04/410_kvaa_2012_2012-10-29_tau_123_fi.px"
-    urls[["Uudenmaan vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2012_04/420_kvaa_2012_2012-10-29_tau_124_fi.px"
-    urls[["Varsinais-Suomen vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2012_04/430_kvaa_2012_2012-10-29_tau_125_fi.px"
-    urls[["Satakunnan vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2012_04/440_kvaa_2012_2012-10-29_tau_126_fi.px"
-    urls[["Hameen vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2012_04/460_kvaa_2012_2012-10-29_tau_127_fi.px"
-    urls[["Pirkanmaan vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2012_04/470_kvaa_2012_2012-10-29_tau_128_fi.px" 
-    urls[["Kymen vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2012_04/480_kvaa_2012_2012-10-29_tau_129_fi.px"
-    urls[["Etela-Savon vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2012_04/490_kvaa_2012_2012-10-29_tau_130_fi.px"
-    urls[["Pohjois-Savon vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2012_04/500_kvaa_2012_2012-10-29_tau_131_fi.px"
-    urls[["Pohjois-Karjalan vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2012_04/510_kvaa_2012_2012-10-29_tau_132_fi.px"
-    urls[["Vaasan vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2012_04/520_kvaa_2012_2012-10-29_tau_133_fi.px"
-    urls[["Keski-Suomen vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2012_04/530_kvaa_2012_2012-10-29_tau_134_fi.px"
-    urls[["Oulun vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2012_04/540_kvaa_2012_2012-10-29_tau_135_fi.px"
-    urls[["Lapin vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2012_04/550_kvaa_2012_2012-10-29_tau_136_fi.px"
+    urls[["Helsingin vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2012_04/410_kvaa_2012_2012-11-02_tau_123_fi.px"    		                      
+    urls[["Uudenmaan vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2012_04/420_kvaa_2012_2012-11-02_tau_124_fi.px"
+    urls[["Varsinais-Suomen vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2012_04/430_kvaa_2012_2012-11-02_tau_125_fi.px"
+    urls[["Satakunnan vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2012_04/440_kvaa_2012_2012-11-02_tau_126_fi.px"
+    urls[["Hameen vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2012_04/460_kvaa_2012_2012-11-02_tau_127_fi.px"
+    urls[["Pirkanmaan vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2012_04/470_kvaa_2012_2012-11-02_tau_128_fi.px"
+    urls[["Kymen vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2012_04/480_kvaa_2012_2012-11-02_tau_129_fi.px"
+    urls[["Etela-Savon vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2012_04/490_kvaa_2012_2012-11-02_tau_130_fi.px"
+    urls[["Pohjois-Savon vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2012_04/500_kvaa_2012_2012-11-02_tau_131_fi.px"
+    urls[["Pohjois-Karjalan vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2012_04/510_kvaa_2012_2012-11-02_tau_132_fi.px"
+    urls[["Vaasan vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2012_04/520_kvaa_2012_2012-11-02_tau_133_fi.px"
+    urls[["Keski-Suomen vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2012_04/530_kvaa_2012_2012-11-02_tau_134_fi.px"
+    urls[["Oulun vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2012_04/540_kvaa_2012_2012-11-02_tau_135_fi.px"
+    urls[["Lapin vaalipiiri"]] <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa/2012_04/550_kvaa_2012_2012-11-02_tau_136_fi.px"
 
     url <- urls[[election.district.name]]
 

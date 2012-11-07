@@ -1,4 +1,3 @@
-
 # This file is a part of the soRvi program (http://louhos.github.com/sorvi/)
 
 # Copyright (C) 2010-2012 Louhos <louhos.github.com>. All rights reserved.
