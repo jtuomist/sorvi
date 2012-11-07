@@ -1,6 +1,6 @@
 \name{haeHakusanalla}
 \alias{haeHakusanalla}
-\title{Hakee hakusanalla äänestyksiä eduskuntarajapinnasta}
+\title{Hakee hakusanalla aanestyksiä eduskuntarajapinnasta}
 \usage{
   haeHakusanalla(hakusana)
 }
@@ -11,7 +11,7 @@
   data.frame
 }
 \description{
-  Hakee hakusanalla äänestyksiä eduskuntarajapinnasta
+  Hakee hakusanalla aanestyksiä eduskuntarajapinnasta
 }
 \examples{
 # luonto <- haeHakusanalla('luonto')

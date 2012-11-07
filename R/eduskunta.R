@@ -1,5 +1,4 @@
 # Copyright (C) Juuso Haapanen 2012, <juuso(at)haapanen.biz> All rights reserved
-#
 # This program is open source software; you can redistribute it and/or
 # modify it under the terms of the FreeBSD License (keep this notice):
 # http://en.wikipedia.org/wiki/BSD_licenses
@@ -11,22 +10,19 @@
 # This software has been published as part of louhos project (louhos.github.com) 
 
 
-# Kirjasto eduskunnan äänestystulosten hakemiseen. Käyttää hyväkseen www.biomi.org/eduskunta/eduskunta.html -sivulla määriteltyä rajapintaa
+
 # Versio 0.1
 
 
-#' Hakee kaikki äänestykset eduskuntarajapinnasta
+#' Hakee kaikki aanestykset eduskuntarajapinnasta
 #' @param no params
 #' @return list
 #' @author Juuso Haapanen \email{sorvi-commits@@lists.r-forge.r-project.org}
 #' @examples
 #' # aanestykset <- GetAllAanestykset()
-#' @export 
 #' @keywords eduskunta
-#' @references
-#' See citation("sorvi") 
-
-
+#' @references citation("sorvi") 
+#' @export
 GetAllAanestykset <- function() {
   if(!require(XML)) {
     install.packages('XML')
@@ -40,18 +36,16 @@ GetAllAanestykset <- function() {
   
 }
 
-#' Hakee tietyn äänestyksen tulokset edustajaittain
+#' Hakee tietyn aanestyksen tulokset edustajaittain
 #' 
-#' @param aanestys äänestyksen tunniste.
+#' @param aanestys 
 #' @return data.frame jossa valinta, puolue ja nimi
 #' @author Juuso Haapanen \email{sorvi-commits@@lists.r-forge.r-project.org}
 #' @examples 
 #' # edustajat <- GetEdustajaData('a3_80-2011')
-#' @export
-#' @references
-#' See citation("sorvi") 
+#' @references See citation("sorvi") 
 #' @keywords eduskunta
-
+#' @export
 GetEdustajaData <- function(aanestys)
 {
   if(!require(XML)) {
@@ -76,7 +70,7 @@ GetEdustajaData <- function(aanestys)
   return(df)
 }
 
-#' Hakee tietyn kansanedustajan äänestykset
+#' Hakee tietyn kansanedustajan aanestykset
 #' @param edustajan nimi muodossa Sukunimi Etunimi
 #'
 #' @return data.frame
@@ -85,11 +79,10 @@ GetEdustajaData <- function(aanestys)
 #'
 #' @examples
 #' # paavo <- GetEdustajanAanestykset('Lipponen Paavo')
-#' @export
-#' @references
-#' See citation("sorvi") 
+#'
+#' @references See citation("sorvi") 
 #' @keywords eduskunta
-
+#' @export
 GetEdustajanAanestykset <- function(edustaja) {
   if(!require(XML)) {
     install.packages('XML')
@@ -105,15 +98,14 @@ GetEdustajanAanestykset <- function(edustaja) {
   return(df)
 }
 
-#' Hakee hakusanalla äänestyksiä eduskuntarajapinnasta
+#' Hakee hakusanalla aanestyksiä eduskuntarajapinnasta
 #' @param hakusana string
 #' @return data.frame
 #' @author Juuso Haapanen \email{sorvi-commits@@lists.r-forge.r-project.org}
 #' @examples
 #' # luonto <- haeHakusanalla('luonto')
 #' @export
-#' @references
-#' See citation("sorvi") 
+#' @references See citation("sorvi") 
 #' @keywords eduskunta 
 
 haeHakusanalla <- function(hakusana) {

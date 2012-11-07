@@ -1,6 +1,6 @@
 \name{GetAllAanestykset}
 \alias{GetAllAanestykset}
-\title{Hakee kaikki äänestykset eduskuntarajapinnasta}
+\title{Hakee kaikki aanestykset eduskuntarajapinnasta}
 \usage{
   GetAllAanestykset()
 }
@@ -11,7 +11,7 @@
   list
 }
 \description{
-  Hakee kaikki äänestykset eduskuntarajapinnasta
+  Hakee kaikki aanestykset eduskuntarajapinnasta
 }
 \examples{
 # aanestykset <- GetAllAanestykset()
@@ -21,7 +21,7 @@
   \email{sorvi-commits@lists.r-forge.r-project.org}
 }
 \references{
-  See citation("sorvi")
+  citation("sorvi")
 }
 \keyword{eduskunta}
 
