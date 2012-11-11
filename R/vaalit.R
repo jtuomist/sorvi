@@ -1333,7 +1333,7 @@ GetElectedCandidates <- function (year, election, election.district, verbose = T
 
   if (verbose) { message("Converting into more compact table format") }
   
-  kaava <- as.formula(Ehdokas + Äänestysalue ~ Äänestystiedot)
+  kaava <- as.formula("Ehdokas + Äänestysalue ~ Äänestystiedot")
   df <- lapply(df, function(dff) {m <- reshape2::melt(dff, c("Ehdokas", "Äänestysalue", "Äänestystiedot"), "dat"); mc <- reshape::cast(m, kaava); mc <- mc[!mc[["Ehdokkaan numero"]] == 0, ]})
   
   # df <- lapply(df, function(dff) {names(dff) <- c("Äänestystiedot", "Äänestysalue", "Ehdokas", "dat"); m <- reshape2::melt(dff, c("Ehdokas", "Äänestysalue", "Äänestystiedot"), "dat"); mc <- reshape::cast(m, Ehdokas + Äänestysalue ~ Äänestystiedot); mc <- mc[!mc[["Ehdokkaan numero"]] == 0, ]})
