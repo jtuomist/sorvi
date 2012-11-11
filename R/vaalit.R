@@ -653,7 +653,6 @@ GetParliamentaryElectionData <- function (level) {
 GetMunicipalElectionData2000 <- function (which = "election.statistics") {
 
   .InstallMarginal("plyr")
-  .InstallMarginal("reshape")
   .InstallMarginal("reshape2")
 
   if (which == "election.statistics") {
