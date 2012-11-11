@@ -67,7 +67,9 @@ ConversionTableForMunicipalities <- function () {
 
 LoadMML <- function(data.id, resolution, verbose = TRUE) {
 
-  #sp <- NULL	
+  # DO NOT SET sp <- NULL HERE; this will return NULL for the function
+  # IN CONTRAST TO INTENDED OUTPUT
+  # sp <- NULL	
 
   url <- paste(LouhosStoragePath(), "mml/rdata/", sep = "")
   filepath <- paste(url, "/", resolution, "/", data.id, ".RData", sep = "")
