@@ -518,7 +518,6 @@ PreprocessPresidentti2012UserData <- function (dat.list, API = API) {
 GetParliamentaryElectionData <- function (level) {
 
   .InstallMarginal("reshape2")
-  .InstallMarginal("reshape")
   .InstallMarginal("plyr")  
 
   if (level == "municipality") {
@@ -530,7 +529,7 @@ GetParliamentaryElectionData <- function (level) {
     px <- sorvi::read.px(url, na.strings='"-"')
     df <- try(as.data.frame(px))
     kaava <- as.formula("Vaalipiiri.ja.kunta~Aanestystiedot~Lukumaaratiedot")
-    tmp <- reshape::cast(df, kaava, value="dat")
+    tmp <- reshape2::cast(df, kaava, value="dat")
 
     # Separate tables and preprocess
     tab1 <- tmp[,,"Lukumaara 2007"]
@@ -587,7 +586,7 @@ GetParliamentaryElectionData <- function (level) {
     px <- sorvi::read.px(url, na.strings='"-"') 
     df <- try(as.data.frame(px))
     kaava <- as.formula("Vaalipiiri~Aanestystiedot~Lukumaaratiedot")
-    tmp <- reshape::cast(df, kaava, value="dat")
+    tmp <- reshape2::cast(df, kaava, value="dat")
 
     # Separate the tables
     tab1 <- tmp[,,1]
@@ -610,7 +609,7 @@ GetParliamentaryElectionData <- function (level) {
     px <- sorvi::read.px("http://pxweb2.stat.fi/database/StatFin/vaa/evaa/120_evaa_tau_105_fi.px", na.strings='"-"') 
     df <- try(as.data.frame(px))
     kaava <- as.formula("Vaalipiiri~Hylkaysperuste")
-    tab2 <- reshape::cast(df, kaava, value="dat")
+    tab2 <- reshape2::cast(df, kaava, value="dat")
 
     # Keep only election.region level data
     rownames(tab2) <- as.character(tab2[,1])
@@ -666,7 +665,7 @@ GetMunicipalElectionData2000 <- function (which = "election.statistics") {
     names(df) <- korvaa.skandit(names(df))
 
     kaava <- as.formula("Alue ~ Aanestystiedot")
-    tab <- reshape::cast(df, kaava, value = "dat")
+    tab <- reshape2::cast(df, kaava, value = "dat")
     rownames(tab) <- korvaa.skandit(as.character(tab$Alue))
 
     # Keep only municipality-level information, filter out others
@@ -692,7 +691,7 @@ GetMunicipalElectionData2000 <- function (which = "election.statistics") {
     url <- "http://pxweb2.stat.fi/database/StatFin/vaa/kvaa_2000/020_kvaa_2000_2008-10-17_tau_102_fi.px"
     px <- sorvi::read.px(url, na.strings='"-"')
     df <- as.data.frame(px)
-    tmp <- reshape::cast(df, Alue ~ Puolue ~ Ehdokastiedot, value="dat")
+    tmp <- reshape2::cast(df, Alue ~ Puolue ~ Ehdokastiedot, value="dat")
 
     tab1 <- tmp[,,"Ehdokkaiden lkm"]
     tab2 <- tmp[,,"Ehdokkaiden osuus (%)"]
@@ -729,7 +728,7 @@ GetMunicipalElectionData2000 <- function (which = "election.statistics") {
 
     px <- sorvi::read.px(url, na.strings='"-"')
     df <- as.data.frame(px)
-    tmp <- reshape::cast(df, Alue ~ Puolue ~ Valittujen.tiedot, value="dat")
+    tmp <- reshape2::cast(df, Alue ~ Puolue ~ Valittujen.tiedot, value="dat")
 
     tab1 <- tmp[,,"Valittujen lkm"]
     tab2 <- tmp[,,"Valittujen osuus (%)"]
@@ -766,7 +765,7 @@ GetMunicipalElectionData2000 <- function (which = "election.statistics") {
     px <- sorvi::read.px(url, na.strings='"-"')
     df <- as.data.frame(px)
 
-    tmp <- reshape::cast(df, Alue ~ Puolue ~ Kannatustiedot, value="dat")
+    tmp <- reshape2::cast(df, Alue ~ Puolue ~ Kannatustiedot, value="dat")
     dimnames(tmp) <- korvaa.skandit(dimnames(tmp))
 
     tab1 <- tmp[,,"Aania yhteensa"]
@@ -808,7 +807,7 @@ GetMunicipalElectionData2000 <- function (which = "election.statistics") {
 
     px <- sorvi::read.px(url, na.strings='"-"')
     df <- as.data.frame(px)
-    tab <- reshape::cast(df, Ehdokas ~ Ehdokastiedot, value="dat")
+    tab <- reshape2::cast(df, Ehdokas ~ Ehdokastiedot, value="dat")
 
   } else if (which == "all.municipality.level.data") {
 
@@ -857,7 +856,7 @@ GetMunicipalElectionData2004 <- function (which = "election.statistics") {
     px <- sorvi::read.px(url, na.strings='"-"')
     df <- as.data.frame(px)
     kaava <- as.formula("Alue~Aanestystiedot~Sukupuoli")
-    tmp <- reshape::cast(df, kaava, value="dat")
+    tmp <- reshape2::cast(df, kaava, value="dat")
 
     tab1 <- tmp[,,"Sukupuolet yhteensa"]
     tab2 <- tmp[,,"Miehet"]
@@ -914,7 +913,7 @@ GetMunicipalElectionData2004 <- function (which = "election.statistics") {
     px <- sorvi::read.px(url, na.strings='"-"')
     df <- as.data.frame(px)
     kaava <- as.formula("Puolue~Vaalipiiri~Lukumaaratiedot")
-    tmp <- reshape::cast(df, kaava, value="dat")
+    tmp <- reshape2::cast(df, kaava, value="dat")
 
     tab1 <- tmp[,,"Valtuutettujen lukumaara"]
     tab2 <- tmp[,,"Puolueen osuus"]
@@ -934,7 +933,7 @@ GetMunicipalElectionData2004 <- function (which = "election.statistics") {
     px <- sorvi::read.px(url, na.strings='"-"')
     df <- as.data.frame(px)
     kaava <- as.formula("Alue~Puolue~Sukupuoli~Valittujen.lukumaara")
-    tmp <- reshape::cast(df, kaava, value="dat")
+    tmp <- reshape2::cast(df, kaava, value="dat")
 
     tab1 <- tmp[,,"Kaikki ehdokkaat", "Valittujen lukumaara"]
     colnames(tab1) <- paste("Kaikki ehdokkaat", "Valittujen lukumaara", colnames(tab1))
@@ -983,7 +982,7 @@ GetMunicipalElectionData2004 <- function (which = "election.statistics") {
 
     #px <- sorvi::read.px(url, na.strings='"-"')
     #df <- as.data.frame(px)
-    #tmp <- reshape::cast(df, Alue~Puolue~Sukupuoli~Valittujen.lukumaara)
+    #tmp <- reshape2::cast(df, Alue~Puolue~Sukupuoli~Valittujen.lukumaara)
 
   } else if (which == "selected.candidates.count") {
 
@@ -1003,7 +1002,7 @@ GetMunicipalElectionData2004 <- function (which = "election.statistics") {
 
     #px <- sorvi::read.px(url, na.strings='"-"')
     #df <- as.data.frame(px)
-    #tmp <- reshape::cast(df, Alue~Puolue~Sukupuoli~Valittujen.lukumaara)
+    #tmp <- reshape2::cast(df, Alue~Puolue~Sukupuoli~Valittujen.lukumaara)
 
   } else if (which == "parties") {
 
@@ -1032,7 +1031,7 @@ GetMunicipalElectionData2004 <- function (which = "election.statistics") {
     px <- sorvi::read.px(url, na.strings='"-"')
     df <- as.data.frame(px)
     kaava <- as.formula("Vaalipiiri.ja.kunta~Puolue~Lukumaaratiedot")
-    tmp <- reshape::cast(df, kaava, value="dat")
+    tmp <- reshape2::cast(df, kaava, value="dat")
 
     tab1 <- tmp[,,"Aanimaara"]
     tab2 <- tmp[,,"Osuus %"]
@@ -1071,7 +1070,7 @@ GetMunicipalElectionData2004 <- function (which = "election.statistics") {
     px <- sorvi::read.px(url, na.strings='"-"')
     df <- as.data.frame(px)
     kaava <- as.formula("Vaalipiiri.ja.kunta~Aanestystiedot.ja.puolueiden.kannatus~Lukumaaratiedot")
-    tmp <- reshape::cast(df, kaava, value="dat")
+    tmp <- reshape2::cast(df, kaava, value="dat")
 
     tab1 <- tmp[,,"Aanimaara"]
     tab2 <- tmp[,,"Osuus %"]
@@ -1109,7 +1108,7 @@ GetMunicipalElectionData2004 <- function (which = "election.statistics") {
     px <- sorvi::read.px(url, na.strings='"-"')
     df <- as.data.frame(px)
     kaava <- as.formula("Vaalipiiri.ja.kunta~Aanestystiedot.ja.puolueiden.kannatus~Lukumaaratiedot")
-    tmp <- reshape::cast(df, kaava, value="dat")
+    tmp <- reshape2::cast(df, kaava, value="dat")
 
     tab1 <- tmp[,,"Lukumaara / Aanimaara"]
     tab2 <- tmp[,,"Osuus aanista"]
@@ -1334,9 +1333,9 @@ GetElectedCandidates <- function (year, election, election.district, verbose = T
   if (verbose) { message("Converting into more compact table format") }
   
   kaava <- as.formula("Ehdokas + Äänestysalue ~ Äänestystiedot")
-  df <- lapply(df, function(dff) {m <- reshape2::melt(dff, c("Ehdokas", "Äänestysalue", "Äänestystiedot"), "dat"); mc <- reshape::cast(m, kaava); mc <- mc[!mc[["Ehdokkaan numero"]] == 0, ]})
+  df <- lapply(df, function(dff) {m <- reshape2::melt(dff, c("Ehdokas", "Äänestysalue", "Äänestystiedot"), "dat"); mc <- reshape2::cast(m, kaava); mc <- mc[!mc[["Ehdokkaan numero"]] == 0, ]})
   
-  # df <- lapply(df, function(dff) {names(dff) <- c("Äänestystiedot", "Äänestysalue", "Ehdokas", "dat"); m <- reshape2::melt(dff, c("Ehdokas", "Äänestysalue", "Äänestystiedot"), "dat"); mc <- reshape::cast(m, Ehdokas + Äänestysalue ~ Äänestystiedot); mc <- mc[!mc[["Ehdokkaan numero"]] == 0, ]})
+  # df <- lapply(df, function(dff) {names(dff) <- c("Äänestystiedot", "Äänestysalue", "Ehdokas", "dat"); m <- reshape2::melt(dff, c("Ehdokas", "Äänestysalue", "Äänestystiedot"), "dat"); mc <- reshape2::cast(m, Ehdokas + Äänestysalue ~ Äänestystiedot); mc <- mc[!mc[["Ehdokkaan numero"]] == 0, ]})
 
   df <- do.call(rbind, df)
 
@@ -1402,7 +1401,7 @@ GetMunicipalElectionData2008 <- function (which = "election.statistics") {
     px <- sorvi::read.px(url, na.strings='"-"')
     df <- as.data.frame(px)
     kaava <- as.formula("Alue~Aanestystiedot~Sukupuoli")
-    tmp <- reshape::cast(df, kaava, value="dat")
+    tmp <- reshape2::cast(df, kaava, value="dat")
 
     tab1 <- tmp[,,"Sukupuolet yhteensa"]
     tab2 <- tmp[,,"Miehet"]
@@ -1456,7 +1455,7 @@ GetMunicipalElectionData2008 <- function (which = "election.statistics") {
 
     px <- sorvi::read.px(url, na.strings='"-"')
     df <- as.data.frame(px)
-    tmp <- reshape::cast(df, Kunta~Puolue~Naisehdokastiedot)
+    tmp <- reshape2::cast(df, Kunta~Puolue~Naisehdokastiedot)
 
     tab1 <- tmp[,,"Aanimaara"]
     tab2 <- tmp[,,"Osuus aanista (%)"]
@@ -1503,7 +1502,7 @@ GetMunicipalElectionData2008 <- function (which = "election.statistics") {
     px <- sorvi::read.px(url, na.strings='"-"')
     df <- as.data.frame(px)
     kaava <- as.formula("Puolue~Vaalipiiri~Lukumaaratiedot")
-    tmp <- reshape::cast(df, kaava, value="dat")
+    tmp <- reshape2::cast(df, kaava, value="dat")
 
     tab1 <- tmp[,,"Valtuutettujen lukumaara"]
     tab2 <- tmp[,,"Puolueen osuus"]
@@ -1523,7 +1522,7 @@ GetMunicipalElectionData2008 <- function (which = "election.statistics") {
     px <- sorvi::read.px(url, na.strings='"-"')
     df <- as.data.frame(px)
     kaava <- as.formula("Alue~Puolue~Sukupuoli~Valittujen.lukumaara")
-    tmp <- reshape::cast(df, kaava, value="dat")
+    tmp <- reshape2::cast(df, kaava, value="dat")
 
     tab1 <- tmp[,,"Kaikki ehdokkaat", "Valittujen lukumaara"]
     colnames(tab1) <- paste("Kaikki ehdokkaat", "Valittujen lukumaara", colnames(tab1))
@@ -1572,7 +1571,7 @@ GetMunicipalElectionData2008 <- function (which = "election.statistics") {
 
     #px <- sorvi::read.px(url, na.strings='"-"')
     #df <- as.data.frame(px)
-    #tmp <- reshape::cast(df, Alue~Puolue~Sukupuoli~Valittujen.lukumaara)
+    #tmp <- reshape2::cast(df, Alue~Puolue~Sukupuoli~Valittujen.lukumaara)
 
   } else if (which == "selected.candidates.count") {
 
@@ -1592,7 +1591,7 @@ GetMunicipalElectionData2008 <- function (which = "election.statistics") {
 
     #px <- sorvi::read.px(url, na.strings='"-"')
     #df <- as.data.frame(px)
-    #tmp <- reshape::cast(df, Alue~Puolue~Sukupuoli~Valittujen.lukumaara)
+    #tmp <- reshape2::cast(df, Alue~Puolue~Sukupuoli~Valittujen.lukumaara)
 
   } else if (which == "parties") {
 
@@ -1621,7 +1620,7 @@ GetMunicipalElectionData2008 <- function (which = "election.statistics") {
     px <- sorvi::read.px(url, na.strings='"-"')
     df <- as.data.frame(px)
     kaava <- as.formula("Vaalipiiri.ja.kunta~Puolue~Lukumaaratiedot")
-    tmp <- reshape::cast(df, kaava, value="dat")
+    tmp <- reshape2::cast(df, kaava, value="dat")
 
     tab1 <- tmp[,,"Aanimaara"]
     tab2 <- tmp[,,"Osuus %"]
@@ -1660,7 +1659,7 @@ GetMunicipalElectionData2008 <- function (which = "election.statistics") {
     px <- sorvi::read.px(url, na.strings='"-"')
     df <- as.data.frame(px)
     kaava <- as.formula("Vaalipiiri.ja.kunta~Aanestystiedot.ja.puolueiden.kannatus~Lukumaaratiedot")
-    tmp <- reshape::cast(df, kaava, value="dat")
+    tmp <- reshape2::cast(df, kaava, value="dat")
 
     tab1 <- tmp[,,"Aanimaara"]
     tab2 <- tmp[,,"Osuus %"]
@@ -1698,7 +1697,7 @@ GetMunicipalElectionData2008 <- function (which = "election.statistics") {
     px <- sorvi::read.px(url, na.strings='"-"')
     df <- as.data.frame(px)
     kaava <- as.formula("Vaalipiiri.ja.kunta~Aanestystiedot.ja.puolueiden.kannatus~Lukumaaratiedot")
-    tmp <- reshape::cast(df, kaava, value="dat")
+    tmp <- reshape2::cast(df, kaava, value="dat")
 
     tab1 <- tmp[,,"Lukumaara / Aanimaara"]
     tab2 <- tmp[,,"Osuus aanista"]

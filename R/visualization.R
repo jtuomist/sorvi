@@ -92,7 +92,6 @@ vwReg <- function(formula, data, title="", B=1000, shade=TRUE, shade.alpha=.1, s
 
     # compute median and CI limits of bootstrap
     .InstallMarginal("plyr")
-    .InstallMarginal("reshape")
     .InstallMarginal("reshape2")
     .InstallMarginal("ggplot2")
     .InstallMarginal("RColorBrewer")
