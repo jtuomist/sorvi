@@ -1333,10 +1333,10 @@ GetElectedCandidates <- function (year, election, election.district, verbose = T
 
   if (verbose) { message("Converting into more compact table format") }
   
+  kaava <- as.formula(Ehdokas + Äänestysalue ~ Äänestystiedot)
+  df <- lapply(df, function(dff) {m <- reshape2::melt(dff, c("Ehdokas", "Äänestysalue", "Äänestystiedot"), "dat"); mc <- reshape::cast(m, kaava); mc <- mc[!mc[["Ehdokkaan numero"]] == 0, ]})
   
-  #df <- lapply(df, function(dff) {m <- reshape2::melt(dff, c("Ehdokas", "\A\anestysalue", "\A\anestystiedot"), "dat"); mc <- reshape::cast(m, Ehdokas + \A\anestysalue ~ \A\anestystiedot); mc <- mc[!mc[["Ehdokkaan numero"]] == 0, ]})
-
-  df <- lapply(df, function(dff) {names(dff) <- c("Aanestystiedot", "Aanestysalue", "Ehdokas", "dat"); m <- reshape2::melt(dff, c("Ehdokas", "Aanestysalue", "Aanestystiedot"), "dat"); mc <- reshape::cast(m, Ehdokas + Aanestysalue ~ Aanestystiedot); mc <- mc[!mc[["Ehdokkaan numero"]] == 0, ]})
+  # df <- lapply(df, function(dff) {names(dff) <- c("Äänestystiedot", "Äänestysalue", "Ehdokas", "dat"); m <- reshape2::melt(dff, c("Ehdokas", "Äänestysalue", "Äänestystiedot"), "dat"); mc <- reshape::cast(m, Ehdokas + Äänestysalue ~ Äänestystiedot); mc <- mc[!mc[["Ehdokkaan numero"]] == 0, ]})
 
   df <- do.call(rbind, df)
 
@@ -1351,8 +1351,8 @@ GetElectedCandidates <- function (year, election, election.district, verbose = T
   df[["Ehdokkaan nimi"]] <- NULL
 
   if (verbose) { message("Preprocessing region fields") }
-  df[["Aanestysalue"]] <- gsub(" / ", "/", as.character(df[["Aanestysalue"]]))
-  alue <- do.call(rbind, strsplit(df[["Aanestysalue"]], "/"))
+  df[["Äänestysalue"]] <- gsub(" / ", "/", as.character(df[["Äänestysalue"]]))
+  alue <- do.call(rbind, strsplit(df[["Äänestysalue"]], "/"))
   df$Kunta <- alue[, 1]
   df$Alue <- alue[, 2]
   rownames(df) <- NULL
