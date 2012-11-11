@@ -173,6 +173,7 @@ GetMunicipalityInfoStatFi <- function (url = "http://pxweb2.stat.fi/Database/Kun
 GetMunicipalityInfoMML <- function () {
 
   .InstallMarginal("reshape2")
+  .InstallMarginal("reshape")
 
   # Municipality information table from Maanmittauslaitos
   #mml.table <- MML[["1_milj_Shape_etrs_shape"]][["kunta1_p"]]
