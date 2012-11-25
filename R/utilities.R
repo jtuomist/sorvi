@@ -28,7 +28,8 @@
 
 ConversionTableForMunicipalities <- function () {
 
-  sp <- LoadMML(data.id = "kunta1_p", resolution = "1_milj_Shape_etrs_shape")				 
+  sp <- LoadMML(data.id = "kunta1_p", resolution = "1_milj_Shape_etrs_shape")	
+			 
   df <- as.data.frame(sp)
  
   conversion.table <- df[, c("Kunta", "Kunta.FI")]
@@ -68,13 +69,14 @@ ConversionTableForMunicipalities <- function () {
 LoadMML <- function(data.id, resolution, verbose = TRUE) {
 
   # DO NOT SET sp <- NULL HERE; this will return NULL for the function
-  # IN CONTRAST TO INTENDED OUTPUT
-  # sp <- NULL	
+  # IN CONTRAST TO INTENDED OUTPUT!!!
+  sp <- NULL	
 
   url <- paste(LouhosStoragePath(), "mml/rdata/", sep = "")
   filepath <- paste(url, "/", resolution, "/", data.id, ".RData", sep = "")
   if (verbose) {message(paste("Loading ", filepath, ". (C) MML 2011. Converted to RData shape object by Louhos. For more information, see ", LouhosStoragePath(), "mml/README", sep = ""))}
-  load(url(filepath), envir = .GlobalEnv) # Returns a shape file sp
+  #load(url(filepath), envir = .GlobalEnv) # Returns a shape file sp
+  load(url(filepath)) # Returns a shape file sp
   sp
 
 }
@@ -125,13 +127,11 @@ LoadData <- function(data.id, verbose = TRUE) {
   url <- LouhosStoragePath()
   filepath <- paste(url, "/louhos/", data.id, ".rda", sep = "")
   if (verbose) {message(paste("Loading ", filepath, sep = ""))}
-  load(url(filepath), envir = .GlobalEnv)  
-  
-  res <- NULL
-  if (data.id == "translations") {res <- fi.en.maakunnat}
-  if (data.id == "kuntarajat.maa.shp") {res <- kuntarajat.maa.shp}
-
-  res
+  #load(url(filepath), envir = .GlobalEnv)  
+  load(url(filepath))  
+  #print(kuntarajat.maa.shp)
+  if (data.id == "translations") {return(fi.en.maakunnat)}
+  if (data.id == "kuntarajat.maa.shp") {return(kuntarajat.maa.shp)}
 
 }
 
