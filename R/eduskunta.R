@@ -14,8 +14,9 @@
 #' Hakee kaikki aanestykset eduskuntarajapinnasta
 #' @param ... parameters to be passed
 #' @return list
-#' @author Juuso Haapanen \email{louhos@@googlegroups.com}
+#' @author Juuso Haapanen, Leo Lahti \email{louhos@@googlegroups.com}
 #' @examples
+#' # AAnestysten tunnisteet ovat muotoa a{aanestyksen numero}_{istunnon numero}-{vuosi}
 #' # aanestykset <- GetAllAanestykset(...)
 #' @keywords eduskunta
 #' @references citation("sorvi") 
@@ -36,9 +37,10 @@ GetAllAanestykset <- function(...) {
 
 #' Hakee tietyn aanestyksen tulokset edustajaittain
 #' 
-#' @param aanestys aanestyksen ID
+#' @param aanestys aanestyksen ID (Aanestysten tunnisteet ovat muotoa 
+#'        a{aanestyksen numero}_{istunnon numero}-{vuosi}), esim. "a3_80-2011"
 #' @return data.frame jossa valinta, puolue ja nimi
-#' @author Juuso Haapanen \email{louhos@@googlegroups.com}
+#' @author Juuso Haapanen, Leo Lahti \email{louhos@@googlegroups.com}
 #' @examples 
 #' # edustajat <- GetEdustajaData('a3_80-2011')
 #' @references See citation("sorvi") 
